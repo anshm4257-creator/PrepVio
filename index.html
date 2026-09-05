@@ -4,1799 +4,2156 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#5b4bdb">
+<link rel="manifest" href="manifest.json">
 
 <title>PrepVio • Smart Study Planner</title>
 
 <style>
 :root{
-  --p:#5b4bdb;
-  --p2:#7c5cff;
-  --bg:#f5f6fb;
-  --card:#ffffff;
-  --text:#171827;
-  --muted:#707486;
-  --ok:#159447;
-  --gold:#e5a800;
-  --danger:#d33;
-  --border:#e7e8f0;
-  --shadow:0 12px 35px rgba(35,30,80,.10);
+ --p:#5b4bdb;
+ --p2:#7c5cff;
+ --bg:#f5f6fb;
+ --card:#fff;
+ --text:#171827;
+ --muted:#717586;
+ --ok:#149447;
+ --danger:#d33;
+ --border:#e7e8f0;
+ --shadow:0 12px 35px rgba(30,25,80,.10);
 }
 
-*{
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
+*{box-sizing:border-box}
 
 body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--bg);
-  color:var(--text);
+ margin:0;
+ font-family:Arial,Helvetica,sans-serif;
+ background:var(--bg);
+ color:var(--text);
+ padding-bottom:82px;
 }
 
 button,input{
-  font:inherit;
+ font:inherit;
 }
 
 button{
-  cursor:pointer;
-}
-
-header{
-  position:sticky;
-  top:0;
-  z-index:50;
-  background:rgba(255,255,255,.92);
-  backdrop-filter:blur(15px);
-  border-bottom:1px solid var(--border);
-  padding:13px 16px;
-}
-
-.header-inner{
-  max-width:1000px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-}
-
-.logo{
-  font-size:20px;
-  font-weight:800;
-  color:var(--p);
-}
-
-.container{
-  width:min(1000px,calc(100% - 24px));
-  margin:20px auto 50px;
-}
-
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:18px;
-  box-shadow:var(--shadow);
-  margin-bottom:14px;
-}
-
-h1,h2,h3{
-  margin-top:0;
-}
-
-.small{
-  font-size:13px;
-}
-
-.muted{
-  color:var(--muted);
-}
-
-.primary,
-.ghost,
-.danger{
-  border:0;
-  border-radius:12px;
-  padding:11px 15px;
-  font-weight:700;
-}
-
-.primary{
-  color:white;
-  background:linear-gradient(135deg,var(--p),var(--p2));
-  box-shadow:0 8px 20px rgba(91,75,219,.25);
-}
-
-.ghost{
-  background:#f0efff;
-  color:var(--p);
-}
-
-.danger{
-  background:#ffecec;
-  color:var(--danger);
+ cursor:pointer;
 }
 
 button:disabled{
-  opacity:.5;
-  cursor:not-allowed;
+ opacity:.5;
+ cursor:not-allowed;
+}
+
+.container{
+ width:min(1000px,calc(100% - 24px));
+ margin:18px auto 30px;
+}
+
+.card{
+ background:var(--card);
+ border:1px solid var(--border);
+ border-radius:20px;
+ padding:18px;
+ margin-bottom:14px;
+ box-shadow:var(--shadow);
+}
+
+.primary,.ghost,.danger{
+ border:0;
+ border-radius:12px;
+ padding:11px 15px;
+ font-weight:700;
+}
+
+.primary{
+ color:white;
+ background:linear-gradient(135deg,var(--p),var(--p2));
+}
+
+.ghost{
+ color:var(--p);
+ background:#f0efff;
+}
+
+.danger{
+ color:var(--danger);
+ background:#ffecec;
+}
+
+.muted{
+ color:var(--muted);
+}
+
+.small{
+ font-size:13px;
 }
 
 .grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:12px;
 }
 
 .stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:10px;
 }
 
 .stat{
-  padding:15px;
-  border-radius:16px;
-  background:#fafaff;
-  border:1px solid var(--border);
-  text-align:center;
+ background:#fafaff;
+ border:1px solid var(--border);
+ border-radius:16px;
+ padding:14px;
+ text-align:center;
 }
 
 .stat b{
-  display:block;
-  font-size:22px;
-  margin-top:4px;
+ display:block;
+ font-size:22px;
+ margin:4px 0;
 }
 
 .subject{
-  padding:18px;
-  border:1px solid var(--border);
-  border-radius:18px;
-  background:white;
-  transition:.25s;
-  cursor:pointer;
+ background:white;
+ border:1px solid var(--border);
+ border-radius:18px;
+ padding:17px;
+ cursor:pointer;
+ transition:.25s;
 }
 
 .subject:hover{
-  transform:translateY(-3px);
-  box-shadow:0 12px 25px rgba(0,0,0,.08);
+ transform:translateY(-3px);
+ box-shadow:0 12px 25px rgba(0,0,0,.08);
 }
 
 .subject-icon{
-  font-size:34px;
+ font-size:35px;
 }
 
 .subject-title{
-  font-size:18px;
-  font-weight:800;
-  margin-top:8px;
+ font-size:18px;
+ font-weight:800;
+ margin:7px 0;
 }
 
 .progress{
-  height:9px;
-  background:#ececf4;
-  border-radius:20px;
-  overflow:hidden;
-  margin-top:10px;
+ height:9px;
+ background:#ececf4;
+ border-radius:20px;
+ overflow:hidden;
+ margin-top:10px;
 }
 
 .progress span{
-  display:block;
-  height:100%;
-  background:linear-gradient(90deg,var(--p),var(--p2));
-  width:0%;
-  transition:width .5s;
+ display:block;
+ height:100%;
+ width:0;
+ background:linear-gradient(90deg,var(--p),var(--p2));
+ transition:width .5s;
 }
 
 .timer{
-  text-align:center;
-  font-size:55px;
-  font-weight:800;
-  letter-spacing:2px;
-  margin:20px 0;
-  color:var(--p);
+ text-align:center;
+ font-size:55px;
+ font-weight:900;
+ color:var(--p);
+ margin:18px 0;
 }
 
 .timer-input{
-  width:100%;
-  padding:12px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  margin:8px 0;
+ width:100%;
+ padding:13px;
+ border:1px solid var(--border);
+ border-radius:12px;
+ outline:none;
 }
 
 .row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px;
 }
 
 .chapter{
-  padding:14px;
-  border:1px solid var(--border);
-  border-radius:14px;
-  margin-bottom:9px;
-  background:#fff;
+ background:white;
+ border:1px solid var(--border);
+ border-radius:15px;
+ padding:14px;
+ margin-bottom:9px;
 }
 
 .chapter-title{
-  font-weight:700;
+ font-weight:800;
 }
 
 .chapter-actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:10px;
+ display:flex;
+ gap:8px;
+ flex-wrap:wrap;
+ margin-top:10px;
+}
+
+.bottom-nav{
+ position:fixed;
+ bottom:0;
+ left:0;
+ right:0;
+ z-index:80;
+ background:rgba(255,255,255,.95);
+ backdrop-filter:blur(15px);
+ border-top:1px solid var(--border);
+ display:flex;
+ justify-content:center;
+}
+
+.bottom-inner{
+ width:min(600px,100%);
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+}
+
+.nav-btn{
+ border:0;
+ background:transparent;
+ padding:9px 5px;
+ color:var(--muted);
+ font-size:12px;
+}
+
+.nav-btn b{
+ display:block;
+ font-size:21px;
+ margin-bottom:2px;
+}
+
+.nav-btn.active{
+ color:var(--p);
+ font-weight:800;
 }
 
 .modal-bg{
-  position:fixed;
-  inset:0;
-  background:rgba(10,10,20,.6);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:15px;
-  z-index:100;
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,.6);
+ z-index:200;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ padding:14px;
 }
 
 .modal{
-  width:min(650px,100%);
-  max-height:90vh;
-  overflow:auto;
-  background:white;
-  border-radius:22px;
-  padding:20px;
-  animation:modalIn .3s ease;
+ width:min(650px,100%);
+ max-height:90vh;
+ overflow:auto;
+ background:white;
+ border-radius:22px;
+ padding:20px;
+ animation:modalIn .3s ease;
 }
 
 .option{
-  display:block;
-  padding:12px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  margin:8px 0;
-  cursor:pointer;
+ display:block;
+ padding:12px;
+ border:1px solid var(--border);
+ border-radius:12px;
+ margin:8px 0;
+ cursor:pointer;
 }
 
 .option:hover{
-  background:#f6f5ff;
+ background:#f5f3ff;
 }
 
 .result{
-  padding:15px;
-  border-radius:15px;
-  background:#f3f2ff;
-  text-align:center;
-  font-size:20px;
-  font-weight:800;
+ padding:15px;
+ border-radius:15px;
+ background:#f2f0ff;
+ text-align:center;
+ font-size:20px;
+ font-weight:800;
+ margin-top:14px;
 }
 
-#app{
-  display:none;
+.profile-avatar{
+ width:80px;
+ height:80px;
+ border-radius:50%;
+ background:linear-gradient(135deg,var(--p),var(--p2));
+ color:white;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:32px;
+ font-weight:900;
+ margin:auto;
 }
 
 #loginPage{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:
-    radial-gradient(circle at top left,#dcd7ff,transparent 35%),
-    radial-gradient(circle at bottom right,#e7ddff,transparent 35%),
-    var(--bg);
+ min-height:100vh;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+ background:
+ radial-gradient(circle at top left,#ddd8ff,transparent 35%),
+ radial-gradient(circle at bottom right,#eadfff,transparent 35%),
+ var(--bg);
 }
 
 .login-card{
-  width:min(430px,100%);
-  background:white;
-  padding:28px;
-  border-radius:25px;
-  box-shadow:var(--shadow);
-  animation:cardIn .7s ease;
+ width:min(430px,100%);
+ background:white;
+ border-radius:25px;
+ padding:28px;
+ box-shadow:var(--shadow);
+ animation:loginIn 1s ease;
 }
 
 .login-logo{
-  text-align:center;
-  font-size:52px;
+ text-align:center;
+ font-size:58px;
 }
 
 .login-title{
-  text-align:center;
-  font-size:30px;
-  font-weight:900;
-  color:var(--p);
+ text-align:center;
+ font-size:31px;
+ font-weight:900;
+ color:var(--p);
 }
 
 .login-input{
-  width:100%;
-  padding:13px;
-  margin:8px 0;
-  border:1px solid var(--border);
-  border-radius:12px;
-  outline:none;
+ width:100%;
+ padding:13px;
+ border:1px solid var(--border);
+ border-radius:12px;
+ margin:8px 0;
 }
 
-.login-input:focus{
-  border-color:var(--p);
+#subjectPage{
+ min-height:100vh;
+ padding-top:20px;
+}
+
+.select-subject{
+ display:flex;
+ align-items:center;
+ gap:12px;
+}
+
+.select-subject input{
+ width:20px;
+ height:20px;
 }
 
 #splash{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  background:linear-gradient(135deg,#5b4bdb,#7c5cff,#392ca2);
-  animation:splashOut 3.5s forwards;
+ position:fixed;
+ inset:0;
+ z-index:9999;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ color:white;
+ background:linear-gradient(135deg,#4d3ac7,#7c5cff,#33269a);
+ animation:splashOut 5.5s forwards;
 }
 
 .splash-box{
-  text-align:center;
-  animation:splashIn 1s ease;
+ text-align:center;
+ animation:splashIn 1.3s ease;
 }
 
 .splash-logo{
-  font-size:65px;
-  animation:float 1.5s infinite ease-in-out;
+ font-size:70px;
+ animation:float 2s infinite ease-in-out;
 }
 
 .splash-name{
-  font-size:42px;
-  font-weight:900;
-  letter-spacing:1px;
+ font-size:45px;
+ font-weight:900;
+ letter-spacing:1px;
 }
 
 .splash-tagline{
-  opacity:.9;
-  margin-top:5px;
+ margin-top:6px;
+ opacity:.9;
 }
 
 .splash-founder{
-  margin-top:20px;
-  font-size:14px;
+ margin-top:22px;
+ font-size:15px;
 }
 
 .loader{
-  width:180px;
-  height:5px;
-  background:rgba(255,255,255,.25);
-  border-radius:10px;
-  overflow:hidden;
-  margin:22px auto;
+ width:190px;
+ height:5px;
+ background:rgba(255,255,255,.25);
+ border-radius:10px;
+ overflow:hidden;
+ margin:25px auto;
 }
 
 .loader span{
-  display:block;
-  height:100%;
-  width:0;
-  background:white;
-  animation:load 2.7s linear forwards;
+ display:block;
+ height:100%;
+ width:0;
+ background:white;
+ animation:loader 4.5s linear forwards;
 }
 
 .toast{
-  position:fixed;
-  right:15px;
-  bottom:15px;
-  background:#171827;
-  color:white;
-  padding:13px 17px;
-  border-radius:13px;
-  z-index:500;
-  display:none;
-  animation:toastIn .3s ease;
+ position:fixed;
+ right:15px;
+ bottom:90px;
+ background:#171827;
+ color:white;
+ padding:13px 17px;
+ border-radius:13px;
+ z-index:500;
+ display:none;
 }
 
 @keyframes splashIn{
-  from{opacity:0;transform:scale(.8)}
-  to{opacity:1;transform:scale(1)}
+ from{opacity:0;transform:scale(.7)}
+ to{opacity:1;transform:scale(1)}
 }
 
 @keyframes splashOut{
-  0%,78%{opacity:1}
-  100%{opacity:0;visibility:hidden}
+ 0%,82%{opacity:1}
+ 100%{opacity:0;visibility:hidden}
 }
 
-@keyframes load{
-  from{width:0}
-  to{width:100%}
+@keyframes loader{
+ from{width:0}
+ to{width:100%}
 }
 
 @keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-10px)}
+ 0%,100%{transform:translateY(0)}
+ 50%{transform:translateY(-12px)}
 }
 
-@keyframes cardIn{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:translateY(0)}
+@keyframes loginIn{
+ from{opacity:0;transform:translateY(35px)}
+ to{opacity:1;transform:translateY(0)}
 }
 
 @keyframes modalIn{
-  from{opacity:0;transform:scale(.92)}
-  to{opacity:1;transform:scale(1)}
-}
-
-@keyframes toastIn{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:translateY(0)}
+ from{opacity:0;transform:scale(.9)}
+ to{opacity:1;transform:scale(1)}
 }
 
 @media(max-width:700px){
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
 
-  .grid{
-    grid-template-columns:1fr;
-  }
+ .grid{
+  grid-template-columns:1fr;
+ }
 
-  .timer{
-    font-size:44px;
-  }
+ .stats{
+  grid-template-columns:repeat(2,1fr);
+ }
 
-  .splash-name{
-    font-size:34px;
-  }
+ .timer{
+  font-size:45px;
+ }
+
+ .splash-name{
+  font-size:35px;
+ }
+
 }
 </style>
 </head>
 
 <body>
 
-<!-- SPLASH -->
-<div id="splash">
-  <div class="splash-box">
-    <div class="splash-logo">🚀</div>
-    <div class="splash-name">PrepVio</div>
-    <div class="splash-tagline">Your Smart Study Companion</div>
-    <div class="splash-founder">Founded by <b>Ansh Mishra</b></div>
+<!-- ================= SPLASH ================= -->
 
-    <div class="loader">
-      <span></span>
-    </div>
+<div id="splash">
+
+ <div class="splash-box">
+
+  <div class="splash-logo">🚀</div>
+
+  <div class="splash-name">
+   PrepVio
   </div>
+
+  <div class="splash-tagline">
+   Your Smart Study Companion
+  </div>
+
+  <div class="splash-founder">
+   Founded by <b>Ansh Mishra</b>
+  </div>
+
+  <div class="loader">
+   <span></span>
+  </div>
+
+ </div>
+
 </div>
 
-<!-- LOGIN -->
+
+<!-- ================= LOGIN ================= -->
+
 <section id="loginPage">
 
-  <div class="login-card">
+ <div class="login-card">
 
-    <div class="login-logo">🚀</div>
+  <div class="login-logo">
+   🚀
+  </div>
 
-    <div class="login-title">
-      PrepVio
+  <div class="login-title">
+   PrepVio
+  </div>
+
+  <p class="muted" style="text-align:center">
+   Smart study planning for UP Board students
+  </p>
+
+  <input
+   id="userName"
+   class="login-input"
+   placeholder="Enter your name"
+   maxlength="30"
+  >
+
+  <button
+   class="primary"
+   style="width:100%;margin-top:10px"
+   onclick="login()"
+  >
+   Continue →
+  </button>
+
+ </div>
+
+</section>
+
+
+<!-- ================= SUBJECT SELECTION ================= -->
+
+<section id="subjectPage" style="display:none">
+
+ <div class="container">
+
+  <div class="card">
+
+   <h1>📚 Select Your Subjects</h1>
+
+   <p class="muted">
+    Only selected subjects will appear in your study planner.
+   </p>
+
+   <div id="subjectOptions"></div>
+
+   <button
+    class="primary"
+    style="width:100%;margin-top:12px"
+    onclick="saveSubjects()"
+   >
+    Start Studying 🚀
+   </button>
+
+  </div>
+
+ </div>
+
+</section>
+
+
+<!-- ================= APP ================= -->
+
+<div id="app" style="display:none">
+
+ <main class="container">
+
+  <!-- HOME -->
+
+  <section id="homePage">
+
+   <div class="card">
+
+    <h1>
+     Welcome, <span id="welcomeName"></span> 👋
+    </h1>
+
+    <p class="muted">
+     Keep studying and build your streak.
+    </p>
+
+   </div>
+
+   <div class="stats">
+
+    <div class="stat">
+     📚
+     <b id="completedCount">0</b>
+     Completed
     </div>
 
-    <p class="muted" style="text-align:center">
-      Study smarter. Stay consistent. Score better.
+    <div class="stat">
+     ⭐
+     <b id="points">0</b>
+     Points
+    </div>
+
+    <div class="stat">
+     🔥
+     <b id="streak">0</b>
+     Streak
+    </div>
+
+    <div class="stat">
+     🎯
+     <b id="target">95%</b>
+     Target
+    </div>
+
+   </div>
+
+
+   <!-- TIMER -->
+
+   <div class="card" style="margin-top:14px">
+
+    <h2>⏱️ Focus Timer</h2>
+
+    <p class="muted">
+     Select any duration from 1 to 180 minutes.
     </p>
 
     <input
-      id="userName"
-      class="login-input"
-      placeholder="Enter your name"
-      maxlength="30"
+     id="customMinutes"
+     class="timer-input"
+     type="number"
+     min="1"
+     max="180"
+     value="25"
     >
+
+    <div class="timer" id="timer">
+     25:00
+    </div>
 
     <button
-      class="primary"
-      style="width:100%;margin-top:10px"
-      onclick="login()"
+     id="startTimerBtn"
+     class="primary"
+     style="width:100%"
+     onclick="startFocus()"
     >
-      Continue →
+     ▶ Start Focus
     </button>
 
-  </div>
-
-</section>
-
-<!-- SUBJECT SELECTION -->
-<section id="subjectPage" style="display:none;min-height:100vh">
-
-  <div class="container">
-
-    <div class="card">
-
-      <h1>📚 Choose Your Subjects</h1>
-
-      <p class="muted">
-        Select the subjects you want to study.
-      </p>
-
-      <div id="subjectOptions"></div>
-
-      <button
-        class="primary"
-        style="width:100%;margin-top:12px"
-        onclick="saveSubjects()"
-      >
-        Start Studying 🚀
-      </button>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- MAIN APP -->
-<div id="app">
-
-<header>
-
-  <div class="header-inner">
-
-    <div class="logo">
-      🚀 PrepVio
-    </div>
-
-    <button class="ghost" onclick="logout()">
-      Logout
+    <button
+     id="stopTimerBtn"
+     class="danger"
+     style="width:100%;margin-top:8px"
+     onclick="stopFocus()"
+     disabled
+    >
+     🔒 Locked During Focus
     </button>
 
-  </div>
+   </div>
 
-</header>
 
-<main class="container">
+   <!-- WEEKLY TEST -->
 
-  <!-- DASHBOARD -->
+   <div class="card">
 
-  <section id="dashboard">
+    <h2>📅 Weekly Test</h2>
 
-    <div class="card">
+    <div id="weeklyBox"></div>
 
-      <h1>
-        Welcome, <span id="welcomeName"></span> 👋
-      </h1>
+   </div>
 
-      <p class="muted">
-        Your study journey starts here.
-      </p>
 
-    </div>
+   <!-- QUICK SUBJECTS -->
 
-    <div class="stats">
+   <div class="card">
 
-      <div class="stat">
-        📚
-        <b id="completedCount">0</b>
-        Chapters
-      </div>
+    <h2>📚 My Subjects</h2>
 
-      <div class="stat">
-        ⭐
-        <b id="points">0</b>
-        Points
-      </div>
+    <div id="homeSubjects" class="grid"></div>
 
-      <div class="stat">
-        🔥
-        <b id="streak">0</b>
-        Streak
-      </div>
-
-      <div class="stat">
-        🎯
-        <b id="target">95%</b>
-        Target
-      </div>
-
-    </div>
-
-    <!-- FOCUS TIMER -->
-
-    <div class="card" style="margin-top:14px">
-
-      <h2>⏱️ Focus Timer</h2>
-
-      <p class="muted">
-        Choose your study duration before starting.
-      </p>
-
-      <input
-        id="customMinutes"
-        class="timer-input"
-        type="number"
-        min="1"
-        max="180"
-        value="25"
-        placeholder="Minutes"
-      >
-
-      <div class="timer" id="timer">
-        25:00
-      </div>
-
-      <button
-        id="startTimerBtn"
-        class="primary"
-        style="width:100%"
-        onclick="startCustomFocus()"
-      >
-        ▶ Start Focus
-      </button>
-
-      <button
-        id="stopTimerBtn"
-        class="danger"
-        style="width:100%;margin-top:8px"
-        onclick="stopFocus()"
-        disabled
-      >
-        🔒 Locked During Focus
-      </button>
-
-      <p class="small muted" style="text-align:center;margin-bottom:0">
-        Once started, the focus session cannot be stopped early.
-      </p>
-
-    </div>
-
-    <!-- WEEKLY TEST -->
-
-    <div class="card">
-
-      <h2>📅 Weekly Test</h2>
-
-      <p class="muted">
-        One subject is selected for the weekly test.
-      </p>
-
-      <div id="weeklyBox"></div>
-
-    </div>
-
-    <!-- SUBJECTS -->
-
-    <div class="card">
-
-      <h2>📚 My Subjects</h2>
-
-      <div id="subjectsGrid" class="grid"></div>
-
-    </div>
+   </div>
 
   </section>
 
-  <!-- SUBJECT DETAILS -->
 
-  <section id="subjectDetails" style="display:none">
+  <!-- SUBJECTS -->
 
-    <div class="card">
+  <section id="subjectsPage" style="display:none">
 
-      <button class="ghost" onclick="backDashboard()">
-        ← Back
-      </button>
+   <div class="card">
 
-      <h1 id="subjectHeading" style="margin-top:15px"></h1>
+    <h1>📚 Subjects</h1>
 
-      <p class="muted">
-        Complete chapters and pass their tests with more than 75%.
-      </p>
+    <p class="muted">
+     Choose a subject to view its chapters.
+    </p>
 
-    </div>
+   </div>
 
-    <div id="chapterList"></div>
+   <div id="allSubjects" class="grid"></div>
 
   </section>
 
-</main>
+
+  <!-- PROGRESS -->
+
+  <section id="progressPage" style="display:none">
+
+   <div class="card">
+
+    <h1>📊 My Progress</h1>
+
+    <div id="progressContent"></div>
+
+   </div>
+
+  </section>
+
+
+  <!-- PROFILE -->
+
+  <section id="profilePage" style="display:none">
+
+   <div class="card" style="text-align:center">
+
+    <div class="profile-avatar" id="profileAvatar">
+     A
+    </div>
+
+    <h2 id="profileName">
+     Ansh Mishra
+    </h2>
+
+    <p class="muted">
+     PrepVio Student
+    </p>
+
+    <button
+     class="ghost"
+     onclick="changeSubjects()"
+    >
+     📚 Change Subjects
+    </button>
+
+    <button
+     class="danger"
+     style="margin-left:5px"
+     onclick="logout()"
+    >
+     Logout
+    </button>
+
+   </div>
+
+  </section>
+
+
+  <!-- CHAPTER DETAILS -->
+
+  <section id="chapterPage" style="display:none">
+
+   <div class="card">
+
+    <button class="ghost" onclick="goSubjects()">
+     ← Back
+    </button>
+
+    <h1 id="subjectHeading" style="margin-top:15px"></h1>
+
+    <p class="muted">
+     Study the chapter and pass the test with more than 75%.
+    </p>
+
+   </div>
+
+   <div id="chapterList"></div>
+
+  </section>
+
+ </main>
+
+
+ <!-- ================= BOTTOM NAV ================= -->
+
+ <nav class="bottom-nav">
+
+  <div class="bottom-inner">
+
+   <button
+    id="navHome"
+    class="nav-btn active"
+    onclick="showPage('home')"
+   >
+    <b>🏠</b>
+    Home
+   </button>
+
+   <button
+    id="navSubjects"
+    class="nav-btn"
+    onclick="showPage('subjects')"
+   >
+    <b>📚</b>
+    Subjects
+   </button>
+
+   <button
+    id="navProgress"
+    class="nav-btn"
+    onclick="showPage('progress')"
+   >
+    <b>📊</b>
+    Progress
+   </button>
+
+   <button
+    id="navProfile"
+    class="nav-btn"
+    onclick="showPage('profile')"
+   >
+    <b>👤</b>
+    Profile
+   </button>
+
+  </div>
+
+ </nav>
 
 </div>
 
-<!-- TEST MODAL -->
+
+<!-- ================= TEST MODAL ================= -->
 
 <div id="testModal" class="modal-bg">
 
-  <div class="modal">
+ <div class="modal">
 
-    <h2 id="testTitle">
-      📝 Chapter Test
-    </h2>
+  <h2 id="testTitle">
+   📝 Chapter Test
+  </h2>
 
-    <div id="testQuestions"></div>
+  <div id="testQuestions"></div>
 
-    <button
-      class="primary"
-      style="width:100%;margin-top:12px"
-      onclick="submitCurrentTest()"
-    >
-      Submit Test
-    </button>
+  <button
+   id="submitTestBtn"
+   class="primary"
+   style="width:100%;margin-top:10px"
+   onclick="submitTest()"
+  >
+   Submit Test
+  </button>
 
-    <div id="testResult"></div>
+  <div id="testResult"></div>
 
-    <button
-      class="ghost"
-      style="width:100%;margin-top:8px"
-      onclick="closeTest()"
-    >
-      Close
-    </button>
+  <button
+   class="ghost"
+   style="width:100%;margin-top:8px"
+   onclick="closeTest()"
+  >
+   Close
+  </button>
 
-  </div>
+ </div>
 
 </div>
 
+
 <div id="toast" class="toast"></div>
+
 
 <script>
 
-/* =========================
-   SUBJECT DATA
-========================= */
+/* =====================================================
+   DATA
+===================================================== */
 
 const DATA={
 
-  "Mathematics":[
-    "Real Numbers",
-    "Polynomials",
-    "Pair of Linear Equations in Two Variables",
-    "Quadratic Equations",
-    "Arithmetic Progressions",
-    "Triangles",
-    "Coordinate Geometry",
-    "Introduction to Trigonometry",
-    "Some Applications of Trigonometry",
-    "Circles",
-    "Areas Related to Circles",
-    "Surface Areas and Volumes",
-    "Statistics",
-    "Probability"
-  ],
+ "Mathematics":[
+ "Real Numbers",
+ "Polynomials",
+ "Pair of Linear Equations in Two Variables",
+ "Quadratic Equations",
+ "Arithmetic Progressions",
+ "Triangles",
+ "Coordinate Geometry",
+ "Introduction to Trigonometry",
+ "Some Applications of Trigonometry",
+ "Circles",
+ "Areas Related to Circles",
+ "Surface Areas and Volumes",
+ "Statistics",
+ "Probability"
+ ],
 
-  "Science":[
-    "Chemical Reactions and Equations",
-    "Acids, Bases and Salts",
-    "Metals and Non-metals",
-    "Carbon and Its Compounds",
-    "Life Processes",
-    "Control and Coordination",
-    "How Do Organisms Reproduce?",
-    "Heredity",
-    "Light – Reflection and Refraction",
-    "Human Eye and Colourful World",
-    "Electricity",
-    "Magnetic Effects of Electric Current",
-    "Our Environment"
-  ],
+ "Science":[
+ "Chemical Reactions and Equations",
+ "Acids, Bases and Salts",
+ "Metals and Non-metals",
+ "Carbon and Its Compounds",
+ "Life Processes",
+ "Control and Coordination",
+ "How Do Organisms Reproduce?",
+ "Heredity",
+ "Light – Reflection and Refraction",
+ "Human Eye and Colourful World",
+ "Electricity",
+ "Magnetic Effects of Electric Current",
+ "Our Environment"
+ ],
 
-  "Social Science":[
-    "The Rise of Nationalism in Europe",
-    "Nationalism in India",
-    "The Making of a Global World",
-    "The Age of Industrialisation",
-    "Print Culture and the Modern World",
-    "Resources and Development",
-    "Forest and Wildlife Resources",
-    "Water Resources",
-    "Agriculture",
-    "Minerals and Energy Resources",
-    "Manufacturing Industries",
-    "Lifelines of National Economy",
-    "Power Sharing",
-    "Federalism",
-    "Gender, Religion and Caste",
-    "Political Parties",
-    "Outcomes of Democracy",
-    "Challenges to Democracy",
-    "Development",
-    "Sectors of the Indian Economy",
-    "Money and Credit",
-    "Globalisation and the Indian Economy"
-  ],
+ "Social Science":[
+ "The Rise of Nationalism in Europe",
+ "Nationalism in India",
+ "The Making of a Global World",
+ "The Age of Industrialisation",
+ "Print Culture and the Modern World",
+ "Resources and Development",
+ "Forest and Wildlife Resources",
+ "Water Resources",
+ "Agriculture",
+ "Minerals and Energy Resources",
+ "Manufacturing Industries",
+ "Lifelines of National Economy",
+ "Power Sharing",
+ "Federalism",
+ "Gender, Religion and Caste",
+ "Political Parties",
+ "Outcomes of Democracy",
+ "Challenges to Democracy",
+ "Development",
+ "Sectors of the Indian Economy",
+ "Money and Credit",
+ "Globalisation and the Indian Economy"
+ ],
 
-  "English":[
-    "A Letter to God",
-    "Nelson Mandela",
-    "Two Stories About Flying",
-    "From the Diary of Anne Frank",
-    "Glimpses of India",
-    "Mijbil the Otter",
-    "Madam Rides the Bus",
-    "The Sermon at Benares",
-    "The Proposal",
-    "Dust of Snow",
-    "Fire and Ice",
-    "A Tiger in the Zoo",
-    "How to Tell Wild Animals",
-    "The Ball Poem",
-    "Amanda!",
-    "Animals",
-    "The Trees",
-    "Fog"
-  ],
+ "English":[
+ "A Letter to God",
+ "Nelson Mandela",
+ "Two Stories About Flying",
+ "From the Diary of Anne Frank",
+ "Glimpses of India",
+ "Mijbil the Otter",
+ "Madam Rides the Bus",
+ "The Sermon at Benares",
+ "The Proposal",
+ "Dust of Snow",
+ "Fire and Ice",
+ "A Tiger in the Zoo",
+ "How to Tell Wild Animals",
+ "The Ball Poem",
+ "Amanda!",
+ "Animals",
+ "The Trees",
+ "Fog"
+ ],
 
-  "Hindi":[
-    "राम-लक्ष्मण-परशुराम संवाद",
-    "सवैया और कवित्त",
-    "आत्मकथ्य",
-    "उत्साह और अट नहीं रही",
-    "यह दंतुरित मुस्कान",
-    "फसल",
-    "छाया मत छूना",
-    "कन्यादान",
-    "संगतकार",
-    "नेताजी का चश्मा",
-    "बालगोबिन भगत",
-    "लखनवी अंदाज",
-    "एक कहानी यह भी",
-    "नौबतखाने में इबादत",
-    "संस्कृति",
-    "माता का अंचल"
-  ],
+ "Hindi":[
+ "राम-लक्ष्मण-परशुराम संवाद",
+ "सवैया और कवित्त",
+ "आत्मकथ्य",
+ "उत्साह और अट नहीं रही",
+ "यह दंतुरित मुस्कान",
+ "फसल",
+ "छाया मत छूना",
+ "कन्यादान",
+ "संगतकार",
+ "नेताजी का चश्मा",
+ "बालगोबिन भगत",
+ "लखनवी अंदाज",
+ "एक कहानी यह भी",
+ "नौबतखाने में इबादत",
+ "संस्कृति",
+ "माता का अंचल"
+ ],
 
-  "Commerce":[
-    "Introduction to Commerce",
-    "Business and Its Characteristics",
-    "Forms of Business Organisation",
-    "Sole Proprietorship",
-    "Partnership",
-    "Joint Stock Company",
-    "Business Services",
-    "Sources of Business Finance",
-    "Entrepreneurship",
-    "Marketing",
-    "Consumer Awareness",
-    "Accounting Basics",
-    "Journal",
-    "Ledger",
-    "Trial Balance"
-  ]
+ "Commerce":[
+ "Final Accounts – Introduction",
+ "Trading Account",
+ "Profit and Loss Account",
+ "Balance Sheet",
+ "Adjustments in Final Accounts",
+ "Business System – Meaning",
+ "Objectives of Business",
+ "Classification of Business Activities",
+ "Industry",
+ "Trade",
+ "Auxiliaries to Trade",
+ "Business Risk",
+ "Forms of Business Organisation",
+ "Sole Proprietorship",
+ "Partnership",
+ "Joint Stock Company",
+ "Co-operative Organisation",
+ "Banking – Introduction",
+ "Functions of Commercial Banks",
+ "Central Banking",
+ "Credit and Loans",
+ "Cheques and Banking Instruments",
+ "Insurance",
+ "Entrepreneurship",
+ "Economics – Introduction",
+ "Utility and Wealth",
+ "Demand and Supply",
+ "Production",
+ "Cost and Revenue",
+ "Market",
+ "National Income",
+ "Consumer Awareness"
+ ]
 
 };
 
 const EMO={
-  "Mathematics":"📐",
-  "Science":"🔬",
-  "Social Science":"🌍",
-  "English":"📖",
-  "Hindi":"🪔",
-  "Commerce":"💼"
+ "Mathematics":"📐",
+ "Science":"🔬",
+ "Social Science":"🌍",
+ "English":"📖",
+ "Hindi":"🪔",
+ "Commerce":"💼"
 };
 
 
-/* =========================
-   IMPORTANT / REPEATED-TYPE
+/* =====================================================
    QUESTION BANK
-========================= */
+===================================================== */
 
 const QUESTIONS={
 
-  "Mathematics":[
-    {
-      q:"Euclid's division algorithm is mainly used to find:",
-      a:["LCM","HCF","Square root","Average"],
-      c:1
-    },
-    {
-      q:"The zeroes of a quadratic polynomial are related to its:",
-      a:["Coefficients","Degree only","Graph only","Constant only"],
-      c:0
-    },
-    {
-      q:"The discriminant of ax²+bx+c is:",
-      a:["a²-bc","b²-4ac","4ac-b²","a+b+c"],
-      c:1
-    }
-  ],
+ "Mathematics":[
+  {
+   q:"Euclid's division algorithm is mainly used to find:",
+   a:["LCM","HCF","Average","Square"],
+   c:1
+  },
+  {
+   q:"The discriminant of ax² + bx + c is:",
+   a:["b² - 4ac","a² - bc","4ac","a+b+c"],
+   c:0
+  },
+  {
+   q:"The probability of an impossible event is:",
+   a:["1","0","-1","2"],
+   c:1
+  }
+ ],
 
-  "Science":[
-    {
-      q:"A reaction in which oxidation and reduction occur simultaneously is called:",
-      a:["Neutralisation","Redox reaction","Displacement only","Decomposition"],
-      c:1
-    },
-    {
-      q:"The pH of a neutral solution at room temperature is approximately:",
-      a:["0","5","7","14"],
-      c:2
-    },
-    {
-      q:"The SI unit of electric current is:",
-      a:["Volt","Ohm","Ampere","Watt"],
-      c:2
-    }
-  ],
+ "Science":[
+  {
+   q:"A reaction in which oxidation and reduction occur together is:",
+   a:["Redox reaction","Neutralisation","Decomposition","Precipitation"],
+   c:0
+  },
+  {
+   q:"The pH of a neutral solution is approximately:",
+   a:["0","5","7","14"],
+   c:2
+  },
+  {
+   q:"The SI unit of electric current is:",
+   a:["Volt","Ohm","Ampere","Watt"],
+   c:2
+  }
+ ],
 
-  "Social Science":[
-    {
-      q:"Who led the Civil Disobedience Movement beginning in 1930?",
-      a:["Jawaharlal Nehru","Mahatma Gandhi","Subhas Chandra Bose","Sardar Patel"],
-      c:1
-    },
-    {
-      q:"Which sector includes agriculture?",
-      a:["Primary","Secondary","Tertiary","IT"],
-      c:0
-    },
-    {
-      q:"The Reserve Bank of India supervises:",
-      a:["Banks","Schools","Railways","Factories"],
-      c:0
-    },
-    {
-      q:"Globalisation refers mainly to:",
-      a:[
-        "Isolation of economies",
-        "Integration of economies",
-        "Ending all trade",
-        "Only local production"
-      ],
-      c:1
-    }
-  ],
+ "Social Science":[
+  {
+   q:"Who led the Civil Disobedience Movement in 1930?",
+   a:["Mahatma Gandhi","Sardar Patel","Subhas Bose","Nehru"],
+   c:0
+  },
+  {
+   q:"Agriculture belongs mainly to which sector?",
+   a:["Primary","Secondary","Tertiary","None"],
+   c:0
+  },
+  {
+   q:"RBI supervises:",
+   a:["Banks","Schools","Railways","Factories"],
+   c:0
+  },
+  {
+   q:"Globalisation mainly means:",
+   a:[
+    "Isolation of economies",
+    "Integration of economies",
+    "Ending trade",
+    "Only local trade"
+   ],
+   c:1
+  }
+ ],
 
-  "English":[
-    {
-      q:"Who wrote 'A Letter to God'?",
-      a:["G.L. Fuentes","Nelson Mandela","Anne Frank","Robert Frost"],
-      c:0
-    },
-    {
-      q:"Nelson Mandela became the first black President of:",
-      a:["India","South Africa","USA","Britain"],
-      c:1
-    },
-    {
-      q:"Who wrote 'From the Diary of Anne Frank'?",
-      a:["Anne Frank","Helen Keller","Ruskin Bond","G.L. Fuentes"],
-      c:0
-    }
-  ],
+ "English":[
+  {
+   q:"Who wrote 'A Letter to God'?",
+   a:["G.L. Fuentes","Anne Frank","Robert Frost","Nelson Mandela"],
+   c:0
+  },
+  {
+   q:"Nelson Mandela became President of:",
+   a:["India","South Africa","USA","Britain"],
+   c:1
+  },
+  {
+   q:"Who wrote the diary used in the chapter 'From the Diary of Anne Frank'?",
+   a:["Anne Frank","Helen Keller","Ruskin Bond","G.L. Fuentes"],
+   c:0
+  }
+ ],
 
-  "Hindi":[
-    {
-      q:"'राम-लक्ष्मण-परशुराम संवाद' के कवि कौन हैं?",
-      a:["तुलसीदास","सूरदास","कबीर","जयशंकर प्रसाद"],
-      c:0
-    },
-    {
-      q:"'संगतकार' कविता के कवि कौन हैं?",
-      a:["मंगलेश डबराल","नागार्जुन","तुलसीदास","निराला"],
-      c:0
-    },
-    {
-      q:"'नेताजी का चश्मा' के लेखक कौन हैं?",
-      a:["स्वयं प्रकाश","यशपाल","रामवृक्ष बेनीपुरी","मन्नू भंडारी"],
-      c:0
-    }
-  ],
+ "Hindi":[
+  {
+   q:"'राम-लक्ष्मण-परशुराम संवाद' के कवि कौन हैं?",
+   a:["तुलसीदास","सूरदास","कबीर","निराला"],
+   c:0
+  },
+  {
+   q:"'संगतकार' के कवि कौन हैं?",
+   a:["मंगलेश डबराल","तुलसीदास","कबीर","सूरदास"],
+   c:0
+  },
+  {
+   q:"'नेताजी का चश्मा' के लेखक कौन हैं?",
+   a:["स्वयं प्रकाश","यशपाल","मन्नू भंडारी","प्रेमचंद"],
+   c:0
+  }
+ ],
 
-  "Commerce":[
-    {
-      q:"Commerce mainly deals with:",
-      a:[
-        "Only production",
-        "Exchange and distribution of goods and services",
-        "Only farming",
-        "Only manufacturing"
-      ],
-      c:1
-    },
-    {
-      q:"Which form of business is owned by one person?",
-      a:[
-        "Partnership",
-        "Company",
-        "Sole proprietorship",
-        "Co-operative"
-      ],
-      c:2
-    },
-    {
-      q:"A partnership is generally formed by:",
-      a:[
-        "Two or more persons",
-        "Only one person",
-        "Government only",
-        "A bank"
-      ],
-      c:0
-    },
-    {
-      q:"Marketing mainly helps in:",
-      a:[
-        "Connecting products with consumers",
-        "Printing currency",
-        "Making laws",
-        "Running courts"
-      ],
-      c:0
-    },
-    {
-      q:"A journal is known as:",
-      a:[
-        "Book of original entry",
-        "Final account",
-        "Balance sheet only",
-        "Cash memo"
-      ],
-      c:0
-    }
-  ]
+ "Commerce":[
+  {
+   q:"Which account is prepared to find gross profit or gross loss?",
+   a:[
+    "Trading Account",
+    "Balance Sheet",
+    "Cash Book",
+    "Journal"
+   ],
+   c:0
+  },
+  {
+   q:"Balance Sheet shows:",
+   a:[
+    "Financial position",
+    "Only sales",
+    "Only purchases",
+    "Only expenses"
+   ],
+   c:0
+  },
+  {
+   q:"A business owned by one person is called:",
+   a:[
+    "Sole proprietorship",
+    "Partnership",
+    "Company",
+    "Co-operative"
+   ],
+   c:0
+  },
+  {
+   q:"A partnership is formed by:",
+   a:[
+    "Two or more persons",
+    "Only one person",
+    "Only government",
+    "Only banks"
+   ],
+   c:0
+  },
+  {
+   q:"The central bank of India is:",
+   a:[
+    "Reserve Bank of India",
+    "State Bank of India",
+    "Punjab National Bank",
+    "Bank of Baroda"
+   ],
+   c:0
+  },
+  {
+   q:"Demand generally refers to:",
+   a:[
+    "Quantity consumers are willing and able to buy",
+    "Only production",
+    "Only saving",
+    "Only taxation"
+   ],
+   c:0
+  }
+ ]
 
 };
 
 
-/* =========================
+/* =====================================================
    STATE
-========================= */
+===================================================== */
 
-let state=JSON.parse(
-  localStorage.getItem("prepvio")
-);
-
-if(!state){
-
-  state={
-    name:"",
-    selectedSubjects:[],
-    done:{},
-    points:0,
-    streak:0,
-    target:95,
-    weeklyScores:{}
-  };
-
-}
+let state=
+ JSON.parse(localStorage.getItem("prepvio")) ||
+ {
+  name:"",
+  selectedSubjects:[],
+  done:{},
+  points:0,
+  streak:0,
+  target:95,
+  weeklyScores:{}
+ };
 
 function save(){
 
-  localStorage.setItem(
-    "prepvio",
-    JSON.stringify(state)
-  );
+ localStorage.setItem(
+  "prepvio",
+  JSON.stringify(state)
+ );
 
 }
 
 
-/* =========================
+/* =====================================================
    LOGIN
-========================= */
+===================================================== */
 
 function login(){
 
-  const name=document
-    .getElementById("userName")
-    .value
-    .trim();
+ const name=
+  document.getElementById("userName")
+  .value.trim();
 
-  if(!name){
+ if(!name){
 
-    alert("Please enter your name.");
+  alert("Please enter your name.");
 
-    return;
-  }
+  return;
+ }
 
-  state.name=name;
+ state.name=name;
 
-  save();
+ save();
 
-  document.getElementById("loginPage").style.display="none";
+ document.getElementById(
+  "loginPage"
+ ).style.display="none";
 
-  if(
-    !state.selectedSubjects ||
-    state.selectedSubjects.length===0
-  ){
+ if(
+  !state.selectedSubjects ||
+  state.selectedSubjects.length===0
+ ){
 
-    showSubjectSelection();
+  showSubjectSelection();
 
-  }else{
+ }else{
 
-    showApp();
+  showApp();
 
-  }
+ }
 
 }
 
 
-/* =========================
+/* =====================================================
    SUBJECT SELECTION
-========================= */
+===================================================== */
 
 function showSubjectSelection(){
 
-  document.getElementById("subjectPage").style.display="block";
+ document.getElementById(
+  "subjectPage"
+ ).style.display="block";
 
-  const box=
-    document.getElementById("subjectOptions");
+ const box=
+  document.getElementById(
+   "subjectOptions"
+  );
 
-  box.innerHTML=
-    Object.keys(DATA).map(subject=>`
+ box.innerHTML=
+  Object.keys(DATA).map(s=>`
 
-      <label class="subject">
+   <label class="card">
 
-        <div style="display:flex;align-items:center;gap:12px">
+    <div class="select-subject">
 
-          <input
-            type="checkbox"
-            value="${subject}"
-            class="subjectCheck"
-            ${state.selectedSubjects.includes(subject)
-              ?"checked":""
-            }
-          >
+     <input
+      type="checkbox"
+      class="subjectCheck"
+      value="${s}"
+      ${state.selectedSubjects.includes(s)
+       ?"checked":""
+      }
+     >
 
-          <div>
-            <div class="subject-icon">
-              ${EMO[subject]}
-            </div>
+     <div>
 
-            <div class="subject-title">
-              ${subject}
-            </div>
+      <div style="font-size:30px">
+       ${EMO[s]}
+      </div>
 
-            <div class="small muted">
-              ${DATA[subject].length} chapters
-            </div>
+      <b>${s}</b>
 
-          </div>
+      <div class="small muted">
+       ${DATA[s].length} study modules
+      </div>
 
-        </div>
+     </div>
 
-      </label>
+    </div>
 
-    `).join("");
+   </label>
+
+  `).join("");
 
 }
 
 
 function saveSubjects(){
 
-  const selected=[
-    ...document.querySelectorAll(
-      ".subjectCheck:checked"
-    )
-  ].map(x=>x.value);
+ const selected=[
+  ...document.querySelectorAll(
+   ".subjectCheck:checked"
+  )
+ ].map(x=>x.value);
 
-  if(selected.length===0){
+ if(selected.length===0){
 
-    alert(
-      "Please select at least one subject."
-    );
+  alert("Please select at least one subject.");
 
-    return;
-  }
+  return;
+ }
 
-  state.selectedSubjects=selected;
+ state.selectedSubjects=selected;
 
-  save();
+ save();
 
-  document.getElementById(
-    "subjectPage"
-  ).style.display="none";
+ document.getElementById(
+  "subjectPage"
+ ).style.display="none";
 
-  showApp();
+ showApp();
 
 }
 
 
-/* =========================
+function changeSubjects(){
+
+ document.getElementById(
+  "app"
+ ).style.display="none";
+
+ showSubjectSelection();
+
+}
+
+
+/* =====================================================
    SHOW APP
-========================= */
+===================================================== */
 
 function showApp(){
 
-  document.getElementById("app").style.display="block";
+ document.getElementById(
+  "app"
+ ).style.display="block";
 
-  document.getElementById(
-    "welcomeName"
-  ).textContent=state.name;
+ document.getElementById(
+  "welcomeName"
+ ).textContent=state.name;
 
-  renderDashboard();
+ document.getElementById(
+  "profileName"
+ ).textContent=state.name;
+
+ document.getElementById(
+  "profileAvatar"
+ ).textContent=
+  state.name.charAt(0).toUpperCase();
+
+ renderHome();
 
 }
 
 
-/* =========================
-   DASHBOARD
-========================= */
+/* =====================================================
+   NAVIGATION
+===================================================== */
 
-function renderDashboard(){
+function hidePages(){
+
+ [
+  "homePage",
+  "subjectsPage",
+  "progressPage",
+  "profilePage",
+  "chapterPage"
+ ].forEach(id=>{
 
   document.getElementById(
-    "points"
-  ).textContent=state.points;
+   id
+  ).style.display="none";
 
+ });
+
+}
+
+function showPage(page){
+
+ hidePages();
+
+ document
+  .getElementById(
+   page+"Page"
+  )
+  .style.display="block";
+
+ document
+  .querySelectorAll(".nav-btn")
+  .forEach(x=>x.classList.remove("active"));
+
+ const nav=
   document.getElementById(
-    "streak"
-  ).textContent=state.streak;
+   "nav"+
+   page.charAt(0).toUpperCase()+
+   page.slice(1)
+  );
 
-  document.getElementById(
-    "target"
-  ).textContent=state.target+"%";
+ if(nav) nav.classList.add("active");
 
-  let total=0;
+ if(page==="home")
+  renderHome();
 
-  Object.values(state.done).forEach(v=>{
+ if(page==="subjects")
+  renderSubjects();
 
-    if(v) total++;
+ if(page==="progress")
+  renderProgress();
+
+}
+
+
+function goSubjects(){
+
+ showPage("subjects");
+
+}
+
+
+/* =====================================================
+   HOME
+===================================================== */
+
+function renderHome(){
+
+ hidePages();
+
+ document.getElementById(
+  "homePage"
+ ).style.display="block";
+
+ document.getElementById(
+  "navHome"
+ ).classList.add("active");
+
+ updateStats();
+
+ renderHomeSubjects();
+
+ renderWeekly();
+
+}
+
+
+function updateStats(){
+
+ let completed=0;
+
+ Object.values(state.done)
+  .forEach(v=>{
+
+   if(v) completed++;
 
   });
 
-  document.getElementById(
-    "completedCount"
-  ).textContent=total;
+ document.getElementById(
+  "completedCount"
+ ).textContent=completed;
 
+ document.getElementById(
+  "points"
+ ).textContent=state.points;
 
-  const grid=
-    document.getElementById("subjectsGrid");
+ document.getElementById(
+  "streak"
+ ).textContent=state.streak;
 
-  grid.innerHTML=
-    state.selectedSubjects
-    .filter(s=>DATA[s])
-    .map(subject=>{
-
-      const totalChapters=
-        DATA[subject].length;
-
-      let completed=0;
-
-      DATA[subject].forEach((chapter,index)=>{
-
-        if(
-          state.done[
-            subject+"_"+index
-          ]
-        ){
-
-          completed++;
-
-        }
-
-      });
-
-      const percent=
-        Math.round(
-          completed/totalChapters*100
-        );
-
-      return `
-
-        <div
-          class="subject"
-          onclick="openSubject('${subject}')"
-        >
-
-          <div class="subject-icon">
-            ${EMO[subject]}
-          </div>
-
-          <div class="subject-title">
-            ${subject}
-          </div>
-
-          <div class="small muted">
-            ${completed}/${totalChapters} completed
-          </div>
-
-          <div class="progress">
-            <span style="width:${percent}%"></span>
-          </div>
-
-        </div>
-
-      `;
-
-    }).join("");
-
-
-  renderWeeklyTest();
+ document.getElementById(
+  "target"
+ ).textContent=state.target+"%";
 
 }
 
 
-/* =========================
-   SUBJECT DETAILS
-========================= */
+/* =====================================================
+   SUBJECTS
+===================================================== */
+
+function renderSubjects(){
+
+ const box=
+  document.getElementById(
+   "allSubjects"
+  );
+
+ box.innerHTML=
+  state.selectedSubjects.map(s=>`
+
+   <div
+    class="subject"
+    onclick="openSubject('${s}')"
+   >
+
+    <div class="subject-icon">
+     ${EMO[s]}
+    </div>
+
+    <div class="subject-title">
+     ${s}
+    </div>
+
+    <div class="small muted">
+     ${DATA[s].length} modules
+    </div>
+
+    <div class="progress">
+     <span
+      style="width:${subjectPercent(s)}%"
+     ></span>
+    </div>
+
+   </div>
+
+  `).join("");
+
+}
+
+
+function renderHomeSubjects(){
+
+ const box=
+  document.getElementById(
+   "homeSubjects"
+  );
+
+ box.innerHTML=
+  state.selectedSubjects.map(s=>`
+
+   <div
+    class="subject"
+    onclick="openSubject('${s}')"
+   >
+
+    <div class="subject-icon">
+     ${EMO[s]}
+    </div>
+
+    <div class="subject-title">
+     ${s}
+    </div>
+
+    <div class="small muted">
+     ${subjectPercent(s)}% completed
+    </div>
+
+    <div class="progress">
+     <span
+      style="width:${subjectPercent(s)}%"
+     ></span>
+    </div>
+
+   </div>
+
+  `).join("");
+
+}
+
+
+function subjectPercent(subject){
+
+ let total=
+  DATA[subject].length;
+
+ let done=0;
+
+ DATA[subject].forEach(
+  (_,i)=>{
+
+   if(
+    state.done[
+     subject+"_"+i
+    ]
+   ) done++;
+
+  }
+ );
+
+ return Math.round(
+  done/total*100
+ );
+
+}
+
+
+/* =====================================================
+   CHAPTERS
+===================================================== */
 
 function openSubject(subject){
 
+ hidePages();
+
+ document.getElementById(
+  "chapterPage"
+ ).style.display="block";
+
+ document.getElementById(
+  "subjectHeading"
+ ).textContent=
+  EMO[subject]+" "+subject;
+
+ const box=
   document.getElementById(
-    "dashboard"
-  ).style.display="none";
+   "chapterList"
+  );
 
-  document.getElementById(
-    "subjectDetails"
-  ).style.display="block";
+ box.innerHTML=
+  DATA[subject].map(
+   (chapter,index)=>{
 
-  document.getElementById(
-    "subjectHeading"
-  ).textContent=
-    EMO[subject]+" "+subject;
+    const key=
+     subject+"_"+index;
 
-  const list=
-    document.getElementById("chapterList");
+    const done=
+     !!state.done[key];
 
-  list.innerHTML=
-    DATA[subject].map(
-      (chapter,index)=>{
+    return `
 
-        const key=
-          subject+"_"+index;
+     <div class="chapter">
 
-        const completed=
-          !!state.done[key];
+      <div class="chapter-title">
+       ${index+1}. ${chapter}
+      </div>
 
-        return `
+      <div class="small muted">
+       ${
+        done
+        ?"✅ Completed"
+        :"📘 Not completed"
+       }
+      </div>
 
-          <div class="chapter">
+      <div class="chapter-actions">
 
-            <div class="chapter-title">
-              ${index+1}. ${chapter}
-            </div>
+       <button
+        class="ghost"
+        onclick="studyChapter('${subject}',${index})"
+       >
+        ▶ Study
+       </button>
 
-            <div class="small muted">
-              ${completed
-                ?"✅ Passed"
-                :"📘 Not completed"
-              }
-            </div>
+       <button
+        class="primary"
+        onclick="giveTest('${subject}',${index})"
+       >
+        📝 Give Test
+       </button>
 
-            <div class="chapter-actions">
+      </div>
 
-              <button
-                class="ghost"
-                onclick="studyChapter('${subject}',${index})"
-              >
-                ▶ Study
-              </button>
+     </div>
 
-              ${
-                completed
-                ?`
-                  <button
-                    class="primary"
-                    onclick="giveTest('${subject}',${index})"
-                  >
-                    📝 Give Test
-                  </button>
-                `
-                :`
-                  <button
-                    class="ghost"
-                    onclick="giveTest('${subject}',${index})"
-                  >
-                    📝 Give Test
-                  </button>
-                `
-              }
+    `;
 
-            </div>
-
-          </div>
-
-        `;
-
-      }
-    ).join("");
+   }
+  ).join("");
 
 }
 
-
-function backDashboard(){
-
-  document.getElementById(
-    "subjectDetails"
-  ).style.display="none";
-
-  document.getElementById(
-    "dashboard"
-  ).style.display="block";
-
-  renderDashboard();
-
-}
-
-
-/* =========================
-   STUDY CHAPTER
-========================= */
 
 function studyChapter(subject,index){
 
-  const chapter=
-    DATA[subject][index];
+ const chapter=
+  DATA[subject][index];
 
-  const query=
-    encodeURIComponent(
-      "UP Board Class 10 "+subject+
-      " "+chapter+" lecture"
-    );
-
-  window.open(
-    "https://www.youtube.com/results?search_query="+query,
-    "_blank"
+ const search=
+  encodeURIComponent(
+   "UP Board Class 10 "+
+   subject+" "+
+   chapter+
+   " important questions"
   );
+
+ window.open(
+  "https://www.youtube.com/results?search_query="+
+  search,
+  "_blank"
+ );
 
 }
 
 
-/* =========================
-   TEST SYSTEM
-========================= */
+/* =====================================================
+   TEST
+===================================================== */
 
 let currentTest=null;
 
-
 function giveTest(subject,index){
 
-  const bank=
-    QUESTIONS[subject] || [];
+ const bank=
+  QUESTIONS[subject] || [];
 
-  if(bank.length===0){
+ if(!bank.length){
 
-    alert(
-      "Question bank is being prepared for this subject."
-    );
-
-    return;
-  }
-
-  /*
-    We use several important questions.
-    In a full chapter-wise database,
-    questions can be mapped individually.
-  */
-
-  currentTest={
-    subject,
-    index,
-    questions:bank.slice(
-      0,
-      Math.min(5,bank.length)
-    )
-  };
-
-  document.getElementById(
-    "testTitle"
-  ).textContent=
-    "📝 "+subject+" • "+
-    DATA[subject][index];
-
-  document.getElementById(
-    "testResult"
-  ).innerHTML="";
-
-  const box=
-    document.getElementById(
-      "testQuestions"
-    );
-
-  box.innerHTML=
-    currentTest.questions.map(
-      (item,i)=>`
-
-        <div style="margin-bottom:20px">
-
-          <b>
-            Q${i+1}. ${item.q}
-          </b>
-
-          ${item.a.map(
-            (option,j)=>`
-
-              <label class="option">
-
-                <input
-                  type="radio"
-                  name="testq${i}"
-                  value="${j}"
-                >
-
-                ${option}
-
-              </label>
-
-          `).join("")}
-
-        </div>
-
-      `
-    ).join("");
-
-  document.getElementById(
-    "testModal"
-  ).style.display="flex";
-
-}
-
-
-function submitCurrentTest(){
-
-  if(!currentTest) return;
-
-  let correct=0;
-
-  currentTest.questions.forEach(
-    (item,i)=>{
-
-      const answer=
-        document.querySelector(
-          `input[name="testq${i}"]:checked`
-        );
-
-      if(
-        answer &&
-        Number(answer.value)===item.c
-      ){
-
-        correct++;
-
-      }
-
-    }
+  alert(
+   "Question bank is not available yet."
   );
 
-  const total=
-    currentTest.questions.length;
+  return;
+ }
 
-  const percentage=
-    Math.round(
-      correct/total*100
-    );
+ currentTest={
+  subject:subject,
+  index:index,
+  questions:bank.slice(
+   0,
+   Math.min(6,bank.length)
+  )
+ };
 
-  const passed=
-    percentage>75;
+ document.getElementById(
+  "testTitle"
+ ).textContent=
+  "📝 "+subject+
+  " • "+
+  DATA[subject][index];
 
-  if(passed){
+ document.getElementById(
+  "testResult"
+ ).innerHTML="";
 
-    const key=
-      currentTest.subject+
-      "_"+
-      currentTest.index;
+ document.getElementById(
+  "submitTestBtn"
+ ).disabled=false;
 
-    if(!state.done[key]){
+ document.getElementById(
+  "testQuestions"
+ ).innerHTML=
+  currentTest.questions.map(
+   (item,i)=>`
 
-      state.done[key]=true;
+    <div style="margin-bottom:20px">
 
-      state.points+=10;
+     <b>
+      Q${i+1}. ${item.q}
+     </b>
 
-    }
+     ${
+      item.a.map(
+       (option,j)=>`
 
-    document.getElementById(
-      "testResult"
-    ).innerHTML=`
+        <label class="option">
 
-      <div class="result">
+         <input
+          type="radio"
+          name="testq${i}"
+          value="${j}"
+         >
 
-        🎉 Passed!
+         ${option}
 
-        <div style="font-size:16px;margin-top:8px">
-          Score: ${correct}/${total}
-          (${percentage}%)
-        </div>
+        </label>
 
-        <div
-          class="small muted"
-          style="margin-top:8px"
-        >
-          Chapter added to Completed.
-          +10 points ⭐
-        </div>
-
-      </div>
-
-    `;
-
-    save();
-
-  }else{
-
-    document.getElementById(
-      "testResult"
-    ).innerHTML=`
-
-      <div
-        class="result"
-        style="background:#fff0f0"
-      >
-
-        📚 Keep Practising
-
-        <div style="font-size:16px;margin-top:8px">
-          Score: ${correct}/${total}
-          (${percentage}%)
-        </div>
-
-        <div
-          class="small muted"
-          style="margin-top:8px"
-        >
-          You need more than 75% to complete
-          this chapter.
-        </div>
-
-      </div>
-
-    `;
-
-  }
-
-}
-
-
-/* =========================
-   CLOSE TEST
-========================= */
-
-function closeTest(){
-
-  document.getElementById(
-    "testModal"
-  ).style.display="none";
-
-  currentTest=null;
-
-  renderDashboard();
-
-}
-
-
-/* =========================
-   WEEKLY TEST
-========================= */
-
-function getWeeklySubject(){
-
-  const subjects=
-    state.selectedSubjects
-    .filter(s=>DATA[s]);
-
-  if(subjects.length===0)
-    return null;
-
-  const week=
-    Math.floor(
-      Date.now()/
-      (7*24*60*60*1000)
-    );
-
-  return subjects[
-    week%subjects.length
-  ];
-
-}
-
-
-function renderWeeklyTest(){
-
-  const box=
-    document.getElementById(
-      "weeklyBox"
-    );
-
-  const subject=
-    getWeeklySubject();
-
-  if(!subject){
-
-    box.innerHTML=
-      "<p class='muted'>Select a subject first.</p>";
-
-    return;
-  }
-
-  box.innerHTML=`
-
-    <div class="chapter">
-
-      <div class="subject-icon">
-        ${EMO[subject]}
-      </div>
-
-      <h3>
-        This Week: ${subject}
-      </h3>
-
-      <p class="small muted">
-        Practice important UP Board-style
-        questions from this subject.
-      </p>
-
-      <button
-        class="primary"
-        onclick="weeklyTest('${subject}')"
-      >
-        📝 Start Weekly Test
-      </button>
+       `
+      ).join("")
+     }
 
     </div>
 
-  `;
+   `
+  ).join("");
+
+ document.getElementById(
+  "testModal"
+ ).style.display="flex";
 
 }
 
 
-function weeklyTest(subject){
+function submitTest(){
 
-  const bank=
-    QUESTIONS[subject] || [];
+ if(!currentTest) return;
 
-  if(!bank.length){
+ let correct=0;
 
-    alert("Weekly questions unavailable.");
+ currentTest.questions.forEach(
+  (item,i)=>{
 
-    return;
-  }
-
-  currentTest={
-    subject,
-    index:-1,
-    questions:bank.slice(
-      0,
-      Math.min(5,bank.length)
-    )
-  };
-
-  document.getElementById(
-    "testTitle"
-  ).textContent=
-    "📅 Weekly Test • "+subject;
-
-  document.getElementById(
-    "testResult"
-  ).innerHTML="";
-
-  const box=
-    document.getElementById(
-      "testQuestions"
+   const ans=
+    document.querySelector(
+     `input[name="testq${i}"]:checked`
     );
 
-  box.innerHTML=
-    currentTest.questions.map(
-      (item,i)=>`
+   if(
+    ans &&
+    Number(ans.value)===item.c
+   ){
 
-        <div style="margin-bottom:20px">
+    correct++;
 
-          <b>
-            Q${i+1}. ${item.q}
-          </b>
+   }
 
-          ${item.a.map(
-            (option,j)=>`
+  }
+ );
 
-              <label class="option">
+ const total=
+  currentTest.questions.length;
 
-                <input
-                  type="radio"
-                  name="testq${i}"
-                  value="${j}"
-                >
+ const percentage=
+  Math.round(
+   correct/total*100
+  );
 
-                ${option}
+ const passed=
+  percentage>75;
 
-              </label>
+ if(passed){
 
-          `).join("")}
+  const key=
+   currentTest.subject+
+   "_"+
+   currentTest.index;
 
-        </div>
+  if(!state.done[key]){
 
-      `
-    ).join("");
+   state.done[key]=true;
+
+   state.points+=10;
+
+  }
 
   document.getElementById(
-    "testModal"
-  ).style.display="flex";
+   "testResult"
+  ).innerHTML=`
+
+   <div class="result">
+
+    🎉 Test Passed!
+
+    <div style="font-size:16px;margin-top:8px">
+     ${correct}/${total}
+     (${percentage}%)
+    </div>
+
+    <div class="small muted">
+     Chapter completed successfully.
+     +10 ⭐
+    </div>
+
+   </div>
+
+  `;
+
+  save();
+
+ }else{
+
+  document.getElementById(
+   "testResult"
+  ).innerHTML=`
+
+   <div
+    class="result"
+    style="background:#fff0f0"
+   >
+
+    📚 Keep Practising
+
+    <div style="font-size:16px;margin-top:8px">
+     ${correct}/${total}
+     (${percentage}%)
+    </div>
+
+    <div class="small muted">
+     You need more than 75% to complete
+     the chapter.
+    </div>
+
+   </div>
+
+  }
+
+ document.getElementById(
+  "submitTestBtn"
+ ).disabled=true;
 
 }
 
 
-/* =========================
-   FOCUS TIMER
-========================= */
+function closeTest(){
+
+ document.getElementById(
+  "testModal"
+ ).style.display="none";
+
+ currentTest=null;
+
+ renderHome();
+
+}
+
+
+/* =====================================================
+   WEEKLY TEST
+===================================================== */
+
+function weeklySubject(){
+
+ const list=
+  state.selectedSubjects;
+
+ if(!list.length)
+  return null;
+
+ const week=
+  Math.floor(
+   Date.now()/
+   (7*24*60*60*1000)
+  );
+
+ return list[
+  week%list.length
+ ];
+
+}
+
+
+function renderWeekly(){
+
+ const box=
+  document.getElementById(
+   "weeklyBox"
+  );
+
+ const subject=
+  weeklySubject();
+
+ if(!subject){
+
+  box.innerHTML=
+   "<p class='muted'>Select subjects first.</p>";
+
+  return;
+ }
+
+ box.innerHTML=`
+
+  <div class="chapter">
+
+   <div class="subject-icon">
+    ${EMO[subject]}
+   </div>
+
+   <h3>
+    This Week: ${subject}
+   </h3>
+
+   <p class="small muted">
+    Practice important board-style questions.
+   </p>
+
+   <button
+    class="primary"
+    onclick="startWeekly('${subject}')"
+   >
+    📝 Start Weekly Test
+   </button>
+
+  </div>
+
+ `;
+
+}
+
+
+function startWeekly(subject){
+
+ const bank=
+  QUESTIONS[subject] || [];
+
+ if(!bank.length) return;
+
+ currentTest={
+  subject:subject,
+  index:-1,
+  questions:bank.slice(
+   0,
+   Math.min(6,bank.length)
+  )
+ };
+
+ document.getElementById(
+  "testTitle"
+ ).textContent=
+  "📅 Weekly Test • "+subject;
+
+ document.getElementById(
+  "testResult"
+ ).innerHTML="";
+
+ document.getElementById(
+  "submitTestBtn"
+ ).disabled=false;
+
+ document.getElementById(
+  "testQuestions"
+ ).innerHTML=
+  currentTest.questions.map(
+   (item,i)=>`
+
+    <div style="margin-bottom:20px">
+
+     <b>
+      Q${i+1}. ${item.q}
+     </b>
+
+     ${
+      item.a.map(
+       (option,j)=>`
+
+        <label class="option">
+
+         <input
+          type="radio"
+          name="testq${i}"
+          value="${j}"
+         >
+
+         ${option}
+
+        </label>
+
+       `
+      ).join("")
+     }
+
+    </div>
+
+   `
+  ).join("");
+
+ document.getElementById(
+  "testModal"
+ ).style.display="flex";
+
+}
+
+
+/* =====================================================
+   PROGRESS
+===================================================== */
+
+function renderProgress(){
+
+ let total=0;
+ let done=0;
+
+ state.selectedSubjects.forEach(
+  subject=>{
+
+   total+=DATA[subject].length;
+
+   DATA[subject].forEach(
+    (_,i)=>{
+
+     if(
+      state.done[
+       subject+"_"+i
+      ]
+     ) done++;
+
+    }
+   );
+
+  }
+ );
+
+ const percent=
+  total?
+  Math.round(done/total*100):
+  0;
+
+ document.getElementById(
+  "progressContent"
+ ).innerHTML=`
+
+  <h2>${percent}% Overall Progress</h2>
+
+  <div class="progress" style="height:14px">
+   <span style="width:${percent}%"></span>
+  </div>
+
+  <p class="muted">
+   ${done} of ${total} study modules completed.
+  </p>
+
+  <hr style="border:0;border-top:1px solid var(--border)">
+
+  ${
+   state.selectedSubjects.map(
+    subject=>`
+
+     <div style="margin:15px 0">
+
+      <b>
+       ${EMO[subject]} ${subject}
+      </b>
+
+      <div class="progress">
+       <span
+        style="width:${subjectPercent(subject)}%"
+       ></span>
+      </div>
+
+      <div class="small muted">
+       ${subjectPercent(subject)}%
+      </div>
+
+     </div>
+
+    `
+   ).join("")
+  }
+
+ `;
+
+}
+
+
+/* =====================================================
+   TIMER
+===================================================== */
 
 let timerInt=null;
 
@@ -1807,254 +2164,217 @@ let timerRunning=false;
 
 function tick(){
 
-  const minutes=
-    Math.floor(secs/60);
+ const m=
+  Math.floor(secs/60);
 
-  const seconds=
-    secs%60;
+ const s=
+  secs%60;
 
-  document.getElementById(
-    "timer"
-  ).textContent=
-    String(minutes).padStart(2,"0")+
-    ":"+
-    String(seconds).padStart(2,"0");
+ document.getElementById(
+  "timer"
+ ).textContent=
+  String(m).padStart(2,"0")+
+  ":"+
+  String(s).padStart(2,"0");
 
 }
 
 
-function startCustomFocus(){
+function startFocus(){
 
-  if(timerRunning)
-    return;
+ if(timerRunning) return;
 
-  const min=
-    Number(
-      document.getElementById(
-        "customMinutes"
-      ).value
-    );
+ const minutes=
+  Number(
+   document.getElementById(
+    "customMinutes"
+   ).value
+  );
 
-  if(!min || min<1 || min>180){
+ if(
+  !minutes ||
+  minutes<1 ||
+  minutes>180
+ ){
+
+  alert(
+   "Enter a duration between 1 and 180 minutes."
+  );
+
+  return;
+ }
+
+ secs=
+  minutes*60;
+
+ timerRunning=true;
+
+ document.getElementById(
+  "customMinutes"
+ ).disabled=true;
+
+ document.getElementById(
+  "startTimerBtn"
+ ).disabled=true;
+
+ document.getElementById(
+  "stopTimerBtn"
+ ).disabled=true;
+
+ tick();
+
+ timerInt=
+  setInterval(()=>{
+
+   secs--;
+
+   tick();
+
+   if(secs<=0){
+
+    clearInterval(timerInt);
+
+    timerRunning=false;
+
+    document.getElementById(
+     "customMinutes"
+    ).disabled=false;
+
+    document.getElementById(
+     "startTimerBtn"
+    ).disabled=false;
+
+    state.points+=5;
+
+    save();
 
     alert(
-      "Choose a duration between 1 and 180 minutes."
+     "Focus session complete! +5 ⭐"
     );
 
-    return;
-  }
+    secs=
+     Number(
+      document.getElementById(
+       "customMinutes"
+      ).value
+     )*60;
 
-  secs=min*60;
+    tick();
 
-  timerRunning=true;
+   }
 
-  document.getElementById(
-    "customMinutes"
-  ).disabled=true;
-
-  document.getElementById(
-    "startTimerBtn"
-  ).disabled=true;
-
-  document.getElementById(
-    "stopTimerBtn"
-  ).disabled=true;
-
-  tick();
-
-  timerInt=
-    setInterval(()=>{
-
-      secs--;
-
-      tick();
-
-      if(secs<=0){
-
-        clearInterval(timerInt);
-
-        timerRunning=false;
-
-        document.getElementById(
-          "customMinutes"
-        ).disabled=false;
-
-        document.getElementById(
-          "startTimerBtn"
-        ).disabled=false;
-
-        state.points+=5;
-
-        save();
-
-        notify(
-          "Focus session complete 🎉",
-          "You earned +5 points."
-        );
-
-        alert(
-          "Focus session complete! +5 ⭐"
-        );
-
-        secs=
-          Number(
-            document.getElementById(
-              "customMinutes"
-            ).value
-          )*60;
-
-        tick();
-
-      }
-
-    },1000);
+  },1000);
 
 }
 
 
 function stopFocus(){
 
-  if(timerRunning){
+ if(timerRunning){
 
-    alert(
-      "Focus session is locked until the timer ends."
-    );
+  alert(
+   "Focus session is locked until the timer ends."
+  );
 
-    return;
+  return;
+ }
 
-  }
+ clearInterval(timerInt);
 
-  clearInterval(timerInt);
+ const minutes=
+  Number(
+   document.getElementById(
+    "customMinutes"
+   ).value
+  ) || 25;
 
-  secs=
-    Number(
-      document.getElementById(
-        "customMinutes"
-      ).value
-    )*60 || 1500;
+ secs=
+  minutes*60;
 
-  tick();
-
-}
-
-
-/* =========================
-   NOTIFICATION
-========================= */
-
-function notify(title,message){
-
-  if(
-    "Notification" in window &&
-    Notification.permission==="granted"
-  ){
-
-    new Notification(
-      title,
-      {body:message}
-    );
-
-  }
+ tick();
 
 }
 
 
-/* =========================
+/* =====================================================
    LOGOUT
-========================= */
+===================================================== */
 
 function logout(){
 
-  if(timerRunning){
+ if(timerRunning){
 
-    alert(
-      "Finish your focus session first."
-    );
+  alert(
+   "Please finish your focus session first."
+  );
 
-    return;
-  }
+  return;
+ }
 
-  document.getElementById(
-    "app"
-  ).style.display="none";
+ document.getElementById(
+  "app"
+ ).style.display="none";
 
-  document.getElementById(
-    "loginPage"
-  ).style.display="flex";
+ document.getElementById(
+  "loginPage"
+ ).style.display="flex";
 
-}
-
-
-/* =========================
-   TOAST
-========================= */
-
-function toast(message){
-
-  const el=
-    document.getElementById("toast");
-
-  el.textContent=message;
-
-  el.style.display="block";
-
-  setTimeout(()=>{
-
-    el.style.display="none";
-
-  },2500);
+ document.getElementById(
+  "userName"
+ ).value="";
 
 }
 
 
-/* =========================
+/* =====================================================
    STARTUP
-========================= */
+===================================================== */
 
 setTimeout(()=>{
 
+ document.getElementById(
+  "splash"
+ ).style.display="none";
+
+ if(state.name){
+
   document.getElementById(
-    "splash"
+   "loginPage"
   ).style.display="none";
 
-  if(state.name){
+  if(
+   state.selectedSubjects &&
+   state.selectedSubjects.length
+  ){
 
-    document.getElementById(
-      "loginPage"
-    ).style.display="none";
+   showApp();
 
-    if(
-      state.selectedSubjects &&
-      state.selectedSubjects.length
-    ){
+  }else{
 
-      showApp();
-
-    }else{
-
-      showSubjectSelection();
-
-    }
+   showSubjectSelection();
 
   }
 
-},3500);
+ }
+
+},5500);
 
 
-/* =========================
-   NOTIFICATION PERMISSION
-========================= */
+/* =====================================================
+   SERVICE WORKER
+===================================================== */
 
 if(
-  "Notification" in window &&
-  Notification.permission==="default"
+ "serviceWorker" in navigator
 ){
 
-  Notification.requestPermission();
+ navigator.serviceWorker
+  .register("sw.js")
+  .catch(()=>{});
 
 }
 
 </script>
 
 </body>
-  </html>
+      </html>

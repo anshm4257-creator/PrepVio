@@ -1118,212 +1118,116 @@ const EMO = {
 
 const QUESTIONS = {
 
-    "Mathematics":[
-        {
-            q:"Euclid's division algorithm is mainly used to find:",
-            a:["LCM","HCF","Average","Square"],
-            c:1
-        },
-        {
-            q:"The discriminant of ax² + bx + c is:",
-            a:["b² - 4ac","a² - bc","4ac","a+b+c"],
-            c:0
-        },
-        {
-            q:"The probability of an impossible event is:",
-            a:["1","0","-1","2"],
-            c:1
-        },
-        {
-            q:"The degree of a quadratic polynomial is:",
-            a:["1","2","3","4"],
-            c:1
-        }
-    ],
+const CHAPTER_QUESTIONS = {
+    "Mathematics": {
+        0: [
+            {q:"Euclid's division lemma states that for positive integers a and b, a = bq + r where:",a:["0 ≤ r < b","r > b","r = b","r < 0"],c:0},
+            {q:"The HCF of 135 and 225 is:",a:["15","45","75","90"],c:1},
+            {q:"Euclid's algorithm is mainly used to find:",a:["LCM","HCF","Square root","Average"],c:1},
+            {q:"If HCF(a,b)=1, then a and b are called:",a:["Prime numbers","Co-prime numbers","Composite numbers","Even numbers"],c:1},
+            {q:"The Fundamental Theorem of Arithmetic concerns the:",a:["Addition of numbers","Unique prime factorisation","Subtraction","Division only"],c:1},
+            {q:"The decimal expansion of 1/8 is:",a:["Terminating","Non-terminating recurring","Non-terminating non-recurring","None"],c:0},
+            {q:"A rational number has a terminating decimal expansion when the denominator has prime factors only:",a:["2 and 3","2 and 5","3 and 5","5 and 7"],c:1},
+            {q:"The HCF of two consecutive positive integers is always:",a:["0","1","2","10"],c:1},
+            {q:"The LCM of 12 and 18 is:",a:["24","30","36","48"],c:2},
+            {q:"Which number is irrational?",a:["1/2","0.75","√2","5"],c:2},
+            {q:"The prime factorisation of 60 is:",a:["2²×3×5","2×3²×5","2×3×5²","2²×5²"],c:0},
+            {q:"If HCF of two numbers is 6 and their product is 180, their LCM is:",a:["20","30","36","60"],c:1},
+            {q:"√5 is:",a:["Natural","Integer","Rational","Irrational"],c:3},
+            {q:"Every composite number can be expressed as a product of:",a:["Only odd numbers","Prime numbers","Only even numbers","Fractions"],c:1},
+            {q:"The decimal expansion of 13/40 is:",a:["Terminating","Recurring","Non-recurring","Irrational"],c:0},
+            {q:"If a number is divisible by both 6 and 8, it is divisible by their:",a:["HCF","LCM","Difference","Sum"],c:1},
+            {q:"The HCF of 17 and 19 is:",a:["1","2","17","19"],c:0},
+            {q:"Which is a rational number?",a:["√3","π","√7","7/9"],c:3},
+            {q:"The LCM of two co-prime numbers is equal to their:",a:["Difference","Sum","Product","HCF"],c:2},
+            {q:"The HCF of 96 and 144 is:",a:["24","36","48","72"],c:2}
+        ],
 
-    "Science":[
-        {
-            q:"A reaction in which oxidation and reduction occur together is:",
-            a:["Redox reaction","Neutralisation","Decomposition","Precipitation"],
-            c:0
-        },
-        {
-            q:"The pH of a neutral solution is approximately:",
-            a:["0","5","7","14"],
-            c:2
-        },
-        {
-            q:"The SI unit of electric current is:",
-            a:["Volt","Ohm","Ampere","Watt"],
-            c:2
-        },
-        {
-            q:"The green pigment in plants is called:",
-            a:["Haemoglobin","Chlorophyll","Melanin","Insulin"],
-            c:1
-        }
-    ],
+        1: [
+            {q:"The degree of a quadratic polynomial is:",a:["1","2","3","4"],c:1},
+            {q:"A zero of a polynomial is the value of x for which:",a:["p(x)=0","p(x)=1","p(x)=x","p(x)>0"],c:0},
+            {q:"The graph of a linear polynomial is a:",a:["Circle","Straight line","Parabola","Point"],c:1},
+            {q:"A quadratic polynomial has degree:",a:["1","2","3","0"],c:1},
+            {q:"The zero of p(x)=x−5 is:",a:["0","5","-5","1"],c:1},
+            {q:"If α and β are zeros of ax²+bx+c, then α+β equals:",a:["b/a","-b/a","c/a","-c/a"],c:1},
+            {q:"The product of zeros of ax²+bx+c is:",a:["b/a","-b/a","c/a","-c/a"],c:2},
+            {q:"The graph of a quadratic polynomial is generally a:",a:["Line","Parabola","Circle","Triangle"],c:1},
+            {q:"A polynomial of degree 3 is called:",a:["Linear","Quadratic","Cubic","Constant"],c:2},
+            {q:"The number of zeros of a non-zero constant polynomial is:",a:["0","1","2","Infinite"],c:0},
+            {q:"If one zero of x²−5x+6 is 2, the other is:",a:["1","2","3","6"],c:2},
+            {q:"For x²−9, the zeros are:",a:["3 and 9","-3 and 3","0 and 9","-9 and 9"],c:1},
+            {q:"The sum of zeros of 2x²+7x+3 is:",a:["7/2","-7/2","3/2","-3/2"],c:1},
+            {q:"The product of zeros of 3x²+5x+2 is:",a:["5/3","-5/3","2/3","-2/3"],c:2},
+            {q:"A polynomial with exactly two terms is called a:",a:["Monomial","Binomial","Trinomial","Constant"],c:1},
+            {q:"A polynomial with one term is called:",a:["Binomial","Trinomial","Monomial","Quadratic"],c:2},
+            {q:"The degree of 7x³+2x²−x+4 is:",a:["1","2","3","4"],c:2},
+            {q:"If p(2)=0, then 2 is a:",a:["Coefficient","Zero of p(x)","Degree","Constant"],c:1},
+            {q:"The coefficient of x in 4x²−7x+2 is:",a:["4","-7","2","7"],c:1},
+            {q:"The constant term of 5x²+3x−8 is:",a:["5","3","-8","8"],c:2}
+        ]
+    },
 
-    "Social Science":[
-        {
-            q:"Who led the Civil Disobedience Movement in 1930?",
-            a:["Mahatma Gandhi","Sardar Patel","Subhas Bose","Nehru"],
-            c:0
-        },
-        {
-            q:"Agriculture belongs mainly to which sector?",
-            a:["Primary","Secondary","Tertiary","None"],
-            c:0
-        },
-        {
-            q:"RBI supervises:",
-            a:["Banks","Schools","Railways","Factories"],
-            c:0
-        },
-        {
-            q:"Globalisation mainly means:",
-            a:[
-                "Isolation of economies",
-                "Integration of economies",
-                "Ending trade",
-                "Only local trade"
-            ],
-            c:1
-        }
-    ],
+    "Science": {
+        0: [
+            {q:"A chemical reaction involves:",a:["Only physical change","Formation of new substances","Only melting","Only boiling"],c:1},
+            {q:"A reaction in which two or more substances combine is called:",a:["Combination","Decomposition","Displacement","Neutralisation"],c:0},
+            {q:"CaO + H₂O → Ca(OH)₂ is a:",a:["Combination reaction","Decomposition reaction","Displacement reaction","Redox only"],c:0},
+            {q:"A reaction in which a substance breaks into simpler substances is:",a:["Combination","Decomposition","Displacement","Precipitation"],c:1},
+            {q:"Oxidation involves:",a:["Addition of oxygen","Removal of oxygen only","Addition of water","Removal of salt"],c:0},
+            {q:"Reduction can involve:",a:["Addition of oxygen","Removal of oxygen","Addition of acid","Formation of salt"],c:1},
+            {q:"A reaction where heat is released is called:",a:["Endothermic","Exothermic","Neutral","Physical"],c:1},
+            {q:"Respiration is generally a:",a:["Exothermic reaction","Endothermic reaction","Decomposition without energy","Physical change"],c:0},
+            {q:"The reaction of iron with copper sulphate is an example of:",a:["Combination","Displacement","Decomposition","Neutralisation"],c:1},
+            {q:"Rusting of iron is an example of:",a:["Oxidation","Reduction only","Neutralisation","Sublimation"],c:0},
+            {q:"Silver chloride turns grey in sunlight because of:",a:["Decomposition","Combination","Neutralisation","Displacement"],c:0},
+            {q:"A balanced chemical equation follows the law of:",a:["Conservation of mass","Conservation of speed","Gravity","Reflection"],c:0},
+            {q:"In a chemical equation, reactants are written on the:",a:["Right","Left","Top","Bottom"],c:1},
+            {q:"Products in a chemical equation are written on the:",a:["Left","Right","Top","Bottom"],c:1},
+            {q:"A reaction between an acid and a base is called:",a:["Neutralisation","Oxidation","Decomposition","Displacement"],c:0},
+            {q:"Which gas is commonly released when acids react with many metals?",a:["Oxygen","Hydrogen","Nitrogen","Carbon dioxide"],c:1},
+            {q:"Corrosion is generally a:",a:["Chemical process","Physical process","Nuclear process","Mechanical process"],c:0},
+            {q:"The reddish-brown coating on iron is:",a:["Copper","Rust","Zinc","Silver"],c:1},
+            {q:"A reaction in which oxidation and reduction occur together is:",a:["Redox reaction","Neutralisation","Combination","Precipitation"],c:0},
+            {q:"Chemical equations should be balanced because atoms are:",a:["Created","Destroyed","Conserved","Changed into energy"],c:2}
+        ]
+    },
 
-    "English":[
-        {
-            q:"Who wrote 'A Letter to God'?",
-            a:[
-                "G.L. Fuentes",
-                "Anne Frank",
-                "Robert Frost",
-                "Nelson Mandela"
-            ],
-            c:0
-        },
-        {
-            q:"Nelson Mandela became President of:",
-            a:[
-                "India",
-                "South Africa",
-                "USA",
-                "Britain"
-            ],
-            c:1
-        },
-        {
-            q:"Who wrote the diary used in 'From the Diary of Anne Frank'?",
-            a:[
-                "Anne Frank",
-                "Helen Keller",
-                "Ruskin Bond",
-                "G.L. Fuentes"
-            ],
-            c:0
-        },
-        {
-            q:"'Dust of Snow' was written by:",
-            a:[
-                "Robert Frost",
-                "William Shakespeare",
-                "W.B. Yeats",
-                "John Keats"
-            ],
-            c:0
-        }
-    ],
+    "Social Science": {
+        0: [
+            {q:"Nationalism in Europe became strongly associated with:",a:["Nation-states","Feudalism","Colonial trade only","Monarchy only"],c:0},
+            {q:"The French Revolution began in:",a:["1789","1815","1848","1914"],c:0},
+            {q:"The French Revolution introduced the idea of:",a:["Liberty and equality","Absolute monarchy","Feudal privileges","Colonial rule"],c:0},
+            {q:"The Napoleonic Code was introduced in:",a:["France","Germany","Italy","Russia"],c:0},
+            {q:"Giuseppe Mazzini was associated with:",a:["Italian nationalism","German monarchy","British empire","Russian revolution"],c:0},
+            {q:"Germany was unified under the leadership of:",a:["Prussia","France","Austria only","Britain"],c:0},
+            {q:"The Frankfurt Parliament was convened in:",a:["1848","1789","1871","1919"],c:0},
+            {q:"The German Empire was proclaimed in:",a:["1871","1848","1914","1930"],c:0},
+            {q:"The allegory of Marianne represented:",a:["France","Germany","Italy","Britain"],c:0},
+            {q:"Germania was the allegory of:",a:["Germany","France","Italy","Russia"],c:0},
+            {q:"The Balkans became an area of conflict mainly because of:",a:["Nationalist tensions","Industrial growth only","Agriculture","Climate"],c:0},
+            {q:"Liberalism in 19th-century Europe generally stood for:",a:["Freedom and equality before law","Absolute monarchy","Feudal privileges","Colonialism"],c:0},
+            {q:"The Treaty of Vienna was signed in:",a:["1815","1789","1848","1871"],c:0},
+            {q:"The Congress of Vienna was hosted by:",a:["Austria","France","Italy","Germany"],c:0},
+            {q:"Otto von Bismarck was the chief architect of:",a:["German unification","Italian unification","French Revolution","Russian Revolution"],c:0},
+            {q:"Italy was unified in the:",a:["19th century","17th century","15th century","20th century"],c:0},
+            {q:"Nationalism later became closely linked with:",a:["Imperialism","Feudalism","Isolation","Nomadism"],c:0},
+            {q:"The Greek struggle for independence was against:",a:["Ottoman Empire","British Empire","French Empire","German Empire"],c:0},
+            {q:"The Romantic artists promoted:",a:["Culture and national feeling","Industrial machines only","Colonial taxation","Feudal privileges"],c:0},
+            {q:"The rise of nationalism helped create:",a:["Modern nation-states","Only empires","Feudal kingdoms","City-states only"],c:0}
+        ]
+    }
+};    
+function getChapterQuestions(subject,index){
+    const bank = CHAPTER_QUESTIONS[subject]?.[index];
 
-    "Hindi":[
-        {
-            q:"'राम-लक्ष्मण-परशुराम संवाद' के कवि कौन हैं?",
-            a:["तुलसीदास","सूरदास","कबीर","निराला"],
-            c:0
-        },
-        {
-            q:"'संगतकार' के कवि कौन हैं?",
-            a:["मंगलेश डबराल","तुलसीदास","कबीर","सूरदास"],
-            c:0
-        },
-        {
-            q:"'नेताजी का चश्मा' के लेखक कौन हैं?",
-            a:["स्वयं प्रकाश","यशपाल","मन्नू भंडारी","प्रेमचंद"],
-            c:0
-        },
-        {
-            q:"'कन्यादान' कविता के कवि कौन हैं?",
-            a:["ऋतुराज","निराला","दिनकर","सुमित्रानंदन पंत"],
-            c:0
-        }
-    ],
+    if(!bank || bank.length < 20){
+        return [];
+    }
 
-    "Commerce":[
-        {
-            q:"Which account is prepared to find gross profit or gross loss?",
-            a:[
-                "Trading Account",
-                "Balance Sheet",
-                "Cash Book",
-                "Journal"
-            ],
-            c:0
-        },
-        {
-            q:"Balance Sheet shows:",
-            a:[
-                "Financial position",
-                "Only sales",
-                "Only purchases",
-                "Only expenses"
-            ],
-            c:0
-        },
-        {
-            q:"A business owned by one person is called:",
-            a:[
-                "Sole proprietorship",
-                "Partnership",
-                "Company",
-                "Co-operative"
-            ],
-            c:0
-        },
-        {
-            q:"A partnership is formed by:",
-            a:[
-                "Two or more persons",
-                "Only one person",
-                "Only government",
-                "Only banks"
-            ],
-            c:0
-        },
-        {
-            q:"The central bank of India is:",
-            a:[
-                "Reserve Bank of India",
-                "State Bank of India",
-                "Punjab National Bank",
-                "Bank of Baroda"
-            ],
-            c:0
-        },
-        {
-            q:"Demand generally refers to:",
-            a:[
-                "Quantity consumers are willing and able to buy",
-                "Only production",
-                "Only saving",
-                "Only taxation"
-            ],
-            c:0
-        }
-    ]
-
-};
-
-
+    // Questions ka order random hoga,
+    // lekin chapter ke questions wahi rahenge.
+    return [...bank].sort(() => Math.random() - 0.5);
+}
 /* ==================================================
                     STATE
 ================================================== */
@@ -1968,28 +1872,23 @@ let currentTest=null;
 
 let currentSubject=null;
 
-
 function giveTest(subject,index){
+    const bank = getChapterQuestions(subject,index);
 
-    const bank=QUESTIONS[subject]||[];
-
-    if(!bank.length){
-
-        alert("Question bank is not available.");
-
+    if(bank.length < 20){
+        alert("Is chapter ke 20 MCQs abhi question bank me available nahi hain.");
         return;
     }
 
-    currentTest={
-        subject:subject,
-        index:index,
-        questions:bank
+    currentTest = {
+        subject: subject,
+        index: index,
+        questions: bank.slice(0,20)
     };
 
     showTestModal(
-        "📝 "+subject+" • "+DATA[subject][index]
+        "📝 " + subject + " • " + DATA[subject][index]
     );
-
 }
 
 

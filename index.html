@@ -1,469 +1,509 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#5b4bdb">
-<link rel="manifest" href="manifest.json">
 
-<title>PrepVio • Smart Study Planner</title>
+<title>PrepVio - Smart Study Planner</title>
 
 <style>
-:root{
- --p:#5b4bdb;
- --p2:#7c5cff;
- --bg:#f5f6fb;
- --card:#fff;
- --text:#171827;
- --muted:#717586;
- --ok:#149447;
- --danger:#d33;
- --border:#e7e8f0;
- --shadow:0 12px 35px rgba(30,25,80,.10);
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-*{box-sizing:border-box}
-
 body{
- margin:0;
- font-family:Arial,Helvetica,sans-serif;
- background:var(--bg);
- color:var(--text);
- padding-bottom:82px;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f6fb;
+    color:#171827;
+    min-height:100vh;
+    padding-bottom:80px;
 }
 
 button,input{
- font:inherit;
+    font:inherit;
 }
 
 button{
- cursor:pointer;
-}
-
-button:disabled{
- opacity:.5;
- cursor:not-allowed;
-}
-
-.container{
- width:min(1000px,calc(100% - 24px));
- margin:18px auto 30px;
-}
-
-.card{
- background:var(--card);
- border:1px solid var(--border);
- border-radius:20px;
- padding:18px;
- margin-bottom:14px;
- box-shadow:var(--shadow);
-}
-
-.primary,.ghost,.danger{
- border:0;
- border-radius:12px;
- padding:11px 15px;
- font-weight:700;
+    cursor:pointer;
 }
 
 .primary{
- color:white;
- background:linear-gradient(135deg,var(--p),var(--p2));
+    width:100%;
+    border:0;
+    border-radius:14px;
+    padding:14px;
+    background:linear-gradient(135deg,#5b4bdb,#7c5cff);
+    color:white;
+    font-weight:bold;
+    font-size:16px;
+}
+
+.primary:active{
+    transform:scale(.98);
 }
 
 .ghost{
- color:var(--p);
- background:#f0efff;
+    border:0;
+    border-radius:12px;
+    padding:11px 15px;
+    background:#efedff;
+    color:#5b4bdb;
+    font-weight:bold;
 }
 
 .danger{
- color:var(--danger);
- background:#ffecec;
+    border:0;
+    border-radius:12px;
+    padding:11px 15px;
+    background:#ffecec;
+    color:#d33;
+    font-weight:bold;
+}
+
+.container{
+    width:min(1000px,calc(100% - 24px));
+    margin:20px auto 30px;
+}
+
+.card{
+    background:white;
+    border:1px solid #e6e7ef;
+    border-radius:20px;
+    padding:18px;
+    margin-bottom:15px;
+    box-shadow:0 10px 30px rgba(30,25,80,.08);
 }
 
 .muted{
- color:var(--muted);
+    color:#717586;
 }
 
 .small{
- font-size:13px;
+    font-size:13px;
 }
 
-.grid{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:12px;
-}
-
-.stats{
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:10px;
-}
-
-.stat{
- background:#fafaff;
- border:1px solid var(--border);
- border-radius:16px;
- padding:14px;
- text-align:center;
-}
-
-.stat b{
- display:block;
- font-size:22px;
- margin:4px 0;
-}
-
-.subject{
- background:white;
- border:1px solid var(--border);
- border-radius:18px;
- padding:17px;
- cursor:pointer;
- transition:.25s;
-}
-
-.subject:hover{
- transform:translateY(-3px);
- box-shadow:0 12px 25px rgba(0,0,0,.08);
-}
-
-.subject-icon{
- font-size:35px;
-}
-
-.subject-title{
- font-size:18px;
- font-weight:800;
- margin:7px 0;
-}
-
-.progress{
- height:9px;
- background:#ececf4;
- border-radius:20px;
- overflow:hidden;
- margin-top:10px;
-}
-
-.progress span{
- display:block;
- height:100%;
- width:0;
- background:linear-gradient(90deg,var(--p),var(--p2));
- transition:width .5s;
-}
-
-.timer{
- text-align:center;
- font-size:55px;
- font-weight:900;
- color:var(--p);
- margin:18px 0;
-}
-
-.timer-input{
- width:100%;
- padding:13px;
- border:1px solid var(--border);
- border-radius:12px;
- outline:none;
-}
-
-.row{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px;
-}
-
-.chapter{
- background:white;
- border:1px solid var(--border);
- border-radius:15px;
- padding:14px;
- margin-bottom:9px;
-}
-
-.chapter-title{
- font-weight:800;
-}
-
-.chapter-actions{
- display:flex;
- gap:8px;
- flex-wrap:wrap;
- margin-top:10px;
-}
-
-.bottom-nav{
- position:fixed;
- bottom:0;
- left:0;
- right:0;
- z-index:80;
- background:rgba(255,255,255,.95);
- backdrop-filter:blur(15px);
- border-top:1px solid var(--border);
- display:flex;
- justify-content:center;
-}
-
-.bottom-inner{
- width:min(600px,100%);
- display:grid;
- grid-template-columns:repeat(4,1fr);
-}
-
-.nav-btn{
- border:0;
- background:transparent;
- padding:9px 5px;
- color:var(--muted);
- font-size:12px;
-}
-
-.nav-btn b{
- display:block;
- font-size:21px;
- margin-bottom:2px;
-}
-
-.nav-btn.active{
- color:var(--p);
- font-weight:800;
-}
-
-.modal-bg{
- position:fixed;
- inset:0;
- background:rgba(0,0,0,.6);
- z-index:200;
- display:none;
- align-items:center;
- justify-content:center;
- padding:14px;
-}
-
-.modal{
- width:min(650px,100%);
- max-height:90vh;
- overflow:auto;
- background:white;
- border-radius:22px;
- padding:20px;
- animation:modalIn .3s ease;
-}
-
-.option{
- display:block;
- padding:12px;
- border:1px solid var(--border);
- border-radius:12px;
- margin:8px 0;
- cursor:pointer;
-}
-
-.option:hover{
- background:#f5f3ff;
-}
-
-.result{
- padding:15px;
- border-radius:15px;
- background:#f2f0ff;
- text-align:center;
- font-size:20px;
- font-weight:800;
- margin-top:14px;
-}
-
-.profile-avatar{
- width:80px;
- height:80px;
- border-radius:50%;
- background:linear-gradient(135deg,var(--p),var(--p2));
- color:white;
- display:flex;
- align-items:center;
- justify-content:center;
- font-size:32px;
- font-weight:900;
- margin:auto;
-}
-
-#loginPage{
- min-height:100vh;
- display:flex;
- align-items:center;
- justify-content:center;
- padding:20px;
- background:
- radial-gradient(circle at top left,#ddd8ff,transparent 35%),
- radial-gradient(circle at bottom right,#eadfff,transparent 35%),
- var(--bg);
-}
-
-.login-card{
- width:min(430px,100%);
- background:white;
- border-radius:25px;
- padding:28px;
- box-shadow:var(--shadow);
- animation:loginIn 1s ease;
-}
-
-.login-logo{
- text-align:center;
- font-size:58px;
-}
-
-.login-title{
- text-align:center;
- font-size:31px;
- font-weight:900;
- color:var(--p);
-}
-
-.login-input{
- width:100%;
- padding:13px;
- border:1px solid var(--border);
- border-radius:12px;
- margin:8px 0;
-}
-
-#subjectPage{
- min-height:100vh;
- padding-top:20px;
-}
-
-.select-subject{
- display:flex;
- align-items:center;
- gap:12px;
-}
-
-.select-subject input{
- width:20px;
- height:20px;
-}
+/* SPLASH */
 
 #splash{
- position:fixed;
- inset:0;
- z-index:9999;
- display:flex;
- align-items:center;
- justify-content:center;
- color:white;
- background:linear-gradient(135deg,#4d3ac7,#7c5cff,#33269a);
- animation:splashOut 5.5s forwards;
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#4633b7,#7c5cff,#30208f);
+    color:white;
 }
 
 .splash-box{
- text-align:center;
- animation:splashIn 1.3s ease;
+    text-align:center;
+    animation:splashEnter 1.4s ease;
 }
 
 .splash-logo{
- font-size:70px;
- animation:float 2s infinite ease-in-out;
+    font-size:72px;
+    animation:floatLogo 2s ease-in-out infinite;
 }
 
 .splash-name{
- font-size:45px;
- font-weight:900;
- letter-spacing:1px;
+    font-size:44px;
+    font-weight:900;
+    letter-spacing:1px;
+    margin-top:8px;
 }
 
 .splash-tagline{
- margin-top:6px;
- opacity:.9;
+    margin-top:8px;
+    font-size:16px;
+    opacity:.9;
 }
 
 .splash-founder{
- margin-top:22px;
- font-size:15px;
+    margin-top:22px;
+    font-size:15px;
 }
 
 .loader{
- width:190px;
- height:5px;
- background:rgba(255,255,255,.25);
- border-radius:10px;
- overflow:hidden;
- margin:25px auto;
+    width:210px;
+    height:5px;
+    background:rgba(255,255,255,.25);
+    border-radius:10px;
+    overflow:hidden;
+    margin:28px auto 0;
 }
 
 .loader span{
- display:block;
- height:100%;
- width:0;
- background:white;
- animation:loader 4.5s linear forwards;
+    display:block;
+    height:100%;
+    width:0;
+    background:white;
+    animation:loadBar 5s linear forwards;
 }
 
-.toast{
- position:fixed;
- right:15px;
- bottom:90px;
- background:#171827;
- color:white;
- padding:13px 17px;
- border-radius:13px;
- z-index:500;
- display:none;
+@keyframes splashEnter{
+    from{
+        opacity:0;
+        transform:scale(.65) translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:scale(1) translateY(0);
+    }
 }
 
-@keyframes splashIn{
- from{opacity:0;transform:scale(.7)}
- to{opacity:1;transform:scale(1)}
+@keyframes floatLogo{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-12px);
+    }
 }
 
-@keyframes splashOut{
- 0%,82%{opacity:1}
- 100%{opacity:0;visibility:hidden}
+@keyframes loadBar{
+    from{width:0}
+    to{width:100%}
 }
 
-@keyframes loader{
- from{width:0}
- to{width:100%}
+/* LOGIN */
+
+#loginPage{
+    min-height:100vh;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    background:
+        radial-gradient(circle at top left,#ddd8ff,transparent 35%),
+        radial-gradient(circle at bottom right,#eadfff,transparent 35%),
+        #f5f6fb;
 }
 
-@keyframes float{
- 0%,100%{transform:translateY(0)}
- 50%{transform:translateY(-12px)}
+.login-card{
+    width:min(430px,100%);
+    background:white;
+    padding:30px;
+    border-radius:26px;
+    box-shadow:0 15px 45px rgba(30,25,80,.13);
+    animation:loginEnter .8s ease;
 }
 
-@keyframes loginIn{
- from{opacity:0;transform:translateY(35px)}
- to{opacity:1;transform:translateY(0)}
+@keyframes loginEnter{
+    from{
+        opacity:0;
+        transform:translateY(35px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.login-logo{
+    text-align:center;
+    font-size:58px;
+}
+
+.login-title{
+    text-align:center;
+    font-size:32px;
+    font-weight:900;
+    color:#5b4bdb;
+    margin-top:5px;
+}
+
+.login-subtitle{
+    text-align:center;
+    margin:8px 0 20px;
+    color:#717586;
+}
+
+.login-input{
+    width:100%;
+    padding:14px;
+    border:1px solid #dddfea;
+    border-radius:13px;
+    outline:none;
+    margin-bottom:12px;
+}
+
+.login-input:focus{
+    border-color:#5b4bdb;
+}
+
+/* SUBJECT SELECTION */
+
+#subjectPage{
+    display:none;
+    min-height:100vh;
+    padding:20px 0;
+}
+
+.subject-select-card{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:white;
+    border:1px solid #e6e7ef;
+    border-radius:17px;
+    padding:16px;
+    margin-bottom:10px;
+}
+
+.subject-select-card input{
+    width:21px;
+    height:21px;
+}
+
+/* APP */
+
+#app{
+    display:none;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin:15px 0;
+}
+
+.stat{
+    background:white;
+    border:1px solid #e6e7ef;
+    border-radius:17px;
+    padding:14px 8px;
+    text-align:center;
+}
+
+.stat-icon{
+    font-size:22px;
+}
+
+.stat b{
+    display:block;
+    font-size:22px;
+    margin:5px 0;
+}
+
+.subject{
+    background:white;
+    border:1px solid #e6e7ef;
+    border-radius:18px;
+    padding:17px;
+    transition:.25s;
+    cursor:pointer;
+}
+
+.subject:active{
+    transform:scale(.98);
+}
+
+.subject-icon{
+    font-size:35px;
+}
+
+.subject-title{
+    font-size:18px;
+    font-weight:800;
+    margin:8px 0;
+}
+
+.progress{
+    height:9px;
+    background:#ededf5;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:linear-gradient(90deg,#5b4bdb,#7c5cff);
+    border-radius:20px;
+    transition:width .5s;
+}
+
+/* TIMER */
+
+.timer{
+    text-align:center;
+    font-size:55px;
+    font-weight:900;
+    color:#5b4bdb;
+    margin:20px 0;
+}
+
+.timer-input{
+    width:100%;
+    padding:14px;
+    border:1px solid #dddfea;
+    border-radius:13px;
+    outline:none;
+}
+
+/* CHAPTERS */
+
+.chapter{
+    background:white;
+    border:1px solid #e6e7ef;
+    border-radius:16px;
+    padding:15px;
+    margin-bottom:10px;
+}
+
+.chapter-title{
+    font-weight:800;
+    line-height:1.4;
+}
+
+.chapter-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:12px;
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:100;
+    background:rgba(255,255,255,.96);
+    backdrop-filter:blur(15px);
+    border-top:1px solid #e6e7ef;
+}
+
+.bottom-inner{
+    width:min(600px,100%);
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+}
+
+.nav-btn{
+    border:0;
+    background:transparent;
+    color:#77798a;
+    padding:9px 4px;
+    font-size:12px;
+}
+
+.nav-btn b{
+    display:block;
+    font-size:21px;
+    margin-bottom:2px;
+}
+
+.nav-btn.active{
+    color:#5b4bdb;
+    font-weight:bold;
+}
+
+/* MODAL */
+
+.modal-bg{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    background:rgba(0,0,0,.6);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:14px;
+}
+
+.modal{
+    width:min(650px,100%);
+    max-height:90vh;
+    overflow:auto;
+    background:white;
+    border-radius:23px;
+    padding:20px;
+    animation:modalIn .3s ease;
 }
 
 @keyframes modalIn{
- from{opacity:0;transform:scale(.9)}
- to{opacity:1;transform:scale(1)}
+    from{
+        opacity:0;
+        transform:scale(.9);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
 }
+
+.option{
+    display:block;
+    border:1px solid #e1e2eb;
+    border-radius:12px;
+    padding:12px;
+    margin:8px 0;
+}
+
+.result{
+    margin-top:15px;
+    padding:15px;
+    border-radius:15px;
+    background:#f1efff;
+    text-align:center;
+    font-weight:bold;
+    font-size:20px;
+}
+
+/* PROFILE */
+
+.profile-avatar{
+    width:82px;
+    height:82px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#5b4bdb,#7c5cff);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
+    font-size:32px;
+    font-weight:900;
+}
+
+/* MOBILE */
 
 @media(max-width:700px){
 
- .grid{
-  grid-template-columns:1fr;
- }
+    .grid{
+        grid-template-columns:1fr;
+    }
 
- .stats{
-  grid-template-columns:repeat(2,1fr);
- }
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
 
- .timer{
-  font-size:45px;
- }
+    .timer{
+        font-size:45px;
+    }
 
- .splash-name{
-  font-size:35px;
- }
+    .splash-name{
+        font-size:36px;
+    }
 
+    .login-card{
+        padding:25px;
+    }
 }
 </style>
 </head>
@@ -473,29 +513,20 @@ button:disabled{
 <!-- ================= SPLASH ================= -->
 
 <div id="splash">
+    <div class="splash-box">
+        <div class="splash-logo">🚀</div>
+        <div class="splash-name">PrepVio</div>
+        <div class="splash-tagline">
+            Your Smart Study Companion
+        </div>
+        <div class="splash-founder">
+            Founded by <b>Ansh Mishra</b>
+        </div>
 
- <div class="splash-box">
-
-  <div class="splash-logo">🚀</div>
-
-  <div class="splash-name">
-   PrepVio
-  </div>
-
-  <div class="splash-tagline">
-   Your Smart Study Companion
-  </div>
-
-  <div class="splash-founder">
-   Founded by <b>Ansh Mishra</b>
-  </div>
-
-  <div class="loader">
-   <span></span>
-  </div>
-
- </div>
-
+        <div class="loader">
+            <span></span>
+        </div>
+    </div>
 </div>
 
 
@@ -503,333 +534,358 @@ button:disabled{
 
 <section id="loginPage">
 
- <div class="login-card">
+    <div class="login-card">
 
-  <div class="login-logo">
-   🚀
-  </div>
+        <div class="login-logo">🚀</div>
 
-  <div class="login-title">
-   PrepVio
-  </div>
+        <div class="login-title">
+            PrepVio
+        </div>
 
-  <p class="muted" style="text-align:center">
-   Smart study planning for UP Board students
-  </p>
+        <div class="login-subtitle">
+            Smart Study Planner
+        </div>
 
-  <input
-   id="userName"
-   class="login-input"
-   placeholder="Enter your name"
-   maxlength="30"
-  >
+        <input
+            id="userName"
+            class="login-input"
+            type="text"
+            placeholder="Enter your name"
+            maxlength="30"
+            autocomplete="name"
+        >
 
-  <button
-   class="primary"
-   style="width:100%;margin-top:10px"
-   onclick="login()"
-  >
-   Continue →
-  </button>
+        <button
+            class="primary"
+            id="continueBtn"
+            type="button"
+            onclick="login()"
+        >
+            Continue →
+        </button>
 
- </div>
+    </div>
 
 </section>
 
 
 <!-- ================= SUBJECT SELECTION ================= -->
 
-<section id="subjectPage" style="display:none">
+<section id="subjectPage">
 
- <div class="container">
+    <div class="container">
 
-  <div class="card">
+        <div class="card">
 
-   <h1>📚 Select Your Subjects</h1>
+            <h1>📚 Select Your Subjects</h1>
 
-   <p class="muted">
-    Only selected subjects will appear in your study planner.
-   </p>
+            <p class="muted" style="margin-top:7px;margin-bottom:18px">
+                Select the subjects you want in your study planner.
+            </p>
 
-   <div id="subjectOptions"></div>
+            <div id="subjectOptions"></div>
 
-   <button
-    class="primary"
-    style="width:100%;margin-top:12px"
-    onclick="saveSubjects()"
-   >
-    Start Studying 🚀
-   </button>
+            <button
+                class="primary"
+                type="button"
+                onclick="saveSubjects()"
+            >
+                Start Studying 🚀
+            </button>
 
-  </div>
+        </div>
 
- </div>
+    </div>
 
 </section>
 
 
-<!-- ================= APP ================= -->
+<!-- ================= MAIN APP ================= -->
 
-<div id="app" style="display:none">
+<div id="app">
 
- <main class="container">
+<main class="container">
 
-  <!-- HOME -->
+<!-- HOME -->
 
-  <section id="homePage">
+<section id="homePage">
 
-   <div class="card">
+    <div class="card">
 
-    <h1>
-     Welcome, <span id="welcomeName"></span> 👋
-    </h1>
+        <h1>
+            Welcome, <span id="welcomeName"></span> 👋
+        </h1>
 
-    <p class="muted">
-     Keep studying and build your streak.
-    </p>
+        <p class="muted" style="margin-top:6px">
+            Keep studying and build your progress.
+        </p>
 
-   </div>
-
-   <div class="stats">
-
-    <div class="stat">
-     📚
-     <b id="completedCount">0</b>
-     Completed
     </div>
 
-    <div class="stat">
-     ⭐
-     <b id="points">0</b>
-     Points
+
+    <div class="stats">
+
+        <div class="stat">
+            <div class="stat-icon">📚</div>
+            <b id="completedCount">0</b>
+            <span class="small muted">Completed</span>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">⭐</div>
+            <b id="points">0</b>
+            <span class="small muted">Points</span>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">🔥</div>
+            <b id="streak">0</b>
+            <span class="small muted">Streak</span>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">🎯</div>
+            <b>95%</b>
+            <span class="small muted">Target</span>
+        </div>
+
     </div>
 
-    <div class="stat">
-     🔥
-     <b id="streak">0</b>
-     Streak
+
+    <!-- TIMER -->
+
+    <div class="card">
+
+        <h2>⏱️ Focus Timer</h2>
+
+        <p class="muted small" style="margin-top:5px">
+            Choose 1–180 minutes.
+        </p>
+
+        <input
+            id="customMinutes"
+            class="timer-input"
+            type="number"
+            min="1"
+            max="180"
+            value="25"
+            style="margin-top:12px"
+        >
+
+        <div id="timer" class="timer">
+            25:00
+        </div>
+
+        <button
+            id="startTimerBtn"
+            class="primary"
+            type="button"
+            onclick="startFocus()"
+        >
+            ▶ Start Focus
+        </button>
+
+        <button
+            id="stopTimerBtn"
+            class="danger"
+            type="button"
+            onclick="stopFocus()"
+            disabled
+            style="width:100%;margin-top:8px"
+        >
+            🔒 Locked During Focus
+        </button>
+
     </div>
 
-    <div class="stat">
-     🎯
-     <b id="target">95%</b>
-     Target
+
+    <!-- WEEKLY TEST -->
+
+    <div class="card">
+
+        <h2>📅 Weekly Test</h2>
+
+        <div id="weeklyBox" style="margin-top:10px"></div>
+
     </div>
 
-   </div>
 
+    <!-- SUBJECTS -->
 
-   <!-- TIMER -->
+    <div class="card">
 
-   <div class="card" style="margin-top:14px">
+        <h2>📚 My Subjects</h2>
 
-    <h2>⏱️ Focus Timer</h2>
+        <div
+            id="homeSubjects"
+            class="grid"
+            style="margin-top:12px"
+        ></div>
 
-    <p class="muted">
-     Select any duration from 1 to 180 minutes.
-    </p>
-
-    <input
-     id="customMinutes"
-     class="timer-input"
-     type="number"
-     min="1"
-     max="180"
-     value="25"
-    >
-
-    <div class="timer" id="timer">
-     25:00
     </div>
 
-    <button
-     id="startTimerBtn"
-     class="primary"
-     style="width:100%"
-     onclick="startFocus()"
-    >
-     ▶ Start Focus
-    </button>
-
-    <button
-     id="stopTimerBtn"
-     class="danger"
-     style="width:100%;margin-top:8px"
-     onclick="stopFocus()"
-     disabled
-    >
-     🔒 Locked During Focus
-    </button>
-
-   </div>
+</section>
 
 
-   <!-- WEEKLY TEST -->
+<!-- SUBJECT PAGE -->
 
-   <div class="card">
+<section id="subjectsPage" style="display:none">
 
-    <h2>📅 Weekly Test</h2>
+    <div class="card">
 
-    <div id="weeklyBox"></div>
+        <h1>📚 Subjects</h1>
 
-   </div>
+        <p class="muted" style="margin-top:6px">
+            Select a subject to view its study modules.
+        </p>
 
-
-   <!-- QUICK SUBJECTS -->
-
-   <div class="card">
-
-    <h2>📚 My Subjects</h2>
-
-    <div id="homeSubjects" class="grid"></div>
-
-   </div>
-
-  </section>
-
-
-  <!-- SUBJECTS -->
-
-  <section id="subjectsPage" style="display:none">
-
-   <div class="card">
-
-    <h1>📚 Subjects</h1>
-
-    <p class="muted">
-     Choose a subject to view its chapters.
-    </p>
-
-   </div>
-
-   <div id="allSubjects" class="grid"></div>
-
-  </section>
-
-
-  <!-- PROGRESS -->
-
-  <section id="progressPage" style="display:none">
-
-   <div class="card">
-
-    <h1>📊 My Progress</h1>
-
-    <div id="progressContent"></div>
-
-   </div>
-
-  </section>
-
-
-  <!-- PROFILE -->
-
-  <section id="profilePage" style="display:none">
-
-   <div class="card" style="text-align:center">
-
-    <div class="profile-avatar" id="profileAvatar">
-     A
     </div>
 
-    <h2 id="profileName">
-     Ansh Mishra
-    </h2>
+    <div id="allSubjects" class="grid"></div>
 
-    <p class="muted">
-     PrepVio Student
-    </p>
-
-    <button
-     class="ghost"
-     onclick="changeSubjects()"
-    >
-     📚 Change Subjects
-    </button>
-
-    <button
-     class="danger"
-     style="margin-left:5px"
-     onclick="logout()"
-    >
-     Logout
-    </button>
-
-   </div>
-
-  </section>
+</section>
 
 
-  <!-- CHAPTER DETAILS -->
+<!-- PROGRESS -->
 
-  <section id="chapterPage" style="display:none">
+<section id="progressPage" style="display:none">
 
-   <div class="card">
+    <div class="card">
 
-    <button class="ghost" onclick="goSubjects()">
-     ← Back
-    </button>
+        <h1>📊 My Progress</h1>
 
-    <h1 id="subjectHeading" style="margin-top:15px"></h1>
+        <div id="progressContent" style="margin-top:15px"></div>
 
-    <p class="muted">
-     Study the chapter and pass the test with more than 75%.
-    </p>
+    </div>
 
-   </div>
-
-   <div id="chapterList"></div>
-
-  </section>
-
- </main>
+</section>
 
 
- <!-- ================= BOTTOM NAV ================= -->
+<!-- PROFILE -->
 
- <nav class="bottom-nav">
+<section id="profilePage" style="display:none">
 
-  <div class="bottom-inner">
+    <div class="card" style="text-align:center">
 
-   <button
-    id="navHome"
-    class="nav-btn active"
-    onclick="showPage('home')"
-   >
-    <b>🏠</b>
-    Home
-   </button>
+        <div
+            id="profileAvatar"
+            class="profile-avatar"
+        >
+            A
+        </div>
 
-   <button
-    id="navSubjects"
-    class="nav-btn"
-    onclick="showPage('subjects')"
-   >
-    <b>📚</b>
-    Subjects
-   </button>
+        <h2 id="profileName" style="margin-top:12px">
+            Student
+        </h2>
 
-   <button
-    id="navProgress"
-    class="nav-btn"
-    onclick="showPage('progress')"
-   >
-    <b>📊</b>
-    Progress
-   </button>
+        <p class="muted" style="margin:6px 0 18px">
+            PrepVio Student
+        </p>
 
-   <button
-    id="navProfile"
-    class="nav-btn"
-    onclick="showPage('profile')"
-   >
-    <b>👤</b>
-    Profile
-   </button>
+        <button
+            class="ghost"
+            type="button"
+            onclick="changeSubjects()"
+        >
+            📚 Change Subjects
+        </button>
 
-  </div>
+        <button
+            class="danger"
+            type="button"
+            onclick="logout()"
+            style="margin-left:5px"
+        >
+            Logout
+        </button>
 
- </nav>
+    </div>
+
+</section>
+
+
+<!-- CHAPTER PAGE -->
+
+<section id="chapterPage" style="display:none">
+
+    <div class="card">
+
+        <button
+            class="ghost"
+            type="button"
+            onclick="goSubjects()"
+        >
+            ← Back
+        </button>
+
+        <h1
+            id="subjectHeading"
+            style="margin-top:15px"
+        ></h1>
+
+        <p class="muted small" style="margin-top:6px">
+            Study the module and give its test.
+            More than 75% is required for completion.
+        </p>
+
+    </div>
+
+    <div id="chapterList"></div>
+
+</section>
+
+</main>
+
+
+<!-- BOTTOM NAV -->
+
+<nav class="bottom-nav">
+
+    <div class="bottom-inner">
+
+        <button
+            id="navHome"
+            class="nav-btn active"
+            type="button"
+            onclick="showPage('home')"
+        >
+            <b>🏠</b>
+            Home
+        </button>
+
+        <button
+            id="navSubjects"
+            class="nav-btn"
+            type="button"
+            onclick="showPage('subjects')"
+        >
+            <b>📚</b>
+            Subjects
+        </button>
+
+        <button
+            id="navProgress"
+            class="nav-btn"
+            type="button"
+            onclick="showPage('progress')"
+        >
+            <b>📊</b>
+            Progress
+        </button>
+
+        <button
+            id="navProfile"
+            class="nav-btn"
+            type="button"
+            onclick="showPage('profile')"
+        >
+            <b>👤</b>
+            Profile
+        </button>
+
+    </div>
+
+</nav>
 
 </div>
 
@@ -838,1543 +894,1456 @@ button:disabled{
 
 <div id="testModal" class="modal-bg">
 
- <div class="modal">
+    <div class="modal">
 
-  <h2 id="testTitle">
-   📝 Chapter Test
-  </h2>
+        <h2 id="testTitle">
+            📝 Test
+        </h2>
 
-  <div id="testQuestions"></div>
+        <div
+            id="testQuestions"
+            style="margin-top:15px"
+        ></div>
 
-  <button
-   id="submitTestBtn"
-   class="primary"
-   style="width:100%;margin-top:10px"
-   onclick="submitTest()"
-  >
-   Submit Test
-  </button>
+        <button
+            id="submitTestBtn"
+            class="primary"
+            type="button"
+            onclick="submitTest()"
+        >
+            Submit Test
+        </button>
 
-  <div id="testResult"></div>
+        <div id="testResult"></div>
 
-  <button
-   class="ghost"
-   style="width:100%;margin-top:8px"
-   onclick="closeTest()"
-  >
-   Close
-  </button>
+        <button
+            class="ghost"
+            type="button"
+            onclick="closeTest()"
+            style="width:100%;margin-top:8px"
+        >
+            Close
+        </button>
 
- </div>
+    </div>
 
 </div>
 
 
-<div id="toast" class="toast"></div>
-
+<!-- ================= JAVASCRIPT ================= -->
 
 <script>
 
-/* =====================================================
-   DATA
-===================================================== */
+/* ================= DATA ================= */
 
-const DATA={
+const DATA = {
 
- "Mathematics":[
- "Real Numbers",
- "Polynomials",
- "Pair of Linear Equations in Two Variables",
- "Quadratic Equations",
- "Arithmetic Progressions",
- "Triangles",
- "Coordinate Geometry",
- "Introduction to Trigonometry",
- "Some Applications of Trigonometry",
- "Circles",
- "Areas Related to Circles",
- "Surface Areas and Volumes",
- "Statistics",
- "Probability"
- ],
+    "Mathematics":[
+        "Real Numbers",
+        "Polynomials",
+        "Pair of Linear Equations in Two Variables",
+        "Quadratic Equations",
+        "Arithmetic Progressions",
+        "Triangles",
+        "Coordinate Geometry",
+        "Introduction to Trigonometry",
+        "Some Applications of Trigonometry",
+        "Circles",
+        "Areas Related to Circles",
+        "Surface Areas and Volumes",
+        "Statistics",
+        "Probability"
+    ],
 
- "Science":[
- "Chemical Reactions and Equations",
- "Acids, Bases and Salts",
- "Metals and Non-metals",
- "Carbon and Its Compounds",
- "Life Processes",
- "Control and Coordination",
- "How Do Organisms Reproduce?",
- "Heredity",
- "Light – Reflection and Refraction",
- "Human Eye and Colourful World",
- "Electricity",
- "Magnetic Effects of Electric Current",
- "Our Environment"
- ],
+    "Science":[
+        "Chemical Reactions and Equations",
+        "Acids, Bases and Salts",
+        "Metals and Non-metals",
+        "Carbon and Its Compounds",
+        "Life Processes",
+        "Control and Coordination",
+        "How Do Organisms Reproduce?",
+        "Heredity",
+        "Light – Reflection and Refraction",
+        "Human Eye and Colourful World",
+        "Electricity",
+        "Magnetic Effects of Electric Current",
+        "Our Environment"
+    ],
 
- "Social Science":[
- "The Rise of Nationalism in Europe",
- "Nationalism in India",
- "The Making of a Global World",
- "The Age of Industrialisation",
- "Print Culture and the Modern World",
- "Resources and Development",
- "Forest and Wildlife Resources",
- "Water Resources",
- "Agriculture",
- "Minerals and Energy Resources",
- "Manufacturing Industries",
- "Lifelines of National Economy",
- "Power Sharing",
- "Federalism",
- "Gender, Religion and Caste",
- "Political Parties",
- "Outcomes of Democracy",
- "Challenges to Democracy",
- "Development",
- "Sectors of the Indian Economy",
- "Money and Credit",
- "Globalisation and the Indian Economy"
- ],
+    "Social Science":[
+        "The Rise of Nationalism in Europe",
+        "Nationalism in India",
+        "The Making of a Global World",
+        "The Age of Industrialisation",
+        "Print Culture and the Modern World",
+        "Resources and Development",
+        "Forest and Wildlife Resources",
+        "Water Resources",
+        "Agriculture",
+        "Minerals and Energy Resources",
+        "Manufacturing Industries",
+        "Lifelines of National Economy",
+        "Power Sharing",
+        "Federalism",
+        "Gender, Religion and Caste",
+        "Political Parties",
+        "Outcomes of Democracy",
+        "Challenges to Democracy",
+        "Development",
+        "Sectors of the Indian Economy",
+        "Money and Credit",
+        "Globalisation and the Indian Economy"
+    ],
 
- "English":[
- "A Letter to God",
- "Nelson Mandela",
- "Two Stories About Flying",
- "From the Diary of Anne Frank",
- "Glimpses of India",
- "Mijbil the Otter",
- "Madam Rides the Bus",
- "The Sermon at Benares",
- "The Proposal",
- "Dust of Snow",
- "Fire and Ice",
- "A Tiger in the Zoo",
- "How to Tell Wild Animals",
- "The Ball Poem",
- "Amanda!",
- "Animals",
- "The Trees",
- "Fog"
- ],
+    "English":[
+        "A Letter to God",
+        "Nelson Mandela",
+        "Two Stories About Flying",
+        "From the Diary of Anne Frank",
+        "Glimpses of India",
+        "Mijbil the Otter",
+        "Madam Rides the Bus",
+        "The Sermon at Benares",
+        "The Proposal",
+        "Dust of Snow",
+        "Fire and Ice",
+        "A Tiger in the Zoo",
+        "How to Tell Wild Animals",
+        "The Ball Poem",
+        "Amanda!",
+        "Animals",
+        "The Trees",
+        "Fog"
+    ],
 
- "Hindi":[
- "राम-लक्ष्मण-परशुराम संवाद",
- "सवैया और कवित्त",
- "आत्मकथ्य",
- "उत्साह और अट नहीं रही",
- "यह दंतुरित मुस्कान",
- "फसल",
- "छाया मत छूना",
- "कन्यादान",
- "संगतकार",
- "नेताजी का चश्मा",
- "बालगोबिन भगत",
- "लखनवी अंदाज",
- "एक कहानी यह भी",
- "नौबतखाने में इबादत",
- "संस्कृति",
- "माता का अंचल"
- ],
+    "Hindi":[
+        "राम-लक्ष्मण-परशुराम संवाद",
+        "सवैया और कवित्त",
+        "आत्मकथ्य",
+        "उत्साह और अट नहीं रही",
+        "यह दंतुरित मुस्कान",
+        "फसल",
+        "छाया मत छूना",
+        "कन्यादान",
+        "संगतकार",
+        "नेताजी का चश्मा",
+        "बालगोबिन भगत",
+        "लखनवी अंदाज",
+        "एक कहानी यह भी",
+        "नौबतखाने में इबादत",
+        "संस्कृति",
+        "माता का अंचल"
+    ],
 
- "Commerce":[
- "Final Accounts – Introduction",
- "Trading Account",
- "Profit and Loss Account",
- "Balance Sheet",
- "Adjustments in Final Accounts",
- "Business System – Meaning",
- "Objectives of Business",
- "Classification of Business Activities",
- "Industry",
- "Trade",
- "Auxiliaries to Trade",
- "Business Risk",
- "Forms of Business Organisation",
- "Sole Proprietorship",
- "Partnership",
- "Joint Stock Company",
- "Co-operative Organisation",
- "Banking – Introduction",
- "Functions of Commercial Banks",
- "Central Banking",
- "Credit and Loans",
- "Cheques and Banking Instruments",
- "Insurance",
- "Entrepreneurship",
- "Economics – Introduction",
- "Utility and Wealth",
- "Demand and Supply",
- "Production",
- "Cost and Revenue",
- "Market",
- "National Income",
- "Consumer Awareness"
- ]
-
-};
-
-const EMO={
- "Mathematics":"📐",
- "Science":"🔬",
- "Social Science":"🌍",
- "English":"📖",
- "Hindi":"🪔",
- "Commerce":"💼"
-};
-
-
-/* =====================================================
-   QUESTION BANK
-===================================================== */
-
-const QUESTIONS={
-
- "Mathematics":[
-  {
-   q:"Euclid's division algorithm is mainly used to find:",
-   a:["LCM","HCF","Average","Square"],
-   c:1
-  },
-  {
-   q:"The discriminant of ax² + bx + c is:",
-   a:["b² - 4ac","a² - bc","4ac","a+b+c"],
-   c:0
-  },
-  {
-   q:"The probability of an impossible event is:",
-   a:["1","0","-1","2"],
-   c:1
-  }
- ],
-
- "Science":[
-  {
-   q:"A reaction in which oxidation and reduction occur together is:",
-   a:["Redox reaction","Neutralisation","Decomposition","Precipitation"],
-   c:0
-  },
-  {
-   q:"The pH of a neutral solution is approximately:",
-   a:["0","5","7","14"],
-   c:2
-  },
-  {
-   q:"The SI unit of electric current is:",
-   a:["Volt","Ohm","Ampere","Watt"],
-   c:2
-  }
- ],
-
- "Social Science":[
-  {
-   q:"Who led the Civil Disobedience Movement in 1930?",
-   a:["Mahatma Gandhi","Sardar Patel","Subhas Bose","Nehru"],
-   c:0
-  },
-  {
-   q:"Agriculture belongs mainly to which sector?",
-   a:["Primary","Secondary","Tertiary","None"],
-   c:0
-  },
-  {
-   q:"RBI supervises:",
-   a:["Banks","Schools","Railways","Factories"],
-   c:0
-  },
-  {
-   q:"Globalisation mainly means:",
-   a:[
-    "Isolation of economies",
-    "Integration of economies",
-    "Ending trade",
-    "Only local trade"
-   ],
-   c:1
-  }
- ],
-
- "English":[
-  {
-   q:"Who wrote 'A Letter to God'?",
-   a:["G.L. Fuentes","Anne Frank","Robert Frost","Nelson Mandela"],
-   c:0
-  },
-  {
-   q:"Nelson Mandela became President of:",
-   a:["India","South Africa","USA","Britain"],
-   c:1
-  },
-  {
-   q:"Who wrote the diary used in the chapter 'From the Diary of Anne Frank'?",
-   a:["Anne Frank","Helen Keller","Ruskin Bond","G.L. Fuentes"],
-   c:0
-  }
- ],
-
- "Hindi":[
-  {
-   q:"'राम-लक्ष्मण-परशुराम संवाद' के कवि कौन हैं?",
-   a:["तुलसीदास","सूरदास","कबीर","निराला"],
-   c:0
-  },
-  {
-   q:"'संगतकार' के कवि कौन हैं?",
-   a:["मंगलेश डबराल","तुलसीदास","कबीर","सूरदास"],
-   c:0
-  },
-  {
-   q:"'नेताजी का चश्मा' के लेखक कौन हैं?",
-   a:["स्वयं प्रकाश","यशपाल","मन्नू भंडारी","प्रेमचंद"],
-   c:0
-  }
- ],
-
- "Commerce":[
-  {
-   q:"Which account is prepared to find gross profit or gross loss?",
-   a:[
-    "Trading Account",
-    "Balance Sheet",
-    "Cash Book",
-    "Journal"
-   ],
-   c:0
-  },
-  {
-   q:"Balance Sheet shows:",
-   a:[
-    "Financial position",
-    "Only sales",
-    "Only purchases",
-    "Only expenses"
-   ],
-   c:0
-  },
-  {
-   q:"A business owned by one person is called:",
-   a:[
-    "Sole proprietorship",
-    "Partnership",
-    "Company",
-    "Co-operative"
-   ],
-   c:0
-  },
-  {
-   q:"A partnership is formed by:",
-   a:[
-    "Two or more persons",
-    "Only one person",
-    "Only government",
-    "Only banks"
-   ],
-   c:0
-  },
-  {
-   q:"The central bank of India is:",
-   a:[
-    "Reserve Bank of India",
-    "State Bank of India",
-    "Punjab National Bank",
-    "Bank of Baroda"
-   ],
-   c:0
-  },
-  {
-   q:"Demand generally refers to:",
-   a:[
-    "Quantity consumers are willing and able to buy",
-    "Only production",
-    "Only saving",
-    "Only taxation"
-   ],
-   c:0
-  }
- ]
+    "Commerce":[
+        "Final Accounts – Introduction",
+        "Trading Account",
+        "Profit and Loss Account",
+        "Balance Sheet",
+        "Adjustments in Final Accounts",
+        "Business System – Meaning",
+        "Objectives of Business",
+        "Classification of Business Activities",
+        "Industry",
+        "Trade",
+        "Auxiliaries to Trade",
+        "Business Risk",
+        "Forms of Business Organisation",
+        "Sole Proprietorship",
+        "Partnership",
+        "Joint Stock Company",
+        "Co-operative Organisation",
+        "Banking – Introduction",
+        "Functions of Commercial Banks",
+        "Central Banking",
+        "Credit and Loans",
+        "Cheques and Banking Instruments",
+        "Insurance",
+        "Entrepreneurship",
+        "Economics – Introduction",
+        "Utility and Wealth",
+        "Demand and Supply",
+        "Production",
+        "Cost and Revenue",
+        "Market",
+        "National Income",
+        "Consumer Awareness"
+    ]
 
 };
 
 
-/* =====================================================
-   STATE
-===================================================== */
+const EMO = {
+    "Mathematics":"📐",
+    "Science":"🔬",
+    "Social Science":"🌍",
+    "English":"📖",
+    "Hindi":"🪔",
+    "Commerce":"💼"
+};
 
-let state=
- JSON.parse(localStorage.getItem("prepvio")) ||
- {
-  name:"",
-  selectedSubjects:[],
-  done:{},
-  points:0,
-  streak:0,
-  target:95,
-  weeklyScores:{}
- };
+
+/* ================= QUESTION BANK ================= */
+
+const QUESTIONS = {
+
+    "Mathematics":[
+        {
+            q:"Euclid's division algorithm is mainly used to find:",
+            a:["LCM","HCF","Average","Square"],
+            c:1
+        },
+        {
+            q:"The discriminant of ax² + bx + c is:",
+            a:["b² - 4ac","a² - bc","4ac","a+b+c"],
+            c:0
+        },
+        {
+            q:"The probability of an impossible event is:",
+            a:["1","0","-1","2"],
+            c:1
+        },
+        {
+            q:"The degree of a quadratic polynomial is:",
+            a:["1","2","3","4"],
+            c:1
+        }
+    ],
+
+    "Science":[
+        {
+            q:"A reaction in which oxidation and reduction occur together is:",
+            a:["Redox reaction","Neutralisation","Decomposition","Precipitation"],
+            c:0
+        },
+        {
+            q:"The pH of a neutral solution is approximately:",
+            a:["0","5","7","14"],
+            c:2
+        },
+        {
+            q:"The SI unit of electric current is:",
+            a:["Volt","Ohm","Ampere","Watt"],
+            c:2
+        },
+        {
+            q:"The green pigment in plants is called:",
+            a:["Haemoglobin","Chlorophyll","Melanin","Insulin"],
+            c:1
+        }
+    ],
+
+    "Social Science":[
+        {
+            q:"Who led the Civil Disobedience Movement in 1930?",
+            a:["Mahatma Gandhi","Sardar Patel","Subhas Bose","Nehru"],
+            c:0
+        },
+        {
+            q:"Agriculture belongs mainly to which sector?",
+            a:["Primary","Secondary","Tertiary","None"],
+            c:0
+        },
+        {
+            q:"RBI supervises:",
+            a:["Banks","Schools","Railways","Factories"],
+            c:0
+        },
+        {
+            q:"Globalisation mainly means:",
+            a:[
+                "Isolation of economies",
+                "Integration of economies",
+                "Ending trade",
+                "Only local trade"
+            ],
+            c:1
+        }
+    ],
+
+    "English":[
+        {
+            q:"Who wrote 'A Letter to God'?",
+            a:[
+                "G.L. Fuentes",
+                "Anne Frank",
+                "Robert Frost",
+                "Nelson Mandela"
+            ],
+            c:0
+        },
+        {
+            q:"Nelson Mandela became President of:",
+            a:[
+                "India",
+                "South Africa",
+                "USA",
+                "Britain"
+            ],
+            c:1
+        },
+        {
+            q:"Who wrote the diary used in 'From the Diary of Anne Frank'?",
+            a:[
+                "Anne Frank",
+                "Helen Keller",
+                "Ruskin Bond",
+                "G.L. Fuentes"
+            ],
+            c:0
+        },
+        {
+            q:"'Dust of Snow' was written by:",
+            a:[
+                "Robert Frost",
+                "William Shakespeare",
+                "W.B. Yeats",
+                "John Keats"
+            ],
+            c:0
+        }
+    ],
+
+    "Hindi":[
+        {
+            q:"'राम-लक्ष्मण-परशुराम संवाद' के कवि कौन हैं?",
+            a:["तुलसीदास","सूरदास","कबीर","निराला"],
+            c:0
+        },
+        {
+            q:"'संगतकार' के कवि कौन हैं?",
+            a:["मंगलेश डबराल","तुलसीदास","कबीर","सूरदास"],
+            c:0
+        },
+        {
+            q:"'नेताजी का चश्मा' के लेखक कौन हैं?",
+            a:["स्वयं प्रकाश","यशपाल","मन्नू भंडारी","प्रेमचंद"],
+            c:0
+        },
+        {
+            q:"'कन्यादान' कविता के कवि कौन हैं?",
+            a:["ऋतुराज","निराला","दिनकर","सुमित्रानंदन पंत"],
+            c:0
+        }
+    ],
+
+    "Commerce":[
+        {
+            q:"Which account is prepared to find gross profit or gross loss?",
+            a:[
+                "Trading Account",
+                "Balance Sheet",
+                "Cash Book",
+                "Journal"
+            ],
+            c:0
+        },
+        {
+            q:"Balance Sheet shows:",
+            a:[
+                "Financial position",
+                "Only sales",
+                "Only purchases",
+                "Only expenses"
+            ],
+            c:0
+        },
+        {
+            q:"A business owned by one person is called:",
+            a:[
+                "Sole proprietorship",
+                "Partnership",
+                "Company",
+                "Co-operative"
+            ],
+            c:0
+        },
+        {
+            q:"A partnership is formed by:",
+            a:[
+                "Two or more persons",
+                "Only one person",
+                "Only government",
+                "Only banks"
+            ],
+            c:0
+        },
+        {
+            q:"The central bank of India is:",
+            a:[
+                "Reserve Bank of India",
+                "State Bank of India",
+                "Punjab National Bank",
+                "Bank of Baroda"
+            ],
+            c:0
+        },
+        {
+            q:"Demand generally refers to:",
+            a:[
+                "Quantity consumers are willing and able to buy",
+                "Only production",
+                "Only saving",
+                "Only taxation"
+            ],
+            c:0
+        }
+    ]
+
+};
+
+
+/* ================= SAFE STORAGE ================= */
+
+/*
+   IMPORTANT FIX:
+   Old/corrupted localStorage can no longer break the app.
+*/
+
+const DEFAULT_STATE = {
+    name:"",
+    selectedSubjects:[],
+    done:{},
+    points:0,
+    streak:0,
+    target:95
+};
+
+let state = loadState();
+
+function loadState(){
+
+    try{
+
+        const saved = localStorage.getItem("prepvio");
+
+        if(!saved){
+            return {...DEFAULT_STATE};
+        }
+
+        const parsed = JSON.parse(saved);
+
+        if(!parsed || typeof parsed !== "object"){
+            return {...DEFAULT_STATE};
+        }
+
+        return {
+            ...DEFAULT_STATE,
+            ...parsed,
+            selectedSubjects:Array.isArray(parsed.selectedSubjects)
+                ? parsed.selectedSubjects
+                : [],
+            done:parsed.done && typeof parsed.done==="object"
+                ? parsed.done
+                : {}
+        };
+
+    }catch(error){
+
+        console.log("Storage reset:",error);
+
+        localStorage.removeItem("prepvio");
+
+        return {...DEFAULT_STATE};
+    }
+}
+
 
 function save(){
 
- localStorage.setItem(
-  "prepvio",
-  JSON.stringify(state)
- );
+    try{
+        localStorage.setItem("prepvio",JSON.stringify(state));
+    }catch(error){
+        console.log("Could not save:",error);
+    }
 
 }
 
 
-/* =====================================================
-   LOGIN
-===================================================== */
+/* ================= LOGIN ================= */
 
 function login(){
 
- const name=
-  document.getElementById("userName")
-  .value.trim();
+    const input = document.getElementById("userName");
 
- if(!name){
+    const name = input.value.trim();
 
-  alert("Please enter your name.");
+    if(name.length===0){
 
-  return;
- }
+        alert("Please enter your name.");
 
- state.name=name;
+        input.focus();
 
- save();
+        return;
+    }
 
- document.getElementById(
-  "loginPage"
- ).style.display="none";
+    state.name = name;
 
- if(
-  !state.selectedSubjects ||
-  state.selectedSubjects.length===0
- ){
+    save();
 
-  showSubjectSelection();
+    document.getElementById("loginPage").style.display="none";
 
- }else{
-
-  showApp();
-
- }
-
+    showSubjectSelection();
 }
 
 
-/* =====================================================
-   SUBJECT SELECTION
-===================================================== */
+/* Enter key also works */
+
+document.getElementById("userName").addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key==="Enter"){
+            login();
+        }
+
+    }
+);
+
+
+/* ================= SUBJECT SELECTION ================= */
 
 function showSubjectSelection(){
 
- document.getElementById(
-  "subjectPage"
- ).style.display="block";
+    document.getElementById("app").style.display="none";
 
- const box=
-  document.getElementById(
-   "subjectOptions"
-  );
+    document.getElementById("loginPage").style.display="none";
 
- box.innerHTML=
-  Object.keys(DATA).map(s=>`
+    document.getElementById("subjectPage").style.display="block";
 
-   <label class="card">
+    const box = document.getElementById("subjectOptions");
 
-    <div class="select-subject">
+    box.innerHTML = Object.keys(DATA).map(subject=>`
 
-     <input
-      type="checkbox"
-      class="subjectCheck"
-      value="${s}"
-      ${state.selectedSubjects.includes(s)
-       ?"checked":""
-      }
-     >
+        <label class="subject-select-card">
 
-     <div>
+            <input
+                type="checkbox"
+                class="subjectCheck"
+                value="${escapeHtml(subject)}"
+                ${state.selectedSubjects.includes(subject)?"checked":""}
+            >
 
-      <div style="font-size:30px">
-       ${EMO[s]}
-      </div>
+            <div>
+                <div style="font-size:31px">
+                    ${EMO[subject]}
+                </div>
 
-      <b>${s}</b>
+                <b>${escapeHtml(subject)}</b>
 
-      <div class="small muted">
-       ${DATA[s].length} study modules
-      </div>
+                <div class="small muted" style="margin-top:4px">
+                    ${DATA[subject].length} study modules
+                </div>
+            </div>
 
-     </div>
+        </label>
 
-    </div>
-
-   </label>
-
-  `).join("");
+    `).join("");
 
 }
 
 
 function saveSubjects(){
 
- const selected=[
-  ...document.querySelectorAll(
-   ".subjectCheck:checked"
-  )
- ].map(x=>x.value);
+    const selected = [
+        ...document.querySelectorAll(".subjectCheck:checked")
+    ].map(input=>input.value);
 
- if(selected.length===0){
+    if(selected.length===0){
 
-  alert("Please select at least one subject.");
+        alert("Please select at least one subject.");
 
-  return;
- }
+        return;
+    }
 
- state.selectedSubjects=selected;
+    state.selectedSubjects = selected;
 
- save();
+    save();
 
- document.getElementById(
-  "subjectPage"
- ).style.display="none";
+    document.getElementById("subjectPage").style.display="none";
 
- showApp();
-
+    showApp();
 }
 
 
-function changeSubjects(){
-
- document.getElementById(
-  "app"
- ).style.display="none";
-
- showSubjectSelection();
-
-}
-
-
-/* =====================================================
-   SHOW APP
-===================================================== */
+/* ================= APP ================= */
 
 function showApp(){
 
- document.getElementById(
-  "app"
- ).style.display="block";
+    document.getElementById("loginPage").style.display="none";
 
- document.getElementById(
-  "welcomeName"
- ).textContent=state.name;
+    document.getElementById("subjectPage").style.display="none";
 
- document.getElementById(
-  "profileName"
- ).textContent=state.name;
+    document.getElementById("app").style.display="block";
 
- document.getElementById(
-  "profileAvatar"
- ).textContent=
-  state.name.charAt(0).toUpperCase();
+    document.getElementById("welcomeName").textContent=state.name;
 
- renderHome();
+    document.getElementById("profileName").textContent=state.name;
 
+    document.getElementById("profileAvatar").textContent=
+        state.name.charAt(0).toUpperCase();
+
+    renderHome();
 }
 
 
-/* =====================================================
-   NAVIGATION
-===================================================== */
+/* ================= PAGE NAVIGATION ================= */
 
 function hidePages(){
 
- [
-  "homePage",
-  "subjectsPage",
-  "progressPage",
-  "profilePage",
-  "chapterPage"
- ].forEach(id=>{
+    document.getElementById("homePage").style.display="none";
 
-  document.getElementById(
-   id
-  ).style.display="none";
+    document.getElementById("subjectsPage").style.display="none";
 
- });
+    document.getElementById("progressPage").style.display="none";
 
+    document.getElementById("profilePage").style.display="none";
+
+    document.getElementById("chapterPage").style.display="none";
 }
+
 
 function showPage(page){
 
- hidePages();
+    hidePages();
 
- document
-  .getElementById(
-   page+"Page"
-  )
-  .style.display="block";
+    document.getElementById(page+"Page").style.display="block";
 
- document
-  .querySelectorAll(".nav-btn")
-  .forEach(x=>x.classList.remove("active"));
+    document.querySelectorAll(".nav-btn").forEach(btn=>{
+        btn.classList.remove("active");
+    });
 
- const nav=
-  document.getElementById(
-   "nav"+
-   page.charAt(0).toUpperCase()+
-   page.slice(1)
-  );
+    const nav =
+        document.getElementById(
+            "nav"+page.charAt(0).toUpperCase()+page.slice(1)
+        );
 
- if(nav) nav.classList.add("active");
+    if(nav){
+        nav.classList.add("active");
+    }
 
- if(page==="home")
-  renderHome();
+    if(page==="home"){
+        renderHome();
+    }
 
- if(page==="subjects")
-  renderSubjects();
+    if(page==="subjects"){
+        renderSubjects();
+    }
 
- if(page==="progress")
-  renderProgress();
+    if(page==="progress"){
+        renderProgress();
+    }
 
 }
 
 
 function goSubjects(){
 
- showPage("subjects");
+    showPage("subjects");
 
 }
 
 
-/* =====================================================
-   HOME
-===================================================== */
+/* ================= HOME ================= */
 
 function renderHome(){
 
- hidePages();
+    hidePages();
 
- document.getElementById(
-  "homePage"
- ).style.display="block";
+    document.getElementById("homePage").style.display="block";
 
- document.getElementById(
-  "navHome"
- ).classList.add("active");
+    document.querySelectorAll(".nav-btn").forEach(btn=>{
+        btn.classList.remove("active");
+    });
 
- updateStats();
+    document.getElementById("navHome").classList.add("active");
 
- renderHomeSubjects();
+    updateStats();
 
- renderWeekly();
+    renderHomeSubjects();
 
+    renderWeekly();
 }
 
 
 function updateStats(){
 
- let completed=0;
+    let completed=0;
 
- Object.values(state.done)
-  .forEach(v=>{
+    Object.values(state.done).forEach(value=>{
 
-   if(v) completed++;
+        if(value){
+            completed++;
+        }
 
-  });
+    });
 
- document.getElementById(
-  "completedCount"
- ).textContent=completed;
+    document.getElementById("completedCount").textContent=completed;
 
- document.getElementById(
-  "points"
- ).textContent=state.points;
+    document.getElementById("points").textContent=state.points || 0;
 
- document.getElementById(
-  "streak"
- ).textContent=state.streak;
-
- document.getElementById(
-  "target"
- ).textContent=state.target+"%";
-
+    document.getElementById("streak").textContent=state.streak || 0;
 }
 
 
-/* =====================================================
-   SUBJECTS
-===================================================== */
+/* ================= SUBJECTS ================= */
+
+function subjectPercent(subject){
+
+    const total=DATA[subject].length;
+
+    let done=0;
+
+    DATA[subject].forEach((chapter,index)=>{
+
+        if(state.done[subject+"_"+index]){
+            done++;
+        }
+
+    });
+
+    return total
+        ? Math.round(done/total*100)
+        : 0;
+}
+
 
 function renderSubjects(){
 
- const box=
-  document.getElementById(
-   "allSubjects"
-  );
+    const box=document.getElementById("allSubjects");
 
- box.innerHTML=
-  state.selectedSubjects.map(s=>`
+    box.innerHTML=state.selectedSubjects.map(subject=>`
 
-   <div
-    class="subject"
-    onclick="openSubject('${s}')"
-   >
+        <div
+            class="subject"
+            onclick="openSubject(${JSON.stringify(subject)})"
+        >
 
-    <div class="subject-icon">
-     ${EMO[s]}
-    </div>
+            <div class="subject-icon">
+                ${EMO[subject]}
+            </div>
 
-    <div class="subject-title">
-     ${s}
-    </div>
+            <div class="subject-title">
+                ${escapeHtml(subject)}
+            </div>
 
-    <div class="small muted">
-     ${DATA[s].length} modules
-    </div>
+            <div class="small muted">
+                ${DATA[subject].length} modules
+            </div>
 
-    <div class="progress">
-     <span
-      style="width:${subjectPercent(s)}%"
-     ></span>
-    </div>
+            <div class="progress">
+                <span style="width:${subjectPercent(subject)}%"></span>
+            </div>
 
-   </div>
+            <div class="small muted" style="margin-top:7px">
+                ${subjectPercent(subject)}% completed
+            </div>
 
-  `).join("");
+        </div>
+
+    `).join("");
 
 }
 
 
 function renderHomeSubjects(){
 
- const box=
-  document.getElementById(
-   "homeSubjects"
-  );
+    const box=document.getElementById("homeSubjects");
 
- box.innerHTML=
-  state.selectedSubjects.map(s=>`
+    box.innerHTML=state.selectedSubjects.map(subject=>`
 
-   <div
-    class="subject"
-    onclick="openSubject('${s}')"
-   >
+        <div
+            class="subject"
+            onclick="openSubject(${JSON.stringify(subject)})"
+        >
 
-    <div class="subject-icon">
-     ${EMO[s]}
-    </div>
+            <div class="subject-icon">
+                ${EMO[subject]}
+            </div>
 
-    <div class="subject-title">
-     ${s}
-    </div>
+            <div class="subject-title">
+                ${escapeHtml(subject)}
+            </div>
 
-    <div class="small muted">
-     ${subjectPercent(s)}% completed
-    </div>
+            <div class="small muted">
+                ${subjectPercent(subject)}% completed
+            </div>
 
-    <div class="progress">
-     <span
-      style="width:${subjectPercent(s)}%"
-     ></span>
-    </div>
+            <div class="progress">
+                <span style="width:${subjectPercent(subject)}%"></span>
+            </div>
 
-   </div>
+        </div>
 
-  `).join("");
+    `).join("");
 
 }
 
 
-function subjectPercent(subject){
-
- let total=
-  DATA[subject].length;
-
- let done=0;
-
- DATA[subject].forEach(
-  (_,i)=>{
-
-   if(
-    state.done[
-     subject+"_"+i
-    ]
-   ) done++;
-
-  }
- );
-
- return Math.round(
-  done/total*100
- );
-
-}
-
-
-/* =====================================================
-   CHAPTERS
-===================================================== */
+/* ================= CHAPTERS ================= */
 
 function openSubject(subject){
 
- hidePages();
+    hidePages();
 
- document.getElementById(
-  "chapterPage"
- ).style.display="block";
+    document.getElementById("chapterPage").style.display="block";
 
- document.getElementById(
-  "subjectHeading"
- ).textContent=
-  EMO[subject]+" "+subject;
+    document.querySelectorAll(".nav-btn").forEach(btn=>{
+        btn.classList.remove("active");
+    });
 
- const box=
-  document.getElementById(
-   "chapterList"
-  );
+    document.getElementById("navSubjects").classList.add("active");
 
- box.innerHTML=
-  DATA[subject].map(
-   (chapter,index)=>{
+    document.getElementById("subjectHeading").textContent=
+        EMO[subject]+" "+subject;
 
-    const key=
-     subject+"_"+index;
+    const box=document.getElementById("chapterList");
 
-    const done=
-     !!state.done[key];
+    box.innerHTML=DATA[subject].map((chapter,index)=>{
 
-    return `
+        const key=subject+"_"+index;
 
-     <div class="chapter">
+        const completed=!!state.done[key];
 
-      <div class="chapter-title">
-       ${index+1}. ${chapter}
-      </div>
+        return `
 
-      <div class="small muted">
-       ${
-        done
-        ?"✅ Completed"
-        :"📘 Not completed"
-       }
-      </div>
+            <div class="chapter">
 
-      <div class="chapter-actions">
+                <div class="chapter-title">
+                    ${index+1}. ${escapeHtml(chapter)}
+                </div>
 
-       <button
-        class="ghost"
-        onclick="studyChapter('${subject}',${index})"
-       >
-        ▶ Study
-       </button>
+                <div
+                    class="small muted"
+                    style="margin-top:5px"
+                >
+                    ${completed
+                        ?"✅ Completed"
+                        :"📘 Not completed"}
+                </div>
 
-       <button
-        class="primary"
-        onclick="giveTest('${subject}',${index})"
-       >
-        📝 Give Test
-       </button>
+                <div class="chapter-actions">
 
-      </div>
+                    <button
+                        class="ghost"
+                        type="button"
+                        onclick='studyChapter(${JSON.stringify(subject)},${index})'
+                    >
+                        ▶ Study
+                    </button>
 
-     </div>
+                    <button
+                        class="primary"
+                        type="button"
+                        style="width:auto"
+                        onclick='giveTest(${JSON.stringify(subject)},${index})'
+                    >
+                        📝 Give Test
+                    </button>
 
-    `;
+                </div>
 
-   }
-  ).join("");
+            </div>
+
+        `;
+
+    }).join("");
 
 }
 
+
+/* ================= STUDY ================= */
 
 function studyChapter(subject,index){
 
- const chapter=
-  DATA[subject][index];
+    const chapter=DATA[subject][index];
 
- const search=
-  encodeURIComponent(
-   "UP Board Class 10 "+
-   subject+" "+
-   chapter+
-   " important questions"
-  );
+    const query=encodeURIComponent(
+        "UP Board Class 10 "+subject+" "+chapter+
+        " important questions MCQ"
+    );
 
- window.open(
-  "https://www.youtube.com/results?search_query="+
-  search,
-  "_blank"
- );
-
+    window.open(
+        "https://www.youtube.com/results?search_query="+query,
+        "_blank"
+    );
 }
 
 
-/* =====================================================
-   TEST
-===================================================== */
+/* ================= TEST SYSTEM ================= */
 
 let currentTest=null;
 
+
 function giveTest(subject,index){
 
- const bank=
-  QUESTIONS[subject] || [];
+    const bank=QUESTIONS[subject] || [];
 
- if(!bank.length){
+    if(bank.length===0){
 
-  alert(
-   "Question bank is not available yet."
-  );
+        alert("Question bank is not available.");
 
-  return;
- }
+        return;
+    }
 
- currentTest={
-  subject:subject,
-  index:index,
-  questions:bank.slice(
-   0,
-   Math.min(6,bank.length)
-  )
- };
+    currentTest={
+        subject:subject,
+        index:index,
+        questions:bank
+    };
 
- document.getElementById(
-  "testTitle"
- ).textContent=
-  "📝 "+subject+
-  " • "+
-  DATA[subject][index];
+    openTestModal(
+        "📝 "+subject+" • "+DATA[subject][index]
+    );
+}
 
- document.getElementById(
-  "testResult"
- ).innerHTML="";
 
- document.getElementById(
-  "submitTestBtn"
- ).disabled=false;
+function openTestModal(title){
 
- document.getElementById(
-  "testQuestions"
- ).innerHTML=
-  currentTest.questions.map(
-   (item,i)=>`
+    document.getElementById("testTitle").textContent=title;
 
-    <div style="margin-bottom:20px">
+    document.getElementById("testResult").innerHTML="";
 
-     <b>
-      Q${i+1}. ${item.q}
-     </b>
+    document.getElementById("submitTestBtn").disabled=false;
 
-     ${
-      item.a.map(
-       (option,j)=>`
+    document.getElementById("testQuestions").innerHTML=
+        currentTest.questions.map((item,i)=>`
 
-        <label class="option">
+            <div style="margin-bottom:20px">
 
-         <input
-          type="radio"
-          name="testq${i}"
-          value="${j}"
-         >
+                <b>
+                    Q${i+1}. ${escapeHtml(item.q)}
+                </b>
 
-         ${option}
+                ${
+                    item.a.map((option,j)=>`
 
-        </label>
+                        <label class="option">
 
-       `
-      ).join("")
-     }
+                            <input
+                                type="radio"
+                                name="testq${i}"
+                                value="${j}"
+                            >
 
-    </div>
+                            ${escapeHtml(option)}
 
-   `
-  ).join("");
+                        </label>
 
- document.getElementById(
-  "testModal"
- ).style.display="flex";
+                    `).join("")
+                }
 
+            </div>
+
+        `).join("");
+
+    document.getElementById("testModal").style.display="flex";
 }
 
 
 function submitTest(){
 
- if(!currentTest) return;
+    if(!currentTest){
+        return;
+    }
 
- let correct=0;
+    let correct=0;
 
- currentTest.questions.forEach(
-  (item,i)=>{
+    currentTest.questions.forEach((question,index)=>{
 
-   const ans=
-    document.querySelector(
-     `input[name="testq${i}"]:checked`
+        const selected=document.querySelector(
+            `input[name="testq${index}"]:checked`
+        );
+
+        if(
+            selected &&
+            Number(selected.value)===question.c
+        ){
+            correct++;
+        }
+
+    });
+
+    const total=currentTest.questions.length;
+
+    const percentage=Math.round(
+        correct/total*100
     );
 
-   if(
-    ans &&
-    Number(ans.value)===item.c
-   ){
+    /*
+       Requirement:
+       More than 75% = chapter completed.
+    */
 
-    correct++;
+    const passed=percentage>75;
 
-   }
+    if(passed){
 
-  }
- );
+        if(currentTest.index>=0){
 
- const total=
-  currentTest.questions.length;
+            const key=
+                currentTest.subject+"_"+currentTest.index;
 
- const percentage=
-  Math.round(
-   correct/total*100
-  );
+            if(!state.done[key]){
 
- const passed=
-  percentage>75;
+                state.done[key]=true;
 
- if(passed){
+                state.points=(state.points||0)+10;
 
-  const key=
-   currentTest.subject+
-   "_"+
-   currentTest.index;
+            }
 
-  if(!state.done[key]){
+        }else{
 
-   state.done[key]=true;
+            state.points=(state.points||0)+15;
+        }
 
-   state.points+=10;
+        save();
 
-  }
+        document.getElementById("testResult").innerHTML=`
 
-  document.getElementById(
-   "testResult"
-  ).innerHTML=`
+            <div class="result">
 
-   <div class="result">
+                🎉 Test Passed!
 
-    🎉 Test Passed!
+                <div style="font-size:16px;margin-top:7px">
+                    ${correct}/${total}
+                    (${percentage}%)
+                </div>
 
-    <div style="font-size:16px;margin-top:8px">
-     ${correct}/${total}
-     (${percentage}%)
-    </div>
+                <div
+                    class="small muted"
+                    style="margin-top:6px"
+                >
+                    ${
+                        currentTest.index>=0
+                        ?"Chapter completed! +10 ⭐"
+                        :"Weekly Test completed! +15 ⭐"
+                    }
+                </div>
 
-    <div class="small muted">
-     Chapter completed successfully.
-     +10 ⭐
-    </div>
+            </div>
 
-   </div>
+        `;
 
-  `;
+        updateStats();
 
-  save();
+    }else{
 
- }else{
+        document.getElementById("testResult").innerHTML=`
 
-  document.getElementById(
-   "testResult"
-  ).innerHTML=`
+            <div
+                class="result"
+                style="background:#fff0f0"
+            >
 
-   <div
-    class="result"
-    style="background:#fff0f0"
-   >
+                📚 Keep Practising
 
-    📚 Keep Practising
+                <div style="font-size:16px;margin-top:7px">
+                    ${correct}/${total}
+                    (${percentage}%)
+                </div>
 
-    <div style="font-size:16px;margin-top:8px">
-     ${correct}/${total}
-     (${percentage}%)
-    </div>
+                <div
+                    class="small muted"
+                    style="margin-top:6px"
+                >
+                    You need more than 75% to complete this chapter.
+                </div>
 
-    <div class="small muted">
-     You need more than 75% to complete
-     the chapter.
-    </div>
+            </div>
 
-   </div>
+        `;
+    }
 
-  }
-
- document.getElementById(
-  "submitTestBtn"
- ).disabled=true;
-
+    document.getElementById("submitTestBtn").disabled=true;
 }
 
 
 function closeTest(){
 
- document.getElementById(
-  "testModal"
- ).style.display="none";
+    document.getElementById("testModal").style.display="none";
 
- currentTest=null;
-
- renderHome();
+    currentTest=null;
 
 }
 
 
-/* =====================================================
-   WEEKLY TEST
-===================================================== */
+/* ================= WEEKLY TEST ================= */
 
 function weeklySubject(){
 
- const list=
-  state.selectedSubjects;
+    if(!state.selectedSubjects.length){
+        return null;
+    }
 
- if(!list.length)
-  return null;
+    const week=Math.floor(
+        Date.now()/(7*24*60*60*1000)
+    );
 
- const week=
-  Math.floor(
-   Date.now()/
-   (7*24*60*60*1000)
-  );
-
- return list[
-  week%list.length
- ];
-
+    return state.selectedSubjects[
+        week%state.selectedSubjects.length
+    ];
 }
 
 
 function renderWeekly(){
 
- const box=
-  document.getElementById(
-   "weeklyBox"
-  );
+    const box=document.getElementById("weeklyBox");
 
- const subject=
-  weeklySubject();
+    const subject=weeklySubject();
 
- if(!subject){
+    if(!subject){
 
-  box.innerHTML=
-   "<p class='muted'>Select subjects first.</p>";
+        box.innerHTML=`
+            <p class="muted">
+                Select subjects first.
+            </p>
+        `;
 
-  return;
- }
+        return;
+    }
 
- box.innerHTML=`
+    box.innerHTML=`
 
-  <div class="chapter">
+        <div class="chapter">
 
-   <div class="subject-icon">
-    ${EMO[subject]}
-   </div>
+            <div class="subject-icon">
+                ${EMO[subject]}
+            </div>
 
-   <h3>
-    This Week: ${subject}
-   </h3>
+            <h3 style="margin-top:7px">
+                This Week: ${escapeHtml(subject)}
+            </h3>
 
-   <p class="small muted">
-    Practice important board-style questions.
-   </p>
+            <p class="small muted" style="margin:6px 0 12px">
+                Practice important board-style questions.
+            </p>
 
-   <button
-    class="primary"
-    onclick="startWeekly('${subject}')"
-   >
-    📝 Start Weekly Test
-   </button>
+            <button
+                class="primary"
+                type="button"
+                onclick='startWeekly(${JSON.stringify(subject)})'
+            >
+                📝 Start Weekly Test
+            </button>
 
-  </div>
+        </div>
 
- `;
-
+    `;
 }
 
 
 function startWeekly(subject){
 
- const bank=
-  QUESTIONS[subject] || [];
+    const bank=QUESTIONS[subject] || [];
 
- if(!bank.length) return;
+    if(bank.length===0){
+        return;
+    }
 
- currentTest={
-  subject:subject,
-  index:-1,
-  questions:bank.slice(
-   0,
-   Math.min(6,bank.length)
-  )
- };
+    currentTest={
+        subject:subject,
+        index:-1,
+        questions:bank
+    };
 
- document.getElementById(
-  "testTitle"
- ).textContent=
-  "📅 Weekly Test • "+subject;
-
- document.getElementById(
-  "testResult"
- ).innerHTML="";
-
- document.getElementById(
-  "submitTestBtn"
- ).disabled=false;
-
- document.getElementById(
-  "testQuestions"
- ).innerHTML=
-  currentTest.questions.map(
-   (item,i)=>`
-
-    <div style="margin-bottom:20px">
-
-     <b>
-      Q${i+1}. ${item.q}
-     </b>
-
-     ${
-      item.a.map(
-       (option,j)=>`
-
-        <label class="option">
-
-         <input
-          type="radio"
-          name="testq${i}"
-          value="${j}"
-         >
-
-         ${option}
-
-        </label>
-
-       `
-      ).join("")
-     }
-
-    </div>
-
-   `
-  ).join("");
-
- document.getElementById(
-  "testModal"
- ).style.display="flex";
-
+    openTestModal(
+        "📅 Weekly Test • "+subject
+    );
 }
 
 
-/* =====================================================
-   PROGRESS
-===================================================== */
+/* ================= PROGRESS ================= */
 
 function renderProgress(){
 
- let total=0;
- let done=0;
+    let total=0;
 
- state.selectedSubjects.forEach(
-  subject=>{
+    let completed=0;
 
-   total+=DATA[subject].length;
+    state.selectedSubjects.forEach(subject=>{
 
-   DATA[subject].forEach(
-    (_,i)=>{
+        total+=DATA[subject].length;
 
-     if(
-      state.done[
-       subject+"_"+i
-      ]
-     ) done++;
+        DATA[subject].forEach((chapter,index)=>{
 
-    }
-   );
+            if(state.done[subject+"_"+index]){
+                completed++;
+            }
 
-  }
- );
+        });
 
- const percent=
-  total?
-  Math.round(done/total*100):
-  0;
+    });
 
- document.getElementById(
-  "progressContent"
- ).innerHTML=`
+    const percentage=total
+        ?Math.round(completed/total*100)
+        :0;
 
-  <h2>${percent}% Overall Progress</h2>
+    document.getElementById("progressContent").innerHTML=`
 
-  <div class="progress" style="height:14px">
-   <span style="width:${percent}%"></span>
-  </div>
+        <h2>${percentage}% Overall Progress</h2>
 
-  <p class="muted">
-   ${done} of ${total} study modules completed.
-  </p>
+        <div
+            class="progress"
+            style="height:14px"
+        >
+            <span style="width:${percentage}%"></span>
+        </div>
 
-  <hr style="border:0;border-top:1px solid var(--border)">
+        <p
+            class="muted"
+            style="margin-top:8px"
+        >
+            ${completed} of ${total} study modules completed.
+        </p>
 
-  ${
-   state.selectedSubjects.map(
-    subject=>`
+        <hr
+            style="
+                border:0;
+                border-top:1px solid #e6e7ef;
+                margin:18px 0
+            "
+        >
 
-     <div style="margin:15px 0">
+        ${
+            state.selectedSubjects.map(subject=>`
 
-      <b>
-       ${EMO[subject]} ${subject}
-      </b>
+                <div style="margin:18px 0">
 
-      <div class="progress">
-       <span
-        style="width:${subjectPercent(subject)}%"
-       ></span>
-      </div>
+                    <b>
+                        ${EMO[subject]} ${escapeHtml(subject)}
+                    </b>
 
-      <div class="small muted">
-       ${subjectPercent(subject)}%
-      </div>
+                    <div class="progress">
+                        <span
+                            style="width:${subjectPercent(subject)}%"
+                        ></span>
+                    </div>
 
-     </div>
+                    <div class="small muted" style="margin-top:5px">
+                        ${subjectPercent(subject)}%
+                    </div>
 
-    `
-   ).join("")
-  }
+                </div>
 
- `;
+            `).join("")
+        }
 
+    `;
 }
 
 
-/* =====================================================
-   TIMER
-===================================================== */
+/* ================= FOCUS TIMER ================= */
 
-let timerInt=null;
-
-let secs=1500;
+let timerInterval=null;
 
 let timerRunning=false;
 
+let secondsLeft=25*60;
 
-function tick(){
 
- const m=
-  Math.floor(secs/60);
+function updateTimerDisplay(){
 
- const s=
-  secs%60;
+    const minutes=Math.floor(secondsLeft/60);
 
- document.getElementById(
-  "timer"
- ).textContent=
-  String(m).padStart(2,"0")+
-  ":"+
-  String(s).padStart(2,"0");
+    const seconds=secondsLeft%60;
 
+    document.getElementById("timer").textContent=
+        String(minutes).padStart(2,"0")+
+        ":"+
+        String(seconds).padStart(2,"0");
 }
 
 
 function startFocus(){
 
- if(timerRunning) return;
+    if(timerRunning){
+        return;
+    }
 
- const minutes=
-  Number(
-   document.getElementById(
-    "customMinutes"
-   ).value
-  );
-
- if(
-  !minutes ||
-  minutes<1 ||
-  minutes>180
- ){
-
-  alert(
-   "Enter a duration between 1 and 180 minutes."
-  );
-
-  return;
- }
-
- secs=
-  minutes*60;
-
- timerRunning=true;
-
- document.getElementById(
-  "customMinutes"
- ).disabled=true;
-
- document.getElementById(
-  "startTimerBtn"
- ).disabled=true;
-
- document.getElementById(
-  "stopTimerBtn"
- ).disabled=true;
-
- tick();
-
- timerInt=
-  setInterval(()=>{
-
-   secs--;
-
-   tick();
-
-   if(secs<=0){
-
-    clearInterval(timerInt);
-
-    timerRunning=false;
-
-    document.getElementById(
-     "customMinutes"
-    ).disabled=false;
-
-    document.getElementById(
-     "startTimerBtn"
-    ).disabled=false;
-
-    state.points+=5;
-
-    save();
-
-    alert(
-     "Focus session complete! +5 ⭐"
+    const minutes=Number(
+        document.getElementById("customMinutes").value
     );
 
-    secs=
-     Number(
-      document.getElementById(
-       "customMinutes"
-      ).value
-     )*60;
+    if(
+        !Number.isFinite(minutes) ||
+        minutes<1 ||
+        minutes>180
+    ){
 
-    tick();
+        alert("Enter a duration between 1 and 180 minutes.");
 
-   }
+        return;
+    }
 
-  },1000);
+    secondsLeft=minutes*60;
 
+    timerRunning=true;
+
+    document.getElementById("customMinutes").disabled=true;
+
+    document.getElementById("startTimerBtn").disabled=true;
+
+    document.getElementById("stopTimerBtn").disabled=true;
+
+    updateTimerDisplay();
+
+    timerInterval=setInterval(()=>{
+
+        secondsLeft--;
+
+        updateTimerDisplay();
+
+        if(secondsLeft<=0){
+
+            clearInterval(timerInterval);
+
+            timerInterval=null;
+
+            timerRunning=false;
+
+            document.getElementById("customMinutes").disabled=false;
+
+            document.getElementById("startTimerBtn").disabled=false;
+
+            state.points=(state.points||0)+5;
+
+            save();
+
+            alert("🎉 Focus session complete! +5 ⭐");
+
+            secondsLeft=minutes*60;
+
+            updateTimerDisplay();
+
+            updateStats();
+        }
+
+    },1000);
 }
 
 
 function stopFocus(){
 
- if(timerRunning){
+    if(timerRunning){
 
-  alert(
-   "Focus session is locked until the timer ends."
-  );
+        alert(
+            "🔒 Focus session is locked until the timer ends."
+        );
 
-  return;
- }
+        return;
+    }
 
- clearInterval(timerInt);
+    const minutes=
+        Number(document.getElementById("customMinutes").value)||25;
 
- const minutes=
-  Number(
-   document.getElementById(
-    "customMinutes"
-   ).value
-  ) || 25;
+    secondsLeft=minutes*60;
 
- secs=
-  minutes*60;
-
- tick();
-
+    updateTimerDisplay();
 }
 
 
-/* =====================================================
-   LOGOUT
-===================================================== */
+/* ================= PROFILE ================= */
+
+function changeSubjects(){
+
+    showSubjectSelection();
+
+}
+
 
 function logout(){
 
- if(timerRunning){
+    if(timerRunning){
 
-  alert(
-   "Please finish your focus session first."
-  );
+        alert(
+            "Please finish your focus session first."
+        );
 
-  return;
- }
+        return;
+    }
 
- document.getElementById(
-  "app"
- ).style.display="none";
+    document.getElementById("app").style.display="none";
 
- document.getElementById(
-  "loginPage"
- ).style.display="flex";
+    document.getElementById("subjectPage").style.display="none";
 
- document.getElementById(
-  "userName"
- ).value="";
+    document.getElementById("loginPage").style.display="flex";
+
+    document.getElementById("userName").value=state.name || "";
 
 }
 
 
-/* =====================================================
-   STARTUP
-===================================================== */
+/* ================= SECURITY / TEXT HELPER ================= */
 
-setTimeout(()=>{
+function escapeHtml(value){
 
- document.getElementById(
-  "splash"
- ).style.display="none";
-
- if(state.name){
-
-  document.getElementById(
-   "loginPage"
-  ).style.display="none";
-
-  if(
-   state.selectedSubjects &&
-   state.selectedSubjects.length
-  ){
-
-   showApp();
-
-  }else{
-
-   showSubjectSelection();
-
-  }
-
- }
-
-},5500);
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+}
 
 
-/* =====================================================
-   SERVICE WORKER
-===================================================== */
+/* ================= STARTUP ================= */
 
-if(
- "serviceWorker" in navigator
-){
+/*
+   IMPORTANT:
+   Splash is handled separately.
+   After splash:
+   1. Existing user -> app
+   2. New user -> name/login
+   3. User without subjects -> subject selection
+*/
 
- navigator.serviceWorker
-  .register("sw.js")
-  .catch(()=>{});
+function startApplication(){
+
+    document.getElementById("splash").style.display="none";
+
+    if(state.name){
+
+        if(
+            Array.isArray(state.selectedSubjects) &&
+            state.selectedSubjects.length>0
+        ){
+
+            showApp();
+
+        }else{
+
+            showSubjectSelection();
+
+        }
+
+    }else{
+
+        document.getElementById("loginPage").style.display="flex";
+
+        document.getElementById("userName").focus();
+
+    }
 
 }
+
+
+/*
+   5.5 second professional splash animation.
+*/
+
+setTimeout(
+    startApplication,
+    5500
+);
+
+
+/* Initial timer */
+
+updateTimerDisplay();
 
 </script>
 
 </body>
-      </html>
+ </html>

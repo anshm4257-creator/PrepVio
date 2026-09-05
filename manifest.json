@@ -1,11 +1,12 @@
 {
-  "name": "StudySprint - UP Board Class 10",
-  "short_name": "StudySprint",
-  "description": "Class 10 UP Board personal study planner",
-  "start_url": "./index.html",
+  "name": "PrepVio - Smart Study Planner",
+  "short_name": "PrepVio",
+  "description": "Smart Study Planner by Ansh Mishra",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#f6f7fb",
-  "theme_color": "#5b4bdb",
   "orientation": "portrait",
+  "theme_color": "#5b4bdb",
+  "background_color": "#f5f6fb",
   "icons": []
 }

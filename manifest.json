@@ -1,0 +1,11 @@
+{
+  "name": "StudySprint - UP Board Class 10",
+  "short_name": "StudySprint",
+  "description": "Class 10 UP Board personal study planner",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f6f7fb",
+  "theme_color": "#5b4bdb",
+  "orientation": "portrait",
+  "icons": []
+}

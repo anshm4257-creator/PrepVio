@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#5b4bdb">
+<link rel="manifest" href="manifest.json">
+<title>StudySprint • UP Board 10</title>
+<style>
+:root{--p:#5b4bdb;--bg:#f6f7fb;--card:#fff;--text:#171827;--muted:#6c7080;--ok:#149447;--gold:#e5a800;--danger:#d33}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+header{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid #e9e9ef;padding:14px 16px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-size:20px;font-weight:800}
+.sub{font-size:12px;color:var(--muted)}
+main{max-width:900px;margin:auto;padding:16px 16px 90px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.card{background:var(--card);border-radius:18px;padding:16px;box-shadow:0 3px 14px #17182710;border:1px solid #ececf3}
+.stat b{display:block;font-size:28px}
+.stat span{font-size:12px;color:var(--muted)}
+.progress{height:10px;background:#e9eaf1;border-radius:20px;overflow:hidden}
+.bar{height:100%;background:var(--p);border-radius:20px;width:0}
+button,input,select{font:inherit}
+button{border:0;border-radius:12px;padding:10px 13px;cursor:pointer;font-weight:700}
+.primary{background:var(--p);color:#fff}
+.ghost{background:#eeeef7;color:#333}
+.success{background:#e4f7ec;color:#087538}
+.warn{background:#fff3ce;color:#7b5a00}
+.danger{background:#ffe7e7;color:#9c1e1e}
+nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e9e9ef;display:flex;justify-content:center;z-index:10}
+nav button{flex:1;max-width:180px;border-radius:0;background:#fff;padding:12px 4px;color:var(--muted);font-size:12px}
+nav button.active{color:var(--p);font-weight:800}
+.view{display:none}
+.view.active{display:block}
+.subject{display:flex;align-items:center;justify-content:space-between;padding:14px;border:1px solid #ececf3;border-radius:15px;margin:9px 0;background:#fff}
+.subject .left{display:flex;gap:12px;align-items:center}
+.emoji{font-size:25px}
+.pct{font-size:12px;color:var(--muted)}
+.chapter{padding:14px;border:1px solid #ececf3;border-radius:15px;margin:9px 0;background:#fff}
+.chrow{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.chname{font-weight:750}
+.badge{font-size:11px;padding:5px 8px;border-radius:999px;background:#eeeef7;color:#555}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.hidden{display:none!important}
+h1{font-size:24px;margin:8px 0 4px}
+h2{font-size:18px;margin:18px 0 10px}
+.muted{color:var(--muted)}
+input,select{width:100%;padding:11px;border:1px solid #dfe0e8;border-radius:11px;background:#fff}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.center{text-align:center}
+.modal{position:fixed;inset:0;background:#0007;display:none;align-items:flex-end;z-index:20}
+.modal.show{display:flex}
+.sheet{background:#fff;width:100%;max-height:88vh;overflow:auto;border-radius:22px 22px 0 0;padding:18px}
+.q{padding:12px 0;border-bottom:1px solid #eee}
+.q label{display:block;margin:8px 0}
+.result{font-size:20px;font-weight:800}
+.timer{font-size:44px;font-weight:900;text-align:center;padding:16px}
+.quote{padding:12px;border-left:4px solid var(--p);background:#f0effc;border-radius:8px;font-size:14px}
+.small{font-size:12px}
+.list{padding-left:18px}
+</style>
+</head>
+<body>
+
+<header>
+<div class="top">
+<div>
+<div class="brand">📚 StudySprint</div>
+<div class="sub">Class 10 • UP Board • Personal Study Planner</div>
+</div>
+<div>⭐ <b id="pointsTop">0</b></div>
+</div>
+</header>
+
+<main>
+
+<section id="home" class="view active">
+<h1>My Dashboard</h1>
+<div class="sub" id="dateText"></div>
+
+<div class="grid" style="margin-top:14px">
+<div class="card stat"><b id="doneCount">0</b><span>Chapters completed</span></div>
+<div class="card stat"><b id="totalCount">0</b><span>Total chapters</span></div>
+<div class="card stat"><b id="streak">0</b><span>Study streak 🔥</span></div>
+<div class="card stat"><b id="points">0</b><span>Reward points</span></div>
+</div>
+
+<div class="card" style="margin-top:12px">
+<b>Overall Progress</b>
+<div class="progress" style="margin:10px 0 6px">
+<div id="overallBar" class="bar"></div>
+</div>
+<div class="sub" id="overallText"></div>
+</div>
+
+<div class="card" style="margin-top:12px">
+<h2 style="margin-top:0">🎯 Final Target</h2>
+<div class="row">
+<input id="targetInput" type="number" min="1" max="100" placeholder="Target %">
+<button class="primary" onclick="saveTarget()">Save Target</button>
+</div>
+<p class="small muted">Your target stays saved on this device.</p>
+</div>
+
+<div class="card" style="margin-top:12px">
+<h2 style="margin-top:0">⏱️ Stay Focus</h2>
+<div class="timer" id="timer">25:00</div>
+<div class="row">
+<button class="primary" onclick="startFocus(25)">25 min Focus</button>
+<button class="ghost" onclick="startFocus(50)">50 min Focus</button>
+</div>
+<button class="danger" style="width:100%;margin-top:8px" onclick="stopFocus()">Stop</button>
+</div>
+
+<div class="card" style="margin-top:12px">
+<h2 style="margin-top:0">🔔 Reminder</h2>
+<div class="row">
+<input id="remTime" type="time">
+<button class="primary" onclick="setReminder()">Set Reminder</button>
+</div>
+<p class="small muted">Notifications work when the browser/app has permission. Keep the app installed/open for best reliability.</p>
+</div>
+
+<div class="quote">💡 Small progress every day beats a huge plan you never follow.</div>
+</section>
+
+<section id="subjects" class="view">
+<h1>Subjects</h1>
+<div class="sub">Tap a subject to see its chapters.</div>
+<div id="subjectList"></div>
+</section>
+
+<section id="progressView" class="view">
+<h1>Progress Report</h1>
+<div id="report"></div>
+</section>
+
+<section id="weekly" class="view">
+<h1>Sunday Weekly Test 📝</h1>
+<div class="sub">Every Sunday, test yourself on chapters you have completed. The app rotates through your subjects.</div>
+
+<div class="card" style="margin-top:12px">
+<b id="sundayStatus"></b>
+<p class="small muted" id="weeklyInfo"></p>
+<button class="primary" onclick="openWeeklyTest()">Start Weekly Test</button>
+</div>
+
+<div class="card" style="margin-top:12px">
+<b>How points work</b>
+<ul class="list small">
+<li>Complete a chapter: +10 ⭐</li>
+<li>Pass its chapter test: +20 ⭐</li>
+<li>Finish a focus session: +5 ⭐</li>
+<li>Weekly test: +10 ⭐ per correct answer</li>
+</ul>
+</div>
+</section>
+
+</main>
+
+<nav>
+<button class="active" onclick="show('home',this)">🏠<br>Home</button>
+<button onclick="show('subjects',this)">📚<br>Subjects</button>
+<button onclick="show('progressView',this)">📊<br>Progress</button>
+<button onclick="show('weekly',this)">📝<br>Sunday Test</button>
+</nav>
+
+<div id="chapterModal" class="modal">
+<div class="sheet">
+<div class="top">
+<h2 id="modalTitle" style="margin:0"></h2>
+<button class="ghost" onclick="closeModal()">✕</button>
+</div>
+<div id="modalBody"></div>
+</div>
+</div>
+
+<script>
+const DATA={
+"Mathematics":["Real Numbers","Polynomials","Pair of Linear Equations in Two Variables","Quadratic Equations","Arithmetic Progressions","Triangles","Coordinate Geometry","Introduction to Trigonometry","Some Applications of Trigonometry","Circles","Areas Related to Circles","Surface Areas and Volumes","Statistics","Probability"],
+
+"Science":["Chemical Reactions and Equations","Acids, Bases and Salts","Metals and Non-metals","Carbon and Its Compounds","Life Processes","Control and Coordination","How do Organisms Reproduce?","Heredity","Light – Reflection and Refraction","The Human Eye and the Colourful World","Electricity","Magnetic Effects of Electric Current","Our Environment"],
+
+"Social Science":["The Rise of Nationalism in Europe","Nationalism in India","The Making of a Global World","The Age of Industrialisation","Print Culture and the Modern World","Resources and Development","Forest and Wildlife Resources","Water Resources","Agriculture","Minerals and Energy Resources","Manufacturing Industries","Lifelines of National Economy","Power Sharing","Federalism","Gender, Religion and Caste","Political Parties","Outcomes of Democracy","Development","Sectors of the Indian Economy","Money and Credit","Globalisation and the Indian Economy","Consumer Rights"],
+
+"English":["A Letter to God","Nelson Mandela: Long Walk to Freedom","Two Stories about Flying","From the Diary of Anne Frank","Glimpses of India","Mijbil the Otter","Madam Rides the Bus","The Sermon at Benares","The Proposal","A Triumph of Surgery","The Thief's Story","The Midnight Visitor","A Question of Trust","Footprints without Feet","The Making of a Scientist","The Necklace","Bholi","The Book That Saved the Earth"],
+
+"Hindi":["सूरदास","राम-लक्ष्मण-परशुराम संवाद","आत्मकथ्य","उत्साह और अट नहीं रही है","यह दंतुरित मुस्कान और फसल","छाया मत छूना","कन्यादान","संगतकार","नेताजी का चश्मा","बालगोबिन भगत","लखनवी अंदाज","मानवीय करुणा की दिव्य चमक","एक कहानी यह भी","स्त्री शिक्षा के विरोधी कुतर्कों का खंडन","नौबतखाने में इबादत","संस्कृति"]
+};
+
+const EMO={
+"Mathematics":"📐",
+"Science":"🔬",
+"Social Science":"🌍",
+"English":"📖",
+"Hindi":"🪔"
+};
+
+let state=JSON.parse(localStorage.getItem("studysprint")||"null")||{
+done:{},
+points:0,
+target:95,
+streak:0,
+lastStudy:null,
+reminder:null,
+weeklyScores:{}
+};
+
+function save(){
+localStorage.setItem("studysprint",JSON.stringify(state));
+render();
+}
+
+function key(s,i){
+return s+"::"+i
+}
+
+function show(id,btn){
+document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+if(btn)btn.classList.add('active');
+render();
+}
+
+function total(){
+return Object.values(DATA).reduce((a,b)=>a+b.length,0)
+}
+
+function done(){
+return Object.values(state.done).filter(Boolean).length
+}
+
+function updateStreak(){
+let d=new Date().toISOString().slice(0,10);
+if(state.lastStudy!==d){
+let y=new Date();
+y.setDate(y.getDate()-1);
+let ys=y.toISOString().slice(0,10);
+state.streak=(state.lastStudy===ys?state.streak+1:1);
+state.lastStudy=d;
+localStorage.setItem("studysprint",JSON.stringify(state))
+}
+}
+
+function render(){
+document.getElementById("dateText").textContent=new Date().toLocaleDateString(undefined,{
+weekday:"long",
+day:"numeric",
+month:"long",
+year:"numeric"
+});
+
+["pointsTop","points"].forEach(id=>document.getElementById(id).textContent=state.points);
+
+document.getElementById("doneCount").textContent=done();
+document.getElementById("totalCount").textContent=total();
+document.getElementById("streak").textContent=state.streak;
+
+let p=Math.round(done()/total()*100);
+document.getElementById("overallBar").style.width=p+"%";
+document.getElementById("overallText").textContent=p+"% complete • "+done()+" of "+total()+" chapters";
+
+document.getElementById("targetInput").value=state.target||95;
+
+renderSubjects();
+renderReport();
+renderWeekly();
+}
+
+function renderSubjects(){
+let box=document.getElementById("subjectList");
+box.innerHTML="";
+
+for(const [s,chs] of Object.entries(DATA)){
+let n=chs.filter((_,i)=>state.done[key(s,i)]).length;
+let p=Math.round(n/chs.length*100);
+
+let el=document.createElement("div");
+el.className="subject";
+
+el.innerHTML=
+`<div class="left">
+<div class="emoji">${EMO[s]}</div>
+<div>
+<b>${s}</b>
+<div class="pct">${n}/${chs.length} completed</div>
+</div>
+</div>
+<div style="text-align:right">
+<b>${p}%</b><br>
+<button class="ghost" onclick="openSubject('${encodeURIComponent(s)}')">Open</button>
+</div>`;
+
+box.appendChild(el);
+}
+}
+
+function openSubject(enc){
+let s=decodeURIComponent(enc);
+let box=document.getElementById("subjectList");
+
+box.innerHTML=
+`<div class="card">
+<button class="ghost" onclick="renderSubjects()">← All subjects</button>
+<h2>${EMO[s]} ${s}</h2>
+<div class="progress">
+<div id="subbar" class="bar"></div>
+</div>
+<div id="chapters"></div>
+</div>`;
+
+let chbox=document.getElementById("chapters");
+
+DATA[s].forEach((c,i)=>{
+let d=!!state.done[key(s,i)];
+let el=document.createElement("div");
+el.className="chapter";
+
+el.innerHTML=
+`<div class="chrow">
+<div>
+<div class="chname">${i+1}. ${c}</div>
+<span class="badge">${d?"Completed":"Not completed"}</span>
+</div>
+<button class="${d?'success':'primary'}" onclick="chapterMenu('${encodeURIComponent(s)}',${i})">${d?"Open":"Select"}</button>
+</div>`;
+
+chbox.appendChild(el);
+});
+
+let n=DATA[s].filter((_,i)=>state.done[key(s,i)]).length;
+
+document.getElementById("subbar").style.width=
+Math.round(n/DATA[s].length*100)+"%";
+}
+
+function chapterMenu(enc,i){
+let s=decodeURIComponent(enc);
+let c=DATA[s][i];
+let d=!!state.done[key(s,i)];
+
+document.getElementById("modalTitle").textContent=c;
+
+document.getElementById("modalBody").innerHTML=
+`<p class="muted">${s} • Chapter ${i+1}</p>
+
+<div class="actions">
+<button class="primary" onclick="watch('${encodeURIComponent(s)}',${i})">▶ Complete Now</button>
+
+${d?
+`<button class="success" onclick="chapterTest('${encodeURIComponent(s)}',${i})">📝 Completed → Test</button>`
+:""}
+
+</div>
+
+<p class="small muted">
+“Complete Now” opens a YouTube search for this exact chapter.
+After studying, mark it completed and take the chapter test.
+</p>
+
+${!d?
+`<button class="success" style="width:100%;margin-top:10px" onclick="markDone('${encodeURIComponent(s)}',${i})">✅ Mark Chapter Completed</button>`
+:""}`;
+
+document.getElementById("chapterModal").classList.add("show");
+}
+
+function closeModal(){
+document.getElementById("chapterModal").classList.remove("show")
+}
+
+function watch(enc,i){
+let s=decodeURIComponent(enc);
+let q=encodeURIComponent("UP Board Class 10 "+s+" "+DATA[s][i]+" English medium");
+window.open("https://www.youtube.com/results?search_query="+q,"_blank");
+}
+
+function markDone(enc,i){
+let s=decodeURIComponent(enc);
+let k=key(s,i);
+
+if(!state.done[k]){
+state.done[k]=true;
+state.points+=10;
+updateStreak();
+}
+
+closeModal();
+save();
+}
+
+const Q={
+"Mathematics":[
+["If a number has decimal expansion terminating after 2 places, what can you say about its denominator in lowest form?",
+"Its prime factors are only 2 and 5",
+"It must be prime",
+"It must be odd",
+"It must be 3",
+"A"]
+],
+
+"Science":[
+["Which type of reaction involves oxidation and reduction together?",
+"Neutralisation",
+"Redox",
+"Precipitation",
+"Decomposition only",
+"B"]
+],
+
+"Social Science":[
+["Which movement was launched by Mahatma Gandhi in 1930?",
+"Non-Cooperation Movement",
+"Civil Disobedience Movement",
+"Quit India Movement",
+"Khilafat Movement",
+"B"]
+],
+
+"English":[
+["Who wrote 'A Letter to God'?",
+"G.L. Fuentes",
+"Robert Frost",
+"Nelson Mandela",
+"Anne Frank",
+"A"]
+],
+
+"Hindi":[
+["‘राम-लक्ष्मण-परशुराम संवाद’ के कवि कौन हैं?",
+"तुलसीदास",
+"सूरदास",
+"नागार्जुन",
+"मंगलेश डबराल",
+"A"]
+]
+};
+
+function makeTest(s,title,keys){
+
+let qs=keys&&keys.length?
+keys.map(x=>Q[s]?.[0]).filter(Boolean):
+[Q[s]?.[0]].filter(Boolean);
+
+if(!qs.length)
+qs=[
+[
+"This is a sample board-style check for "+title+". Which option is correct?",
+"Option A",
+"Option B",
+"Option C",
+"Option D",
+"A"
+]
+];
+
+let body=
+`<p class="small muted">
+This is a starter test. Add more questions to the app’s question bank for a full chapter-wise test.
+</p>
+<form id="testForm">`;
+
+qs.forEach((q,idx)=>{
+body+=
+`<div class="q">
+<b>Q${idx+1}. ${q[0]}</b>
+${q.slice(1,5).map((o,j)=>
+`<label>
+<input type="radio" name="q${idx}" value="${String.fromCharCode(65+j)}"> ${o}
+</label>`
+).join("")}
+</div>`;
+});
+
+body+=
+`<button type="button" class="primary" style="width:100%;margin-top:14px" onclick="submitTest('${encodeURIComponent(s)}',${qs.length})">
+Submit Test
+</button>
+</form>
+<div id="testResult"></div>`;
+
+document.getElementById("modalBody").innerHTML=body;
+document.getElementById("chapterModal").classList.add("show");
+}
+
+function chapterTest(enc,i){
+let s=decodeURIComponent(enc);
+let c=DATA[s][i];
+
+document.getElementById("modalTitle").textContent="Test • "+c;
+
+makeTest(s,c,[i]);
+}
+
+function submitTest(enc,n){
+let s=decodeURIComponent(enc);
+let q=Q[s]?.[0];
+let correct=0;
+
+for(let i=0;i<n;i++){
+let a=document.querySelector(`input[name=q${i}]:checked`);
+if(a&&a.value===q?.[5])correct++;
+}
+
+state.points+=20;
+
+document.getElementById("testResult").innerHTML=
+`<div class="result" style="margin-top:14px">
+🎉 Score: ${correct}/${n}
+</div>
+<p class="small muted">
++20 reward points for attempting the chapter test.
+</p>`;
+
+save();
+}
+
+function renderReport(){
+let box=document.getElementById("report");
+box.innerHTML="";
+
+for(const [s,chs] of Object.entries(DATA)){
+let n=chs.filter((_,i)=>state.done[key(s,i)]).length;
+let p=Math.round(n/chs.length*100);
+
+box.innerHTML+=
+`<div class="card" style="margin:10px 0">
+<div class="top">
+<b>${EMO[s]} ${s}</b>
+<b>${p}%</b>
+</div>
+<div class="progress" style="margin-top:9px">
+<div class="bar" style="width:${p}%"></div>
+</div>
+<p class="small muted">${n} of ${chs.length} chapters completed</p>
+</div>`;
+}
+}
+
+function renderWeekly(){
+let day=new Date().getDay();
+let subjects=Object.keys(DATA);
+let idx=Math.floor((new Date().getTime()/604800000))%subjects.length;
+let s=subjects[idx];
+
+let n=DATA[s].filter((_,i)=>state.done[key(s,i)]).length;
+
+document.getElementById("sundayStatus").textContent=
+day===0?
+"🟢 It’s Sunday — weekly test is ready!":
+"📅 Next Sunday: "+s;
+
+document.getElementById("weeklyInfo").textContent=
+`This week’s rotating subject: ${s}. Completed chapters available: ${n}.`;
+}
+
+function openWeeklyTest(){
+let subjects=Object.keys(DATA);
+let idx=Math.floor((new Date().getTime()/604800000))%subjects.length;
+let s=subjects[idx];
+
+let doneIdx=DATA[s]
+.map((_,i)=>i)
+.filter(i=>state.done[key(s,i)]);
+
+if(!doneIdx.length){
+alert("Complete at least one chapter in "+s+" before the weekly test.");
+return;
+}
+
+document.getElementById("modalTitle").textContent=
+"Sunday Test • "+s;
+
+makeTest(s,"Weekly Test • "+s,doneIdx);
+
+document.getElementById("chapterModal").classList.add("show");
+}
+
+function saveTarget(){
+let v=Number(document.getElementById("targetInput").value);
+
+if(v>=1&&v<=100){
+state.target=v;
+save();
+alert("Final target saved: "+v+"%");
+}
+}
+
+let timerInt=null,secs=1500;
+
+function startFocus(min){
+clearInterval(timerInt);
+secs=min*60;
+tick();
+
+timerInt=setInterval(()=>{
+secs--;
+tick();
+
+if(secs<=0){
+clearInterval(timerInt);
+state.points+=5;
+save();
+
+notify(
+"Focus session complete 🎉",
+"Great work! You earned +5 points."
+);
+
+alert("Focus session complete! +5 ⭐");
+}
+},1000);
+}
+
+function tick(){
+let m=Math.floor(secs/60);
+let s=secs%60;
+
+document.getElementById("timer").textContent=
+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+}
+
+function stopFocus(){
+clearInterval(timerInt);
+secs=1500;
+tick();
+}
+
+function notify(title,msg){
+if("Notification"in window&&Notification.permission==="granted")
+new Notification(title,{body:msg});
+}
+
+async function setReminder(){
+
+if(!("Notification"in window)){
+alert("This browser does not support notifications.");
+return;
+}
+
+let p=await Notification.requestPermission();
+
+if(p!=="granted"){
+alert("Please allow notifications.");
+return;
+}
+
+let t=document.getElementById("remTime").value;
+
+if(!t){
+alert("Choose a time first.");
+return;
+}
+
+state.reminder=t;
+save();
+
+alert("Reminder saved for "+t+". Keep the app installed/open for reliable alerts.");
+}
+
+setInterval(()=>{
+if(state.reminder){
+
+let now=new Date();
+let t=now.toTimeString().slice(0,5);
+
+let last=localStorage.getItem("lastRem");
+let d=now.toISOString().slice(0,10);
+
+if(t===state.reminder&&last!==d){
+localStorage.setItem("lastRem",d);
+
+notify(
+"📚 Study reminder",
+"Time for your study target!"
+);
+}
+}
+},30000);
+
+if("serviceWorker"in navigator)
+navigator.serviceWorker.register("sw.js").catch(()=>{});
+
+render();
+</script>
+
+</body>
+  </html>

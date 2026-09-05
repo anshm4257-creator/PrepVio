@@ -2624,6 +2624,14 @@ setTimeout(
 updateTimerDisplay();
 
 </script>
-
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js")
+            .then(() => console.log("PrepVio PWA ready"))
+            .catch(error => console.log("PWA error:", error));
+    });
+}
+</script>
 </body>
 </html>

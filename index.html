@@ -4,45 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#5b4bdb">
-
 <title>PrepVio - Smart Study Planner</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
     font-family:Arial,Helvetica,sans-serif;
     background:#f5f6fb;
     color:#171827;
     min-height:100vh;
-    padding-bottom:80px;
+    padding-bottom:82px;
 }
 
-button,input{
-    font:inherit;
-}
+button,input{font:inherit}
+button{cursor:pointer}
 
-button{
-    cursor:pointer;
+button:disabled{
+    opacity:.55;
+    cursor:not-allowed;
 }
 
 .primary{
-    width:100%;
     border:0;
-    border-radius:14px;
-    padding:14px;
+    border-radius:13px;
+    padding:12px 16px;
     background:linear-gradient(135deg,#5b4bdb,#7c5cff);
     color:white;
-    font-weight:bold;
-    font-size:16px;
-}
-
-.primary:active{
-    transform:scale(.98);
+    font-weight:800;
 }
 
 .ghost{
@@ -51,7 +40,7 @@ button{
     padding:11px 15px;
     background:#efedff;
     color:#5b4bdb;
-    font-weight:bold;
+    font-weight:800;
 }
 
 .danger{
@@ -60,16 +49,16 @@ button{
     padding:11px 15px;
     background:#ffecec;
     color:#d33;
-    font-weight:bold;
+    font-weight:800;
 }
 
 .container{
     width:min(1000px,calc(100% - 24px));
-    margin:20px auto 30px;
+    margin:18px auto 30px;
 }
 
 .card{
-    background:white;
+    background:#fff;
     border:1px solid #e6e7ef;
     border-radius:20px;
     padding:18px;
@@ -77,30 +66,25 @@ button{
     box-shadow:0 10px 30px rgba(30,25,80,.08);
 }
 
-.muted{
-    color:#717586;
-}
+.muted{color:#717586}
+.small{font-size:13px}
 
-.small{
-    font-size:13px;
-}
-
-/* SPLASH */
+/* ================= SPLASH ================= */
 
 #splash{
     position:fixed;
     inset:0;
     z-index:99999;
     display:flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
+    color:#fff;
     background:linear-gradient(135deg,#4633b7,#7c5cff,#30208f);
-    color:white;
 }
 
 .splash-box{
     text-align:center;
-    animation:splashEnter 1.4s ease;
+    animation:splashIn 1.4s ease;
 }
 
 .splash-logo{
@@ -109,15 +93,13 @@ button{
 }
 
 .splash-name{
-    font-size:44px;
+    font-size:45px;
     font-weight:900;
-    letter-spacing:1px;
-    margin-top:8px;
+    margin-top:7px;
 }
 
 .splash-tagline{
-    margin-top:8px;
-    font-size:16px;
+    margin-top:7px;
     opacity:.9;
 }
 
@@ -129,77 +111,56 @@ button{
 .loader{
     width:210px;
     height:5px;
-    background:rgba(255,255,255,.25);
-    border-radius:10px;
-    overflow:hidden;
     margin:28px auto 0;
+    border-radius:20px;
+    overflow:hidden;
+    background:rgba(255,255,255,.25);
 }
 
 .loader span{
     display:block;
-    height:100%;
     width:0;
-    background:white;
-    animation:loadBar 5s linear forwards;
+    height:100%;
+    background:#fff;
+    animation:loader 5s linear forwards;
 }
 
-@keyframes splashEnter{
-    from{
-        opacity:0;
-        transform:scale(.65) translateY(30px);
-    }
-    to{
-        opacity:1;
-        transform:scale(1) translateY(0);
-    }
+@keyframes splashIn{
+    from{opacity:0;transform:scale(.65) translateY(30px)}
+    to{opacity:1;transform:scale(1) translateY(0)}
 }
 
 @keyframes floatLogo{
-    0%,100%{
-        transform:translateY(0);
-    }
-    50%{
-        transform:translateY(-12px);
-    }
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-12px)}
 }
 
-@keyframes loadBar{
+@keyframes loader{
     from{width:0}
     to{width:100%}
 }
 
-/* LOGIN */
+/* ================= LOGIN ================= */
 
 #loginPage{
     min-height:100vh;
     display:none;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
     padding:20px;
     background:
-        radial-gradient(circle at top left,#ddd8ff,transparent 35%),
-        radial-gradient(circle at bottom right,#eadfff,transparent 35%),
-        #f5f6fb;
+    radial-gradient(circle at top left,#ddd8ff,transparent 35%),
+    radial-gradient(circle at bottom right,#eadfff,transparent 35%),
+    #f5f6fb;
 }
 
 .login-card{
     width:min(430px,100%);
-    background:white;
-    padding:30px;
+    background:#fff;
     border-radius:26px;
+    padding:30px;
     box-shadow:0 15px 45px rgba(30,25,80,.13);
-    animation:loginEnter .8s ease;
-}
-
-@keyframes loginEnter{
-    from{
-        opacity:0;
-        transform:translateY(35px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+    animation:loginIn .8s ease;
 }
 
 .login-logo{
@@ -212,13 +173,12 @@ button{
     font-size:32px;
     font-weight:900;
     color:#5b4bdb;
-    margin-top:5px;
 }
 
 .login-subtitle{
     text-align:center;
-    margin:8px 0 20px;
     color:#717586;
+    margin:8px 0 20px;
 }
 
 .login-input{
@@ -234,19 +194,24 @@ button{
     border-color:#5b4bdb;
 }
 
-/* SUBJECT SELECTION */
+@keyframes loginIn{
+    from{opacity:0;transform:translateY(35px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+/* ================= SUBJECT SELECTION ================= */
 
 #subjectPage{
     display:none;
     min-height:100vh;
-    padding:20px 0;
+    padding-top:20px;
 }
 
 .subject-select-card{
     display:flex;
     align-items:center;
     gap:14px;
-    background:white;
+    background:#fff;
     border:1px solid #e6e7ef;
     border-radius:17px;
     padding:16px;
@@ -258,11 +223,9 @@ button{
     height:21px;
 }
 
-/* APP */
+/* ================= APP ================= */
 
-#app{
-    display:none;
-}
+#app{display:none}
 
 .grid{
     display:grid;
@@ -278,7 +241,7 @@ button{
 }
 
 .stat{
-    background:white;
+    background:#fff;
     border:1px solid #e6e7ef;
     border-radius:17px;
     padding:14px 8px;
@@ -296,12 +259,17 @@ button{
 }
 
 .subject{
-    background:white;
+    background:#fff;
     border:1px solid #e6e7ef;
     border-radius:18px;
     padding:17px;
-    transition:.25s;
     cursor:pointer;
+    transition:.25s;
+}
+
+.subject:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 25px rgba(0,0,0,.08);
 }
 
 .subject:active{
@@ -334,7 +302,7 @@ button{
     transition:width .5s;
 }
 
-/* TIMER */
+/* ================= TIMER ================= */
 
 .timer{
     text-align:center;
@@ -352,19 +320,19 @@ button{
     outline:none;
 }
 
-/* CHAPTERS */
+/* ================= CHAPTER ================= */
 
 .chapter{
-    background:white;
+    background:#fff;
     border:1px solid #e6e7ef;
-    border-radius:16px;
+    border-radius:17px;
     padding:15px;
     margin-bottom:10px;
 }
 
 .chapter-title{
     font-weight:800;
-    line-height:1.4;
+    line-height:1.45;
 }
 
 .chapter-actions{
@@ -374,7 +342,7 @@ button{
     margin-top:12px;
 }
 
-/* BOTTOM NAV */
+/* ================= NAV ================= */
 
 .bottom-nav{
     position:fixed;
@@ -410,10 +378,10 @@ button{
 
 .nav-btn.active{
     color:#5b4bdb;
-    font-weight:bold;
+    font-weight:800;
 }
 
-/* MODAL */
+/* ================= MODAL ================= */
 
 .modal-bg{
     position:fixed;
@@ -430,42 +398,40 @@ button{
     width:min(650px,100%);
     max-height:90vh;
     overflow:auto;
-    background:white;
+    background:#fff;
     border-radius:23px;
     padding:20px;
     animation:modalIn .3s ease;
 }
 
-@keyframes modalIn{
-    from{
-        opacity:0;
-        transform:scale(.9);
-    }
-    to{
-        opacity:1;
-        transform:scale(1);
-    }
-}
-
 .option{
     display:block;
+    padding:12px;
     border:1px solid #e1e2eb;
     border-radius:12px;
-    padding:12px;
     margin:8px 0;
 }
 
+.option:hover{
+    background:#f4f2ff;
+}
+
 .result{
-    margin-top:15px;
     padding:15px;
+    margin-top:15px;
     border-radius:15px;
     background:#f1efff;
     text-align:center;
-    font-weight:bold;
     font-size:20px;
+    font-weight:800;
 }
 
-/* PROFILE */
+@keyframes modalIn{
+    from{opacity:0;transform:scale(.9)}
+    to{opacity:1;transform:scale(1)}
+}
+
+/* ================= PROFILE ================= */
 
 .profile-avatar{
     width:82px;
@@ -481,7 +447,7 @@ button{
     font-weight:900;
 }
 
-/* MOBILE */
+/* ================= MOBILE ================= */
 
 @media(max-width:700px){
 
@@ -500,25 +466,30 @@ button{
     .splash-name{
         font-size:36px;
     }
-
-    .login-card{
-        padding:25px;
-    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= SPLASH ================= -->
+<!-- ==================================================
+                     SPLASH
+================================================== -->
 
 <div id="splash">
+
     <div class="splash-box">
+
         <div class="splash-logo">🚀</div>
-        <div class="splash-name">PrepVio</div>
+
+        <div class="splash-name">
+            PrepVio
+        </div>
+
         <div class="splash-tagline">
             Your Smart Study Companion
         </div>
+
         <div class="splash-founder">
             Founded by <b>Ansh Mishra</b>
         </div>
@@ -526,17 +497,23 @@ button{
         <div class="loader">
             <span></span>
         </div>
+
     </div>
+
 </div>
 
 
-<!-- ================= LOGIN ================= -->
+<!-- ==================================================
+                     LOGIN
+================================================== -->
 
 <section id="loginPage">
 
     <div class="login-card">
 
-        <div class="login-logo">🚀</div>
+        <div class="login-logo">
+            🚀
+        </div>
 
         <div class="login-title">
             PrepVio
@@ -550,16 +527,17 @@ button{
             id="userName"
             class="login-input"
             type="text"
-            placeholder="Enter your name"
             maxlength="30"
+            placeholder="Enter your name"
             autocomplete="name"
         >
 
         <button
-            class="primary"
             id="continueBtn"
+            class="primary"
             type="button"
             onclick="login()"
+            style="width:100%"
         >
             Continue →
         </button>
@@ -569,7 +547,9 @@ button{
 </section>
 
 
-<!-- ================= SUBJECT SELECTION ================= -->
+<!-- ==================================================
+                SUBJECT SELECTION
+================================================== -->
 
 <section id="subjectPage">
 
@@ -579,8 +559,11 @@ button{
 
             <h1>📚 Select Your Subjects</h1>
 
-            <p class="muted" style="margin-top:7px;margin-bottom:18px">
-                Select the subjects you want in your study planner.
+            <p
+                class="muted"
+                style="margin:7px 0 18px"
+            >
+                Select the subjects you want to study.
             </p>
 
             <div id="subjectOptions"></div>
@@ -589,6 +572,7 @@ button{
                 class="primary"
                 type="button"
                 onclick="saveSubjects()"
+                style="width:100%;margin-top:5px"
             >
                 Start Studying 🚀
             </button>
@@ -600,13 +584,16 @@ button{
 </section>
 
 
-<!-- ================= MAIN APP ================= -->
+<!-- ==================================================
+                     MAIN APP
+================================================== -->
 
 <div id="app">
 
 <main class="container">
 
-<!-- HOME -->
+
+<!-- ================= HOME ================= -->
 
 <section id="homePage">
 
@@ -652,14 +639,14 @@ button{
     </div>
 
 
-    <!-- TIMER -->
+    <!-- FOCUS TIMER -->
 
     <div class="card">
 
         <h2>⏱️ Focus Timer</h2>
 
         <p class="muted small" style="margin-top:5px">
-            Choose 1–180 minutes.
+            Choose any duration from 1 to 180 minutes.
         </p>
 
         <input
@@ -672,7 +659,10 @@ button{
             style="margin-top:12px"
         >
 
-        <div id="timer" class="timer">
+        <div
+            id="timer"
+            class="timer"
+        >
             25:00
         </div>
 
@@ -681,6 +671,7 @@ button{
             class="primary"
             type="button"
             onclick="startFocus()"
+            style="width:100%"
         >
             ▶ Start Focus
         </button>
@@ -705,12 +696,15 @@ button{
 
         <h2>📅 Weekly Test</h2>
 
-        <div id="weeklyBox" style="margin-top:10px"></div>
+        <div
+            id="weeklyBox"
+            style="margin-top:10px"
+        ></div>
 
     </div>
 
 
-    <!-- SUBJECTS -->
+    <!-- HOME SUBJECTS -->
 
     <div class="card">
 
@@ -727,7 +721,7 @@ button{
 </section>
 
 
-<!-- SUBJECT PAGE -->
+<!-- ================= SUBJECTS ================= -->
 
 <section id="subjectsPage" style="display:none">
 
@@ -735,18 +729,24 @@ button{
 
         <h1>📚 Subjects</h1>
 
-        <p class="muted" style="margin-top:6px">
-            Select a subject to view its study modules.
+        <p
+            class="muted"
+            style="margin-top:6px"
+        >
+            Tap any subject to open its chapters.
         </p>
 
     </div>
 
-    <div id="allSubjects" class="grid"></div>
+    <div
+        id="allSubjects"
+        class="grid"
+    ></div>
 
 </section>
 
 
-<!-- PROGRESS -->
+<!-- ================= PROGRESS ================= -->
 
 <section id="progressPage" style="display:none">
 
@@ -754,18 +754,24 @@ button{
 
         <h1>📊 My Progress</h1>
 
-        <div id="progressContent" style="margin-top:15px"></div>
+        <div
+            id="progressContent"
+            style="margin-top:15px"
+        ></div>
 
     </div>
 
 </section>
 
 
-<!-- PROFILE -->
+<!-- ================= PROFILE ================= -->
 
 <section id="profilePage" style="display:none">
 
-    <div class="card" style="text-align:center">
+    <div
+        class="card"
+        style="text-align:center"
+    >
 
         <div
             id="profileAvatar"
@@ -774,11 +780,17 @@ button{
             A
         </div>
 
-        <h2 id="profileName" style="margin-top:12px">
+        <h2
+            id="profileName"
+            style="margin-top:12px"
+        >
             Student
         </h2>
 
-        <p class="muted" style="margin:6px 0 18px">
+        <p
+            class="muted"
+            style="margin:6px 0 18px"
+        >
             PrepVio Student
         </p>
 
@@ -804,7 +816,7 @@ button{
 </section>
 
 
-<!-- CHAPTER PAGE -->
+<!-- ================= CHAPTER PAGE ================= -->
 
 <section id="chapterPage" style="display:none">
 
@@ -815,7 +827,7 @@ button{
             type="button"
             onclick="goSubjects()"
         >
-            ← Back
+            ← Back to Subjects
         </button>
 
         <h1
@@ -823,9 +835,11 @@ button{
             style="margin-top:15px"
         ></h1>
 
-        <p class="muted small" style="margin-top:6px">
-            Study the module and give its test.
-            More than 75% is required for completion.
+        <p
+            class="muted small"
+            style="margin-top:7px"
+        >
+            Open a chapter to study or give its test.
         </p>
 
     </div>
@@ -834,10 +848,11 @@ button{
 
 </section>
 
+
 </main>
 
 
-<!-- BOTTOM NAV -->
+<!-- ================= BOTTOM NAV ================= -->
 
 <nav class="bottom-nav">
 
@@ -890,9 +905,14 @@ button{
 </div>
 
 
-<!-- ================= TEST MODAL ================= -->
+<!-- ==================================================
+                       TEST MODAL
+================================================== -->
 
-<div id="testModal" class="modal-bg">
+<div
+    id="testModal"
+    class="modal-bg"
+>
 
     <div class="modal">
 
@@ -910,6 +930,7 @@ button{
             class="primary"
             type="button"
             onclick="submitTest()"
+            style="width:100%"
         >
             Submit Test
         </button>
@@ -930,11 +951,15 @@ button{
 </div>
 
 
-<!-- ================= JAVASCRIPT ================= -->
+<!-- ==================================================
+                    JAVASCRIPT
+================================================== -->
 
 <script>
 
-/* ================= DATA ================= */
+/* ==================================================
+                    SUBJECT DATA
+================================================== */
 
 const DATA = {
 
@@ -964,7 +989,7 @@ const DATA = {
         "Control and Coordination",
         "How Do Organisms Reproduce?",
         "Heredity",
-        "Light – Reflection and Refraction",
+        "Light - Reflection and Refraction",
         "Human Eye and Colourful World",
         "Electricity",
         "Magnetic Effects of Electric Current",
@@ -1037,12 +1062,12 @@ const DATA = {
     ],
 
     "Commerce":[
-        "Final Accounts – Introduction",
+        "Final Accounts - Introduction",
         "Trading Account",
         "Profit and Loss Account",
         "Balance Sheet",
         "Adjustments in Final Accounts",
-        "Business System – Meaning",
+        "Business System - Meaning",
         "Objectives of Business",
         "Classification of Business Activities",
         "Industry",
@@ -1054,14 +1079,14 @@ const DATA = {
         "Partnership",
         "Joint Stock Company",
         "Co-operative Organisation",
-        "Banking – Introduction",
+        "Banking - Introduction",
         "Functions of Commercial Banks",
         "Central Banking",
         "Credit and Loans",
         "Cheques and Banking Instruments",
         "Insurance",
         "Entrepreneurship",
-        "Economics – Introduction",
+        "Economics - Introduction",
         "Utility and Wealth",
         "Demand and Supply",
         "Production",
@@ -1075,16 +1100,20 @@ const DATA = {
 
 
 const EMO = {
+
     "Mathematics":"📐",
     "Science":"🔬",
     "Social Science":"🌍",
     "English":"📖",
     "Hindi":"🪔",
     "Commerce":"💼"
+
 };
 
 
-/* ================= QUESTION BANK ================= */
+/* ==================================================
+                    QUESTIONS
+================================================== */
 
 const QUESTIONS = {
 
@@ -1294,12 +1323,9 @@ const QUESTIONS = {
 };
 
 
-/* ================= SAFE STORAGE ================= */
-
-/*
-   IMPORTANT FIX:
-   Old/corrupted localStorage can no longer break the app.
-*/
+/* ==================================================
+                    STATE
+================================================== */
 
 const DEFAULT_STATE = {
     name:"",
@@ -1310,66 +1336,77 @@ const DEFAULT_STATE = {
     target:95
 };
 
-let state = loadState();
+let state=loadState();
+
 
 function loadState(){
 
     try{
 
-        const saved = localStorage.getItem("prepvio");
+        const raw=localStorage.getItem("prepvio");
 
-        if(!saved){
+        if(!raw){
             return {...DEFAULT_STATE};
         }
 
-        const parsed = JSON.parse(saved);
+        const saved=JSON.parse(raw);
 
-        if(!parsed || typeof parsed !== "object"){
+        if(!saved || typeof saved!=="object"){
             return {...DEFAULT_STATE};
         }
 
         return {
             ...DEFAULT_STATE,
-            ...parsed,
-            selectedSubjects:Array.isArray(parsed.selectedSubjects)
-                ? parsed.selectedSubjects
-                : [],
-            done:parsed.done && typeof parsed.done==="object"
-                ? parsed.done
-                : {}
+            ...saved,
+            selectedSubjects:
+                Array.isArray(saved.selectedSubjects)
+                ?saved.selectedSubjects
+                :[],
+            done:
+                saved.done &&
+                typeof saved.done==="object"
+                ?saved.done
+                :{}
         };
 
     }catch(error){
 
-        console.log("Storage reset:",error);
+        console.log(error);
 
         localStorage.removeItem("prepvio");
 
         return {...DEFAULT_STATE};
+
     }
+
 }
 
 
 function save(){
 
     try{
-        localStorage.setItem("prepvio",JSON.stringify(state));
+        localStorage.setItem(
+            "prepvio",
+            JSON.stringify(state)
+        );
     }catch(error){
-        console.log("Could not save:",error);
+        console.log(error);
     }
 
 }
 
 
-/* ================= LOGIN ================= */
+/* ==================================================
+                       LOGIN
+================================================== */
 
 function login(){
 
-    const input = document.getElementById("userName");
+    const input=document.getElementById("userName");
 
-    const name = input.value.trim();
+    const name=input.value.trim();
 
-    if(name.length===0){
+    if(!name){
 
         alert("Please enter your name.");
 
@@ -1378,17 +1415,18 @@ function login(){
         return;
     }
 
-    state.name = name;
+    state.name=name;
 
     save();
 
     document.getElementById("loginPage").style.display="none";
 
     showSubjectSelection();
+
 }
 
 
-/* Enter key also works */
+/* ENTER KEY */
 
 document.getElementById("userName").addEventListener(
     "keydown",
@@ -1402,7 +1440,9 @@ document.getElementById("userName").addEventListener(
 );
 
 
-/* ================= SUBJECT SELECTION ================= */
+/* ==================================================
+                SUBJECT SELECTION
+================================================== */
 
 function showSubjectSelection(){
 
@@ -1412,41 +1452,53 @@ function showSubjectSelection(){
 
     document.getElementById("subjectPage").style.display="block";
 
-    const box = document.getElementById("subjectOptions");
+    const box=document.getElementById("subjectOptions");
 
-    box.innerHTML = Object.keys(DATA).map(subject=>`
+    box.innerHTML="";
 
-        <label class="subject-select-card">
+    Object.keys(DATA).forEach(subject=>{
 
-            <input
-                type="checkbox"
-                class="subjectCheck"
-                value="${escapeHtml(subject)}"
-                ${state.selectedSubjects.includes(subject)?"checked":""}
-            >
+        const label=document.createElement("label");
 
-            <div>
-                <div style="font-size:31px">
-                    ${EMO[subject]}
-                </div>
+        label.className="subject-select-card";
 
-                <b>${escapeHtml(subject)}</b>
+        const checkbox=document.createElement("input");
 
-                <div class="small muted" style="margin-top:4px">
-                    ${DATA[subject].length} study modules
-                </div>
+        checkbox.type="checkbox";
+
+        checkbox.className="subjectCheck";
+
+        checkbox.value=subject;
+
+        checkbox.checked=
+            state.selectedSubjects.includes(subject);
+
+        const content=document.createElement("div");
+
+        content.innerHTML=`
+            <div style="font-size:31px">
+                ${EMO[subject]}
             </div>
+            <b>${escapeHtml(subject)}</b>
+            <div class="small muted" style="margin-top:4px">
+                ${DATA[subject].length} study modules
+            </div>
+        `;
 
-        </label>
+        label.appendChild(checkbox);
 
-    `).join("");
+        label.appendChild(content);
+
+        box.appendChild(label);
+
+    });
 
 }
 
 
 function saveSubjects(){
 
-    const selected = [
+    const selected=[
         ...document.querySelectorAll(".subjectCheck:checked")
     ].map(input=>input.value);
 
@@ -1457,17 +1509,20 @@ function saveSubjects(){
         return;
     }
 
-    state.selectedSubjects = selected;
+    state.selectedSubjects=selected;
 
     save();
 
     document.getElementById("subjectPage").style.display="none";
 
     showApp();
+
 }
 
 
-/* ================= APP ================= */
+/* ==================================================
+                     APP
+================================================== */
 
 function showApp(){
 
@@ -1477,18 +1532,23 @@ function showApp(){
 
     document.getElementById("app").style.display="block";
 
-    document.getElementById("welcomeName").textContent=state.name;
+    document.getElementById("welcomeName").textContent=
+        state.name;
 
-    document.getElementById("profileName").textContent=state.name;
+    document.getElementById("profileName").textContent=
+        state.name;
 
     document.getElementById("profileAvatar").textContent=
         state.name.charAt(0).toUpperCase();
 
     renderHome();
+
 }
 
 
-/* ================= PAGE NAVIGATION ================= */
+/* ==================================================
+                  PAGE SYSTEM
+================================================== */
 
 function hidePages(){
 
@@ -1501,6 +1561,24 @@ function hidePages(){
     document.getElementById("profilePage").style.display="none";
 
     document.getElementById("chapterPage").style.display="none";
+
+}
+
+
+function setActiveNav(name){
+
+    document.querySelectorAll(".nav-btn").forEach(btn=>{
+        btn.classList.remove("active");
+    });
+
+    const button=document.getElementById(
+        "nav"+name.charAt(0).toUpperCase()+name.slice(1)
+    );
+
+    if(button){
+        button.classList.add("active");
+    }
+
 }
 
 
@@ -1508,20 +1586,15 @@ function showPage(page){
 
     hidePages();
 
-    document.getElementById(page+"Page").style.display="block";
+    const target=document.getElementById(page+"Page");
 
-    document.querySelectorAll(".nav-btn").forEach(btn=>{
-        btn.classList.remove("active");
-    });
-
-    const nav =
-        document.getElementById(
-            "nav"+page.charAt(0).toUpperCase()+page.slice(1)
-        );
-
-    if(nav){
-        nav.classList.add("active");
+    if(!target){
+        return;
     }
+
+    target.style.display="block";
+
+    setActiveNav(page);
 
     if(page==="home"){
         renderHome();
@@ -1538,14 +1611,9 @@ function showPage(page){
 }
 
 
-function goSubjects(){
-
-    showPage("subjects");
-
-}
-
-
-/* ================= HOME ================= */
+/* ==================================================
+                     HOME
+================================================== */
 
 function renderHome(){
 
@@ -1553,17 +1621,14 @@ function renderHome(){
 
     document.getElementById("homePage").style.display="block";
 
-    document.querySelectorAll(".nav-btn").forEach(btn=>{
-        btn.classList.remove("active");
-    });
-
-    document.getElementById("navHome").classList.add("active");
+    setActiveNav("home");
 
     updateStats();
 
     renderHomeSubjects();
 
     renderWeekly();
+
 }
 
 
@@ -1579,47 +1644,79 @@ function updateStats(){
 
     });
 
-    document.getElementById("completedCount").textContent=completed;
+    document.getElementById("completedCount").textContent=
+        completed;
 
-    document.getElementById("points").textContent=state.points || 0;
+    document.getElementById("points").textContent=
+        state.points||0;
 
-    document.getElementById("streak").textContent=state.streak || 0;
+    document.getElementById("streak").textContent=
+        state.streak||0;
+
 }
 
 
-/* ================= SUBJECTS ================= */
+/* ==================================================
+                SUBJECT PROGRESS
+================================================== */
 
 function subjectPercent(subject){
 
-    const total=DATA[subject].length;
+    const chapters=DATA[subject];
 
-    let done=0;
+    if(!chapters || !chapters.length){
+        return 0;
+    }
 
-    DATA[subject].forEach((chapter,index)=>{
+    let completed=0;
 
-        if(state.done[subject+"_"+index]){
-            done++;
+    chapters.forEach((chapter,index)=>{
+
+        const key=subject+"_"+index;
+
+        if(state.done[key]){
+            completed++;
         }
 
     });
 
-    return total
-        ? Math.round(done/total*100)
-        : 0;
+    return Math.round(
+        completed/chapters.length*100
+    );
+
 }
 
+
+/* ==================================================
+                RENDER SUBJECTS
+================================================== */
 
 function renderSubjects(){
 
     const box=document.getElementById("allSubjects");
 
-    box.innerHTML=state.selectedSubjects.map(subject=>`
+    box.innerHTML="";
 
-        <div
-            class="subject"
-            onclick="openSubject(${JSON.stringify(subject)})"
-        >
+    state.selectedSubjects.forEach(subject=>{
 
+        const card=document.createElement("div");
+
+        card.className="subject";
+
+        /*
+          IMPORTANT FIX:
+          Direct event listener is used instead of
+          inline onclick string.
+        */
+
+        card.addEventListener(
+            "click",
+            function(){
+                openSubject(subject);
+            }
+        );
+
+        card.innerHTML=`
             <div class="subject-icon">
                 ${EMO[subject]}
             </div>
@@ -1629,7 +1726,7 @@ function renderSubjects(){
             </div>
 
             <div class="small muted">
-                ${DATA[subject].length} modules
+                ${DATA[subject].length} study modules
             </div>
 
             <div class="progress">
@@ -1639,10 +1736,11 @@ function renderSubjects(){
             <div class="small muted" style="margin-top:7px">
                 ${subjectPercent(subject)}% completed
             </div>
+        `;
 
-        </div>
+        box.appendChild(card);
 
-    `).join("");
+    });
 
 }
 
@@ -1651,13 +1749,22 @@ function renderHomeSubjects(){
 
     const box=document.getElementById("homeSubjects");
 
-    box.innerHTML=state.selectedSubjects.map(subject=>`
+    box.innerHTML="";
 
-        <div
-            class="subject"
-            onclick="openSubject(${JSON.stringify(subject)})"
-        >
+    state.selectedSubjects.forEach(subject=>{
 
+        const card=document.createElement("div");
+
+        card.className="subject";
+
+        card.addEventListener(
+            "click",
+            function(){
+                openSubject(subject);
+            }
+        );
+
+        card.innerHTML=`
             <div class="subject-icon">
                 ${EMO[subject]}
             </div>
@@ -1673,114 +1780,199 @@ function renderHomeSubjects(){
             <div class="progress">
                 <span style="width:${subjectPercent(subject)}%"></span>
             </div>
+        `;
 
-        </div>
+        box.appendChild(card);
 
-    `).join("");
+    });
 
 }
 
 
-/* ================= CHAPTERS ================= */
+/* ==================================================
+                 OPEN SUBJECT / CHAPTERS
+================================================== */
 
 function openSubject(subject){
+
+    /*
+      IMPORTANT FIX:
+      The selected subject is stored in a global variable.
+      Chapter buttons are created with addEventListener.
+    */
+
+    currentSubject=subject;
 
     hidePages();
 
     document.getElementById("chapterPage").style.display="block";
 
-    document.querySelectorAll(".nav-btn").forEach(btn=>{
-        btn.classList.remove("active");
-    });
-
-    document.getElementById("navSubjects").classList.add("active");
+    setActiveNav("subjects");
 
     document.getElementById("subjectHeading").textContent=
         EMO[subject]+" "+subject;
 
+    renderChapters(subject);
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+function renderChapters(subject){
+
     const box=document.getElementById("chapterList");
 
-    box.innerHTML=DATA[subject].map((chapter,index)=>{
+    box.innerHTML="";
+
+    const chapters=DATA[subject]||[];
+
+    chapters.forEach((chapter,index)=>{
 
         const key=subject+"_"+index;
 
         const completed=!!state.done[key];
 
-        return `
+        const wrapper=document.createElement("div");
 
-            <div class="chapter">
+        wrapper.className="chapter";
 
-                <div class="chapter-title">
-                    ${index+1}. ${escapeHtml(chapter)}
-                </div>
+        const title=document.createElement("div");
 
-                <div
-                    class="small muted"
-                    style="margin-top:5px"
-                >
-                    ${completed
-                        ?"✅ Completed"
-                        :"📘 Not completed"}
-                </div>
+        title.className="chapter-title";
 
-                <div class="chapter-actions">
+        title.textContent=
+            (index+1)+". "+chapter;
 
-                    <button
-                        class="ghost"
-                        type="button"
-                        onclick='studyChapter(${JSON.stringify(subject)},${index})'
-                    >
-                        ▶ Study
-                    </button>
+        const status=document.createElement("div");
 
-                    <button
-                        class="primary"
-                        type="button"
-                        style="width:auto"
-                        onclick='giveTest(${JSON.stringify(subject)},${index})'
-                    >
-                        📝 Give Test
-                    </button>
+        status.className="small muted";
 
-                </div>
+        status.style.marginTop="5px";
 
-            </div>
+        status.textContent=
+            completed
+            ?"✅ Completed"
+            :"📘 Not completed";
 
-        `;
+        const actions=document.createElement("div");
 
-    }).join("");
+        actions.className="chapter-actions";
+
+        const studyButton=document.createElement("button");
+
+        studyButton.className="ghost";
+
+        studyButton.type="button";
+
+        studyButton.textContent="▶ Study";
+
+        studyButton.addEventListener(
+            "click",
+            function(event){
+
+                event.stopPropagation();
+
+                studyChapter(
+                    subject,
+                    index
+                );
+
+            }
+        );
+
+
+        const testButton=document.createElement("button");
+
+        testButton.className="primary";
+
+        testButton.type="button";
+
+        testButton.textContent="📝 Give Test";
+
+        testButton.addEventListener(
+            "click",
+            function(event){
+
+                event.stopPropagation();
+
+                giveTest(
+                    subject,
+                    index
+                );
+
+            }
+        );
+
+        actions.appendChild(studyButton);
+
+        actions.appendChild(testButton);
+
+        wrapper.appendChild(title);
+
+        wrapper.appendChild(status);
+
+        wrapper.appendChild(actions);
+
+        box.appendChild(wrapper);
+
+    });
 
 }
 
 
-/* ================= STUDY ================= */
+/* ==================================================
+                       BACK
+================================================== */
+
+function goSubjects(){
+
+    showPage("subjects");
+
+}
+
+
+/* ==================================================
+                    STUDY BUTTON
+================================================== */
 
 function studyChapter(subject,index){
 
     const chapter=DATA[subject][index];
 
-    const query=encodeURIComponent(
-        "UP Board Class 10 "+subject+" "+chapter+
+    const search=encodeURIComponent(
+        "UP Board Class 10 "+
+        subject+
+        " "+
+        chapter+
         " important questions MCQ"
     );
 
     window.open(
-        "https://www.youtube.com/results?search_query="+query,
+        "https://www.youtube.com/results?search_query="+search,
         "_blank"
     );
+
 }
 
 
-/* ================= TEST SYSTEM ================= */
+/* ==================================================
+                     TEST SYSTEM
+================================================== */
 
 let currentTest=null;
+
+let currentSubject=null;
 
 
 function giveTest(subject,index){
 
-    const bank=QUESTIONS[subject] || [];
+    const bank=QUESTIONS[subject]||[];
 
-    if(bank.length===0){
+    if(!bank.length){
 
         alert("Question bank is not available.");
 
@@ -1793,52 +1985,73 @@ function giveTest(subject,index){
         questions:bank
     };
 
-    openTestModal(
+    showTestModal(
         "📝 "+subject+" • "+DATA[subject][index]
     );
+
 }
 
 
-function openTestModal(title){
+function showTestModal(title){
 
-    document.getElementById("testTitle").textContent=title;
+    document.getElementById("testTitle").textContent=
+        title;
 
     document.getElementById("testResult").innerHTML="";
 
-    document.getElementById("submitTestBtn").disabled=false;
+    const submitButton=
+        document.getElementById("submitTestBtn");
 
-    document.getElementById("testQuestions").innerHTML=
-        currentTest.questions.map((item,i)=>`
+    submitButton.disabled=false;
 
-            <div style="margin-bottom:20px">
+    const questionBox=
+        document.getElementById("testQuestions");
 
-                <b>
-                    Q${i+1}. ${escapeHtml(item.q)}
-                </b>
+    questionBox.innerHTML="";
 
-                ${
-                    item.a.map((option,j)=>`
+    currentTest.questions.forEach((question,index)=>{
 
-                        <label class="option">
+        const questionDiv=document.createElement("div");
 
-                            <input
-                                type="radio"
-                                name="testq${i}"
-                                value="${j}"
-                            >
+        questionDiv.style.marginBottom="20px";
 
-                            ${escapeHtml(option)}
+        const questionTitle=document.createElement("b");
 
-                        </label>
+        questionTitle.textContent=
+            "Q"+(index+1)+". "+question.q;
 
-                    `).join("")
-                }
+        questionDiv.appendChild(questionTitle);
 
-            </div>
+        question.a.forEach((option,optionIndex)=>{
 
-        `).join("");
+            const label=document.createElement("label");
+
+            label.className="option";
+
+            const radio=document.createElement("input");
+
+            radio.type="radio";
+
+            radio.name="testq"+index;
+
+            radio.value=optionIndex;
+
+            label.appendChild(radio);
+
+            label.appendChild(
+                document.createTextNode(" "+option)
+            );
+
+            questionDiv.appendChild(label);
+
+        });
+
+        questionBox.appendChild(questionDiv);
+
+    });
 
     document.getElementById("testModal").style.display="flex";
+
 }
 
 
@@ -1853,14 +2066,16 @@ function submitTest(){
     currentTest.questions.forEach((question,index)=>{
 
         const selected=document.querySelector(
-            `input[name="testq${index}"]:checked`
+            'input[name="testq'+index+'"]:checked'
         );
 
         if(
             selected &&
             Number(selected.value)===question.c
         ){
+
             correct++;
+
         }
 
     });
@@ -1872,8 +2087,7 @@ function submitTest(){
     );
 
     /*
-       Requirement:
-       More than 75% = chapter completed.
+      More than 75% is required.
     */
 
     const passed=percentage>75;
@@ -1883,19 +2097,24 @@ function submitTest(){
         if(currentTest.index>=0){
 
             const key=
-                currentTest.subject+"_"+currentTest.index;
+                currentTest.subject+
+                "_"+
+                currentTest.index;
 
             if(!state.done[key]){
 
                 state.done[key]=true;
 
-                state.points=(state.points||0)+10;
+                state.points=
+                    (state.points||0)+10;
 
             }
 
         }else{
 
-            state.points=(state.points||0)+15;
+            state.points=
+                (state.points||0)+15;
+
         }
 
         save();
@@ -1911,10 +2130,7 @@ function submitTest(){
                     (${percentage}%)
                 </div>
 
-                <div
-                    class="small muted"
-                    style="margin-top:6px"
-                >
+                <div class="small muted" style="margin-top:6px">
                     ${
                         currentTest.index>=0
                         ?"Chapter completed! +10 ⭐"
@@ -1923,10 +2139,21 @@ function submitTest(){
                 </div>
 
             </div>
-
         `;
 
         updateStats();
+
+        /*
+          Refresh current chapter status
+        */
+
+        if(currentTest.index>=0){
+
+            renderChapters(
+                currentTest.subject
+            );
+
+        }
 
     }else{
 
@@ -1944,19 +2171,17 @@ function submitTest(){
                     (${percentage}%)
                 </div>
 
-                <div
-                    class="small muted"
-                    style="margin-top:6px"
-                >
+                <div class="small muted" style="margin-top:6px">
                     You need more than 75% to complete this chapter.
                 </div>
 
             </div>
-
         `;
+
     }
 
     document.getElementById("submitTestBtn").disabled=true;
+
 }
 
 
@@ -1969,12 +2194,19 @@ function closeTest(){
 }
 
 
-/* ================= WEEKLY TEST ================= */
+/* ==================================================
+                    WEEKLY TEST
+================================================== */
 
 function weeklySubject(){
 
-    if(!state.selectedSubjects.length){
+    if(
+        !Array.isArray(state.selectedSubjects) ||
+        state.selectedSubjects.length===0
+    ){
+
         return null;
+
     }
 
     const week=Math.floor(
@@ -1984,6 +2216,7 @@ function weeklySubject(){
     return state.selectedSubjects[
         week%state.selectedSubjects.length
     ];
+
 }
 
 
@@ -1995,11 +2228,8 @@ function renderWeekly(){
 
     if(!subject){
 
-        box.innerHTML=`
-            <p class="muted">
-                Select subjects first.
-            </p>
-        `;
+        box.innerHTML=
+            "<p class='muted'>Select subjects first.</p>";
 
         return;
     }
@@ -2021,24 +2251,35 @@ function renderWeekly(){
             </p>
 
             <button
+                id="weeklyStartButton"
                 class="primary"
                 type="button"
-                onclick='startWeekly(${JSON.stringify(subject)})'
             >
                 📝 Start Weekly Test
             </button>
 
         </div>
-
     `;
+
+    document
+        .getElementById("weeklyStartButton")
+        .addEventListener(
+            "click",
+            function(){
+
+                startWeekly(subject);
+
+            }
+        );
+
 }
 
 
 function startWeekly(subject){
 
-    const bank=QUESTIONS[subject] || [];
+    const bank=QUESTIONS[subject]||[];
 
-    if(bank.length===0){
+    if(!bank.length){
         return;
     }
 
@@ -2048,13 +2289,16 @@ function startWeekly(subject){
         questions:bank
     };
 
-    openTestModal(
+    showTestModal(
         "📅 Weekly Test • "+subject
     );
+
 }
 
 
-/* ================= PROGRESS ================= */
+/* ==================================================
+                     PROGRESS
+================================================== */
 
 function renderProgress(){
 
@@ -2080,7 +2324,7 @@ function renderProgress(){
         ?Math.round(completed/total*100)
         :0;
 
-    document.getElementById("progressContent").innerHTML=`
+    let html=`
 
         <h2>${percentage}% Overall Progress</h2>
 
@@ -2091,10 +2335,7 @@ function renderProgress(){
             <span style="width:${percentage}%"></span>
         </div>
 
-        <p
-            class="muted"
-            style="margin-top:8px"
-        >
+        <p class="muted" style="margin-top:8px">
             ${completed} of ${total} study modules completed.
         </p>
 
@@ -2105,36 +2346,43 @@ function renderProgress(){
                 margin:18px 0
             "
         >
+    `;
 
-        ${
-            state.selectedSubjects.map(subject=>`
+    state.selectedSubjects.forEach(subject=>{
 
-                <div style="margin:18px 0">
+        html+=`
 
-                    <b>
-                        ${EMO[subject]} ${escapeHtml(subject)}
-                    </b>
+            <div style="margin:18px 0">
 
-                    <div class="progress">
-                        <span
-                            style="width:${subjectPercent(subject)}%"
-                        ></span>
-                    </div>
+                <b>
+                    ${EMO[subject]}
+                    ${escapeHtml(subject)}
+                </b>
 
-                    <div class="small muted" style="margin-top:5px">
-                        ${subjectPercent(subject)}%
-                    </div>
-
+                <div class="progress">
+                    <span
+                        style="width:${subjectPercent(subject)}%"
+                    ></span>
                 </div>
 
-            `).join("")
-        }
+                <div class="small muted" style="margin-top:5px">
+                    ${subjectPercent(subject)}%
+                </div>
 
-    `;
+            </div>
+        `;
+
+    });
+
+    document.getElementById("progressContent").innerHTML=
+        html;
+
 }
 
 
-/* ================= FOCUS TIMER ================= */
+/* ==================================================
+                    FOCUS TIMER
+================================================== */
 
 let timerInterval=null;
 
@@ -2145,7 +2393,9 @@ let secondsLeft=25*60;
 
 function updateTimerDisplay(){
 
-    const minutes=Math.floor(secondsLeft/60);
+    const minutes=Math.floor(
+        secondsLeft/60
+    );
 
     const seconds=secondsLeft%60;
 
@@ -2153,6 +2403,7 @@ function updateTimerDisplay(){
         String(minutes).padStart(2,"0")+
         ":"+
         String(seconds).padStart(2,"0");
+
 }
 
 
@@ -2172,7 +2423,9 @@ function startFocus(){
         minutes>180
     ){
 
-        alert("Enter a duration between 1 and 180 minutes.");
+        alert(
+            "Enter a duration between 1 and 180 minutes."
+        );
 
         return;
     }
@@ -2181,11 +2434,17 @@ function startFocus(){
 
     timerRunning=true;
 
-    document.getElementById("customMinutes").disabled=true;
+    document.getElementById(
+        "customMinutes"
+    ).disabled=true;
 
-    document.getElementById("startTimerBtn").disabled=true;
+    document.getElementById(
+        "startTimerBtn"
+    ).disabled=true;
 
-    document.getElementById("stopTimerBtn").disabled=true;
+    document.getElementById(
+        "stopTimerBtn"
+    ).disabled=true;
 
     updateTimerDisplay();
 
@@ -2203,24 +2462,33 @@ function startFocus(){
 
             timerRunning=false;
 
-            document.getElementById("customMinutes").disabled=false;
+            document.getElementById(
+                "customMinutes"
+            ).disabled=false;
 
-            document.getElementById("startTimerBtn").disabled=false;
+            document.getElementById(
+                "startTimerBtn"
+            ).disabled=false;
 
-            state.points=(state.points||0)+5;
+            state.points=
+                (state.points||0)+5;
 
             save();
 
-            alert("🎉 Focus session complete! +5 ⭐");
+            alert(
+                "🎉 Focus session complete! +5 ⭐"
+            );
 
             secondsLeft=minutes*60;
 
             updateTimerDisplay();
 
             updateStats();
+
         }
 
     },1000);
+
 }
 
 
@@ -2236,15 +2504,22 @@ function stopFocus(){
     }
 
     const minutes=
-        Number(document.getElementById("customMinutes").value)||25;
+        Number(
+            document.getElementById(
+                "customMinutes"
+            ).value
+        )||25;
 
     secondsLeft=minutes*60;
 
     updateTimerDisplay();
+
 }
 
 
-/* ================= PROFILE ================= */
+/* ==================================================
+                    PROFILE
+================================================== */
 
 function changeSubjects(){
 
@@ -2270,38 +2545,40 @@ function logout(){
 
     document.getElementById("loginPage").style.display="flex";
 
-    document.getElementById("userName").value=state.name || "";
+    document.getElementById("userName").value=
+        state.name||"";
 
 }
 
 
-/* ================= SECURITY / TEXT HELPER ================= */
+/* ==================================================
+                 HTML SAFE TEXT
+================================================== */
 
 function escapeHtml(value){
 
     return String(value)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
 }
 
 
-/* ================= STARTUP ================= */
-
-/*
-   IMPORTANT:
-   Splash is handled separately.
-   After splash:
-   1. Existing user -> app
-   2. New user -> name/login
-   3. User without subjects -> subject selection
-*/
+/* ==================================================
+                      START APP
+================================================== */
 
 function startApplication(){
 
-    document.getElementById("splash").style.display="none";
+    const splash=
+        document.getElementById("splash");
+
+    if(splash){
+        splash.style.display="none";
+    }
 
     if(state.name){
 
@@ -2320,18 +2597,20 @@ function startApplication(){
 
     }else{
 
-        document.getElementById("loginPage").style.display="flex";
+        document.getElementById(
+            "loginPage"
+        ).style.display="flex";
 
-        document.getElementById("userName").focus();
+        document.getElementById(
+            "userName"
+        ).focus();
 
     }
 
 }
 
 
-/*
-   5.5 second professional splash animation.
-*/
+/* 5.5 second splash */
 
 setTimeout(
     startApplication,
@@ -2346,4 +2625,4 @@ updateTimerDisplay();
 </script>
 
 </body>
- </html>
+</html>
